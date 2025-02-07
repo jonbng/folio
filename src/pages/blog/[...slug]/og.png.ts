@@ -11,7 +11,7 @@ const posts = await getCollection("blog");
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 export async function GET({ params }: { params: Params }) {
-  const post = posts.find((post) => post.id === params.id); // Find the specific post by ID
+  const post = posts.find((post) => post.id === params.slug); // Find the specific post by ID
   if (!post) {
     return new Response("Post not found", { status: 404 });
   }
@@ -27,7 +27,7 @@ export async function GET({ params }: { params: Params }) {
 
 export async function getStaticPaths() {
   return posts.map((post) => ({
-    params: { id: post.id },
+    params: { slug: post.id },
     props: post,
   }));
 }
@@ -36,7 +36,13 @@ export async function SVG(component: h.JSX.Element) {
   return await satori(component as any, {
     width: 1200,
     height: 630,
-    fonts: [],
+    fonts: [
+      {
+        name: "Outfit",
+        data: await fs.readFile("outfit.ttf"),
+        weight: 400,
+      },
+    ],
   });
 }
 
