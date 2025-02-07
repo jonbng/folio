@@ -5,10 +5,10 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 import webmanifest from 'astro-webmanifest';
-import { SITE_DESCRIPTION, SITE_TITLE } from "./src/consts";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "./src/consts";
 
 export default defineConfig({
-  site: "https://jonathanb.dk",
+  site: SITE_URL,
   integrations: [
     mdx(),
     sitemap(),
