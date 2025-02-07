@@ -1,5 +1,6 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_TITLE = 'Folio';
+export const SITE_DESCRIPTION = 'My corner on the internet! 🏡';
+export const TWITTER_HANDLE = '@arctixdev';
+export const GITHUB_HANDLE = 'arctixdev';
+export const REPO_NAME = 'folio';
+export const EMAIL = 'hi@jonathanb.dk';
