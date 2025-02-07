@@ -6,5 +6,6 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "jsx": "preserve"
   }
 }

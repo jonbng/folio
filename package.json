@@ -17,8 +17,11 @@
     "astro-webmanifest": "^1.0.0",
     "date-fns": "^4.1.0",
     "markdown-it": "^14.1.0",
+    "preact": "^10.25.4",
     "sanitize-html": "^2.14.0",
+    "satori": "^0.12.1",
     "sharp": "^0.33.5",
-    "tailwindcss": "^4.0.4"
+    "tailwindcss": "^4.0.4",
+    "tw-to-css": "^0.0.12"
   }
 }
