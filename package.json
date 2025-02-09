@@ -12,14 +12,15 @@
     "@astrojs/mdx": "^4.0.8",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "@tailwindcss/vite": "^4.0.4",
+    "@tailwindcss/vite": "^4.0.5",
+    "@upstash/redis": "^1.34.4",
     "astro": "^5.2.5",
-    "date-fns": "^4.1.0"
+    "lucide-astro": "^0.473.0"
   },
   "devDependencies": {
     "astro-webmanifest": "^1.0.0",
     "markdown-it": "^14.1.0",
-    "tailwindcss": "^4.0.4",
+    "tailwindcss": "^4.0.5",
     "satori": "^0.12.1",
     "sharp": "^0.33.5",
     "preact": "^10.25.4",

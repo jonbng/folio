@@ -1,4 +1,6 @@
 export const SITE_TITLE = 'Jonathan Bangert | Folio';
+export const MEDIUM_TITLE = 'Jonathan | Folio';
+export const NAME_TITLE = 'Jonathan Bangert';
 export const SHORT_TITLE = 'Folio';
 export const SITE_URL = "https://folio-e7b.pages.dev";
 export const SITE_DESCRIPTION = 'My corner on the internet! 🏡';
