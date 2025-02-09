@@ -2,9 +2,11 @@
 const today = new Date();
 ---
 
-<footer class="py-6 text-gray-400 text-center flex flex-row justify-between absolute bottom-0 left-0 right-0 max-w-4xl mx-auto">
+<footer
+  class="py-6 text-gray-400 text-center flex flex-col md:flex-row justify-between relative bottom-0 left-0 right-0 max-w-4xl mx-auto w-full px-4 mt-auto"
+>
   &copy; {today.getFullYear()} Jonathan Bangert. All rights reserved.
-  <div class="social-links flex justify-center gap-4">
+  <div class="social-links flex justify-center gap-4 mt-4 md:mt-0">
     <a
       href="https://x.com/arctixdev"
       target="_blank"

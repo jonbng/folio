@@ -13,13 +13,13 @@ import Footer from "../components/Footer.astro";
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <main transition:animate="fade" class="max-w-4xl mx-auto pt-10">
+    <main transition:animate="fade" class="max-w-4xl mx-auto pt-10 px-4 min-h-screen flex flex-col">
       <Header />
-      <div class="flex justify-center flex-col pt-20">
-        <div class="flex flex-row gap-4">
+      <div class="flex flex-col items-center pt-20">
+        <div class="flex flex-col-reverse md:flex-row gap-4 sm:flex-col">
           <div class="flex flex-col gap-2">
-            <h1 class="text-4xl">Hello! 👋</h1>
-            <h1 class="text-3xl">
+            <h1 class="text-4xl hidden sm:block">Hello! 👋</h1>
+            <h1 class="text-2xl sm:text-3xl">
               <span>My name is Jonathan Bangert</span>
               <span class="text-gray-500"
                 >- Akademia Co-Founder & SWE @ Flimmer</span
@@ -87,7 +87,7 @@ import Footer from "../components/Footer.astro";
           </div>
           <Image
             src={profilePicture}
-            class="rounded-3xl object-cover w-52 h-52"
+            class="rounded-3xl object-cover w-full sm:w-52 sm:h-52 h-fit mx-auto md:mx-0"
             alt="Picture of Jonathan Bangert"
             width={300}
             height={300}
