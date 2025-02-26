@@ -71,8 +71,8 @@ export default function Home() {
           style={{ transformOrigin: "center" }}
           className="relative"
         >
-          <div className="max-w-4xl mx-auto px-6 sm:px-4 py-20">
-            <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-16">
+          <div className="max-w-4xl mx-auto px-6 sm:px-4 sm:py-20 py-8">
+            <header className="flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8 sm:mb-16">
               <div className="flex flex-row items-center gap-4">
                 <h1 className="text-lg font-medium">Jonathan Bangert</h1>
                 <div className="hidden sm:flex items-center gap-2 text-sm text-zinc-500">
