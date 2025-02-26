@@ -6,16 +6,28 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
-import BlogPreview from "@/components/blog-preview";
-import BeyondCoding from "@/components/beyond-coding";
-import { motion } from "framer-motion";
+// import BlogPreview from "@/components/blog-preview";
+// import BeyondCoding from "@/components/beyond-coding";
+import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   const [isWorkOpen, setIsWorkOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState(null);
+  const [selectedWork, setSelectedWork] = useState<{
+    id: number;
+    title: string;
+    tag: string;
+    tagColor: string;
+    description: string;
+    shortDescription: string;
+    image: string;
+    year: string;
+    detailedDescription: string;
+    technologies: string[];
+    link?: string;
+    team: { name: string; role: string; avatar: string; link?: string }[];
+  } | null>(null);
   const [time, setTime] = useState(new Date());
 
   // Update time every minute
@@ -46,7 +58,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative min-h-screen bg-white dark:bg-zinc-950">
+      <div className="relative min-h-screen bg-white">
         <motion.main
           animate={{
             scale: isWorkOpen ? 0.93 : 1,
@@ -59,111 +71,111 @@ export default function Home() {
           className="relative"
         >
           <div className="max-w-4xl mx-auto px-6 sm:px-4 py-20">
-            <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-20">
+            <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-16">
               <div className="flex flex-row items-center gap-4">
                 <h1 className="text-lg font-medium">Jonathan Bangert</h1>
-                <div className="hidden sm:flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+                <div className="hidden sm:flex items-center gap-2 text-sm text-zinc-500">
                   <Clock className="w-4 h-4" />
                   <span>Denver</span>
                   <span>{denverTime}</span>
                 </div>
               </div>
               <nav className="flex gap-4 items-center">
-                <Button variant="ghost" size="icon" asChild>
+                <Button variant="actualGhost" size="icon" asChild>
                   <a
-                    href="https://twitter.com/jonathanb"
+                    href="https://twitter.com/arctixdev"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors hover:scale-110"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                   >
-                    <Twitter className="w-6 h-6" />
+                    <Twitter size={24} />
                     <span className="sr-only">Twitter</span>
                   </a>
                 </Button>
-                <Button variant="ghost" size="icon" asChild>
+                <Button variant="actualGhost" size="icon" asChild>
                   <a
-                    href="https://github.com/jonathanb"
+                    href="https://github.com/arctixdev"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors hover:scale-110"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                   >
-                    <Github className="w-6 h-6" />
+                    <Github size={24} />
                     <span className="sr-only">GitHub</span>
                   </a>
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="actualGhost"
                   size="icon"
                   asChild
                   className="hidden sm:inline-flex"
                 >
                   <a
-                    href="https://linkedin.com/in/jonathanb"
+                    href="https://linkedin.com/in/jonathan-bangert/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors hover:scale-110"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                   >
-                    <Linkedin className="w-6 h-6" />
+                    <Linkedin size={24} />
                     <span className="sr-only">LinkedIn</span>
                   </a>
                 </Button>
-                <Button variant="ghost" size="icon" asChild>
+                <Button variant="actualGhost" size="icon" asChild>
                   <a
                     href="mailto:contact@jonathanb.dk"
-                    className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors hover:scale-110"
+                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                   >
-                    <Mail className="w-6 h-6" />
+                    <Mail size={24} />
                     <span className="sr-only">Email</span>
                   </a>
                 </Button>
-                <ThemeToggle />
               </nav>
             </header>
 
-            <section className="mb-12">
-              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-12">
+            <section className="mb-10">
+              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-8">
                 <div className="flex-1">
                   <h2 className="text-4xl font-bold tracking-tight mb-8">
                     Hello! <span className="wave">👋</span>
                   </h2>
-                  <p className="text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8">
-                    I'm Jonathan — Akademia Co-Founder & SWE @ Flimmer. I've
-                    been building things for as long as I can remember, focusing
-                    on creating elegant solutions to complex problems.
+                  <p className="text-xl text-zinc-600 leading-relaxed mb-4">
+                    I&apos;m Jonathan — Akademia Co-Founder & SWE @ Flimmer.
+                    I&apos;ve been building things for as long as I can
+                    remember, focusing on creating elegant solutions to complex
+                    problems.
                   </p>
-                  <Button asChild className="mt-4">
+                  <Button asChild className="mt-4" variant={"link"}>
                     <a
-                      href="https://twitter.com/jonathanb"
+                      href="https://twitter.com/arctixdev"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center"
+                      className="inline-flex items-center h-12"
                     >
-                      <Twitter className="w-5 h-5 mr-2" />
+                      <Twitter className="mr-2" size={24} />
                       Follow me on Twitter
                     </a>
                   </Button>
                 </div>
-                <div className="flex-shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
+                <div className="shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
                   <Image
-                    src="https://avatars.githubusercontent.com/u/74015378?v=4"
+                    src="/pfp.jpg"
                     alt="Jonathan Bangert"
                     width={220}
                     height={220}
-                    className="w-full sm:w-[220px] h-[220px] sm:rounded-full rounded-2xl object-cover"
+                    className="w-full sm:w-[220px] aspect-3/2 sm:aspect-square object-[50%_10%] sm:rounded-full rounded-2xl object-cover"
                     priority
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                 <div className="space-y-4">
-                  <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  <p className="text-lg text-zinc-600 leading-relaxed">
                     With over a decade of experience in software development, I
                     specialize in building scalable web applications and
                     contributing to open source projects that make a difference.
                   </p>
                 </div>
                 <div className="space-y-4">
-                  <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                  <p className="text-lg text-zinc-600 leading-relaxed">
                     My passion lies in leveraging technology to solve real-world
                     problems and create impactful solutions that enhance user
                     experiences and drive innovation.
@@ -172,33 +184,35 @@ export default function Home() {
               </div>
             </section>
 
-            <div className="flex items-center gap-2 mb-12 text-zinc-600 dark:text-zinc-400">
+            <div className="flex items-center gap-2 mb-12 text-zinc-600">
               <Book className="w-5 h-5" />
-              <span>Currently reading: "Outliers" by Malcolm Gladwell</span>
+              <span>
+                Currently reading: &quot;Outliers&quot; by Malcolm Gladwell
+              </span>
             </div>
 
-            <Separator className="mb-20" />
+            <Separator className="mb-14" />
 
             <WorkShowcase
               onOpenChange={setIsWorkOpen}
               onSelectWork={setSelectedWork}
             />
 
-            <Separator className="my-20" />
+            <Separator className="my-14" />
 
-            <BeyondCoding />
+            {/* <BeyondCoding /> */}
 
-            <Separator className="my-20" />
+            {/* <Separator className="my-20" /> */}
 
             <PressShowcase />
 
-            <Separator className="my-20" />
+            {/* <Separator className="my-20" /> */}
 
-            <BlogPreview />
+            {/* <BlogPreview /> */}
 
-            <footer className="mt-20 pt-8 border-t border-zinc-200 dark:border-zinc-700">
+            <footer className="mt-14 pt-8 border-t border-zinc-200">
               <div className="flex justify-between items-center">
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="text-sm text-zinc-500">
                   © {new Date().getFullYear()} Jonathan Bangert. All rights
                   reserved.
                 </p>
@@ -211,7 +225,7 @@ export default function Home() {
                     href="mailto:contact@jonathanb.dk"
                     className="animate-underline"
                   >
-                    Let's Talk
+                    Let&apos;s Talk
                   </a>
                 </Button>
               </div>
@@ -220,7 +234,6 @@ export default function Home() {
         </motion.main>
       </div>
 
-      {/* Sidebar rendered outside main content */}
       <ProjectSidebar
         isOpen={isWorkOpen}
         selectedWork={selectedWork}
