@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://jonathanb.dk/sitemap-index.xml
