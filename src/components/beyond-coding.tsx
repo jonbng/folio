@@ -1,22 +1,22 @@
 "use client";
 
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+// import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const photos = [
   {
     id: 1,
-    src: "/placeholder.svg?height=300&width=400",
-    alt: "Mountain landscape",
+    src: "/1.jpg",
+    alt: "Lofoten, Norway",
   },
-  { id: 2, src: "/placeholder.svg?height=300&width=400", alt: "Forest trail" },
+  { id: 2, src: "/2.jpg", alt: "Narvik, Norway" },
   {
     id: 3,
-    src: "/placeholder.svg?height=300&width=400",
-    alt: "Sunset over hills",
+    src: "/3.jpg",
+    alt: "Festvågtinden, Norway",
   },
 ];
 
@@ -50,10 +50,10 @@ export default function BeyondCoding() {
         asChild
         className="p-0 h-auto font-semibold text-zinc-900 hover:no-underline group"
       >
-        <Link href="/photography" className="flex items-center gap-1">
+        {/* <Link href="/photography" className="flex items-center gap-1">
           <span className="animate-underline">View full portfolio</span>
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
+        </Link> */}
       </Button>
     </section>
   );

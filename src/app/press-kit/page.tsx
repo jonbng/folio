@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export default function PressKit() {
   return (
@@ -18,13 +20,31 @@ export default function PressKit() {
         <section className="space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-4">Bio</h2>
-            <p className="text-zinc-600">
-              Jonathan Bangert is a software engineer, educator, and
-              entrepreneur. He is the co-founder of Akademia, an AI-powered
-              learning platform, and a senior software engineer at Flimmer. With
-              over a decade of experience in the tech industry, Jonathan is
-              passionate about leveraging technology to solve real-world
-              problems and improve education.
+            <p className="text-zinc-600 text-lg pt-4">
+              Jonathan Bangert has been building things for as long as he can
+              remember, starting with small coding projects, breaking things
+              apart just to understand how they work, and obsessing over every
+              detail until it feels right. Right now, he&apos;s working at{" "}
+              <a href="https://flimmer.app" className="underline font-bold">
+                Flimmer
+              </a>{" "}
+              as a software engineer and Co-Founder at{" "}
+              <a href="https://akademia.dev" className="underline font-bold">
+                Akademia
+              </a>
+              , a reimagined platform for schools, but he&apos;s always experimenting
+              with new ideas. He shares his thoughts on{" "}
+              <a href="https://x.com/arctixdev" className="underline font-bold">
+                X
+              </a>
+              , and if you want to chat, you can reach him at{" "}
+              <a
+                href="mailto:contact@jonathanb.dk"
+                className="underline font-bold"
+              >
+                contact@jonathanb.dk
+              </a>
+              .
             </p>
           </div>
 
@@ -34,7 +54,16 @@ export default function PressKit() {
               High-resolution images for press use. Please credit &quot;Jonathan
               Bangert&quot; when using these images.
             </p>
-            {/* Add your press images here */}
+            <Image src="/pfp.jpg" alt="Jonathan Bangert" width={400} height={400} />
+            <Button variant="link" asChild>
+              <a
+                href="/pfp.jpg"
+                download
+                className="text-blue-600 hover:underline"
+              >
+                Download
+              </a>
+            </Button>
           </div>
 
           <div>

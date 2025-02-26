@@ -14,7 +14,7 @@ const works = [
     image: "https://akademia.cc/akademia-card.png",
     year: "2023 — Present",
     detailedDescription:
-      "Akademia is an innovative educational platform that leverages artificial intelligence to personalize learning experiences. It adapts to each student's pace and learning style, providing tailored content and real-time feedback. For teachers, it offers powerful analytics and automated grading tools, freeing up time for more personalized instruction.",
+      "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused.",
     technologies: [
       "Svelte",
       "Kubernetes",
@@ -45,13 +45,13 @@ const works = [
     tag: "Work",
     tagColor: "bg-blue-100 text-blue-800",
     description:
-      "Leading software engineering initiatives and building next-generation solutions for digital experiences.",
+      "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
     image:
       "https://flimmer.app/_next/static/media/figure-together-1.8e212f4e.svg",
     year: "2022 — Present",
     detailedDescription:
-      "At Flimmer, we're pushing the boundaries of what's possible in digital experiences. Our team specializes in creating high-performance, scalable web applications that deliver exceptional user experiences. From e-commerce platforms to complex data visualization tools, we tackle challenges across various industries.",
+      "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning.",
     technologies: [
       "React Native",
       "Expo",
@@ -115,23 +115,23 @@ const works = [
     tag: "Contributor",
     tagColor: "bg-purple-100 text-purple-800",
     description:
-      "Contributing to various open source projects and creating developer tools to improve workflow efficiency.",
-    shortDescription: "Empowering developers through open source.",
+      "Music Assistant is a music library manager for your offline and online music sources which can easily stream your favourite music to a wide range of supported players and be combined with the power of Home Assistant!",
+    shortDescription: "Open source music library manager.",
     image:
       "https://www.home-assistant.io/images/blog/2024-05-music-assistant/art.jpg",
     cover: "cover",
     year: "2020 — Present",
     detailedDescription:
-      "My passion for open source drives me to contribute to and create projects that make developers' lives easier. From CLI tools that streamline common tasks to libraries that solve complex problems, I'm committed to giving back to the community that has given me so much.",
+      "TODO.",
     technologies: ["TypeScript", "Rust", "Go", "Python"],
     team: [
       {
         name: "Jonathan Bangert",
         role: "Maintainer",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/pfp.jpg",
       },
       {
-        name: "Open Source Community",
+        name: "Marcel Van Der Veldt",
         role: "Contributors",
         avatar: "/placeholder.svg?height=40&width=40",
       },
@@ -140,15 +140,15 @@ const works = [
   {
     id: 4,
     title: "Nørrebro Skakklub",
-    tag: "Work",
+    tag: "Contract",
     tagColor: "bg-orange-100 text-orange-800",
     description:
-      "Leading software engineering initiatives and building next-generation solutions for digital experiences.",
-    shortDescription: "Building a better chess club.",
+      "We built a new website for Nørrebro Skakklub, making it easier for members to stay updated, find events, and connect with the club.",
+    shortDescription: "Building a better chess club website.",
     image: "https://nbskak.dk/card.webp",
     year: "2023 — 2024",
     detailedDescription:
-      "At Nørrebro Skakklub, we're dedicated to making chess accessible and enjoyable for everyone. Our team is working on a new website that will serve as a hub for our community, providing resources, event information, and a platform for members to connect.",
+      "Nørrebro Skakklub needed a modern, functional website to better serve its members and attract new players. We designed and developed a clean, easy-to-navigate platform where users can find event schedules, club news, and essential information at a glance. The site simplifies communication, improves accessibility, and ensures that both new and existing members can engage with the club effortlessly.",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
     team: [
       {

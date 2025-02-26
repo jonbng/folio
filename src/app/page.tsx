@@ -7,10 +7,11 @@ import { Separator } from "@/components/ui/separator";
 import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
 // import BlogPreview from "@/components/blog-preview";
-// import BeyondCoding from "@/components/beyond-coding";
+import BeyondCoding from "@/components/beyond-coding";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
+import Link from "next/link";
 
 export default function Home() {
   const [isWorkOpen, setIsWorkOpen] = useState(false);
@@ -81,53 +82,40 @@ export default function Home() {
                 </div>
               </div>
               <nav className="flex gap-4 items-center">
-                <Button variant="actualGhost" size="icon" asChild>
-                  <a
-                    href="https://twitter.com/arctixdev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
-                  >
-                    <Twitter size={24} />
-                    <span className="sr-only">Twitter</span>
-                  </a>
-                </Button>
-                <Button variant="actualGhost" size="icon" asChild>
-                  <a
-                    href="https://github.com/arctixdev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
-                  >
-                    <Github size={24} />
-                    <span className="sr-only">GitHub</span>
-                  </a>
-                </Button>
-                <Button
-                  variant="actualGhost"
-                  size="icon"
-                  asChild
-                  className="hidden sm:inline-flex"
+                <Link
+                  href="https://twitter.com/arctixdev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                 >
-                  <a
-                    href="https://linkedin.com/in/jonathan-bangert/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
-                  >
-                    <Linkedin size={24} />
-                    <span className="sr-only">LinkedIn</span>
-                  </a>
-                </Button>
-                <Button variant="actualGhost" size="icon" asChild>
-                  <a
-                    href="mailto:contact@jonathanb.dk"
-                    className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
-                  >
-                    <Mail size={24} />
-                    <span className="sr-only">Email</span>
-                  </a>
-                </Button>
+                  <Twitter size={24} />
+                  <span className="sr-only">Twitter</span>
+                </Link>
+                <Link
+                  href="https://github.com/arctixdev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                >
+                  <Github size={24} />
+                  <span className="sr-only">GitHub</span>
+                </Link>
+                <Link
+                  href="https://linkedin.com/in/jonathan-bangert/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:inline-flex text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                >
+                  <Linkedin size={24} />
+                  <span className="sr-only">LinkedIn</span>
+                </Link>
+                <Link
+                  href="mailto:contact@jonathanb.dk"
+                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                >
+                  <Mail size={24} />
+                  <span className="sr-only">Email</span>
+                </Link>
               </nav>
             </header>
 
@@ -137,31 +125,39 @@ export default function Home() {
                   <h2 className="text-4xl font-bold tracking-tight mb-8">
                     Hello! <span className="wave">👋</span>
                   </h2>
-                  <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    I&apos;m Jonathan — Akademia Co-Founder & SWE @ Flimmer.
-                    I&apos;ve been building things for as long as I can
-                    remember, focusing on creating elegant solutions to complex
-                    problems.
+                  <p className="text-xl text-zinc-600 leading-relaxed mb-6">
+                    I&apos;m Jonathan — software engineer, builder, and problem
+                    solver. I co-founded Akademia and work as a SWE @ Flimmer. I
+                    care about making technology simple, intuitive, and actually
+                    useful.
                   </p>
-                  <Button asChild className="mt-4" variant={"link"}>
-                    <a
-                      href="https://twitter.com/arctixdev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center h-12"
+                  <div className="flex flex-row items-start gap-2 mt-6">
+                    <Twitter className="w-6 h-6" />
+                    <Button
+                      asChild
+                      className="p-0 h-auto my-auto"
+                      variant={"link"}
                     >
-                      <Twitter className="mr-2" size={24} />
-                      Follow me on Twitter
-                    </a>
-                  </Button>
+                      <Link
+                        href="https://twitter.com/arctixdev"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="items-center flex gap-1"
+                      >
+                        <span className="animate-underline">
+                          Follow me on Twitter
+                        </span>
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
                 <div className="shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
                   <Image
                     src="/pfp.jpg"
                     alt="Jonathan Bangert"
-                    width={220}
-                    height={220}
-                    className="w-full sm:w-[220px] aspect-3/2 sm:aspect-square object-[50%_10%] sm:rounded-full rounded-2xl object-cover"
+                    width={210}
+                    height={210}
+                    className="w-full sm:w-[210px] aspect-3/2 sm:aspect-square object-[50%_10%] sm:rounded-full rounded-2xl object-cover"
                     priority
                   />
                 </div>
@@ -169,16 +165,18 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
                 <div className="space-y-4">
                   <p className="text-lg text-zinc-600 leading-relaxed">
-                    With over a decade of experience in software development, I
-                    specialize in building scalable web applications and
-                    contributing to open source projects that make a difference.
+                    I care about building things that last. Not just in terms of
+                    code, but in how they impact people. The best products
+                    aren&apos;t just functional—they become part of how we work,
+                    think, and create.
                   </p>
                 </div>
                 <div className="space-y-4">
                   <p className="text-lg text-zinc-600 leading-relaxed">
-                    My passion lies in leveraging technology to solve real-world
-                    problems and create impactful solutions that enhance user
-                    experiences and drive innovation.
+                    Technology should work for people, not the other way around.
+                    I focus on the details, the experience, and the long-term
+                    impact, because great tools don&apos;t just solve problems,
+                    they change what&apos;s possible.
                   </p>
                 </div>
               </div>
@@ -200,9 +198,9 @@ export default function Home() {
 
             <Separator className="my-14" />
 
-            {/* <BeyondCoding /> */}
+            <BeyondCoding />
 
-            {/* <Separator className="my-20" /> */}
+            <Separator className="my-20" />
 
             <PressShowcase />
 
