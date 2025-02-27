@@ -11,7 +11,7 @@ const works = [
     description:
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
     shortDescription: "Reimagining the Danish school systems software.",
-    image: "https://akademia.cc/akademia-card.png",
+    image: "/akademia.png",
     year: "2023 — Present",
     detailedDescription:
       "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused.",
@@ -40,6 +40,26 @@ const works = [
     ],
   },
   {
+    id: 6,
+    cover: "cover",
+    title: "AlfaBeta",
+    tag: "For fun 😎",
+    tagColor: "bg-yellow-100 text-yellow-800",
+    shortDescription: "The only link shortener you'll ever need.",
+    image: "/alfabeta.png",
+    year: "2024",
+    detailedDescription: "TODO.",
+    description: "TODO.",
+    technologies: ["Next.js", "Tailwind CSS", "Clerk"],
+    team: [
+      {
+        name: "Jonathan Bangert",
+        role: "Designer & Developer",
+        avatar: "/pfp.jpg",
+      },
+    ],
+  },
+  {
     id: 2,
     title: "Flimmer",
     tag: "Work",
@@ -47,8 +67,7 @@ const works = [
     description:
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
-    image:
-      "https://flimmer.app/_next/static/media/figure-together-1.8e212f4e.svg",
+    image: "/flimmer.svg",
     year: "2022 — Present",
     detailedDescription:
       "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning.",
@@ -62,30 +81,6 @@ const works = [
       "Turbo",
     ],
     team: [
-      {
-        name: "Jonathan Bangert",
-        role: "Software Engineer",
-        avatar: "/pfp.jpg",
-      },
-      {
-        name: "Elliott Friedrich",
-        role: "Software Engineer",
-        avatar: "/elliott.jpg",
-        link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
-      },
-      {
-        name: "Oscar Landmark",
-        role: "Senior Software Engineer",
-        avatar: "https://avatars.githubusercontent.com/u/22825865?v=4",
-        link: "https://www.linkedin.com/in/oscdot//",
-      },
-      {
-        name: "Jan-Georges Jersild Balin",
-        role: "Senior Software Engineer",
-        avatar:
-          "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSycH4nNuxZY_szug1Q-ZlYQK_be-gngwghI1Zc3wI4t9dVKX_y",
-        link: "https://www.linkedin.com/in/jan-georges-jersild-balin-55719a1b8/",
-      },
       {
         name: "Rasmus Kolbe",
         role: "Founder",
@@ -107,6 +102,64 @@ const works = [
           "https://flimmer.app/_next/image?url=%2Fteam-pics%2Fmark.png&w=3840&q=75",
         link: "https://www.linkedin.com/in/mark-pallisgaard-hansen-74235583",
       },
+      {
+        name: "Emma Illgner",
+        role: "SoMe Manager",
+        avatar:
+          "https://ca.slack-edge.com/T6U833XV2-U0894V6AYUA-19543bcf68d3-512",
+        link: "https://www.linkedin.com/in/emma-illgner-8527a7222/",
+      },
+      {
+        name: "Jan-Georges Jersild Balin",
+        role: "Senior Software Engineer",
+        avatar:
+          "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSycH4nNuxZY_szug1Q-ZlYQK_be-gngwghI1Zc3wI4t9dVKX_y",
+        link: "https://www.linkedin.com/in/jan-georges-jersild-balin-55719a1b8/",
+      },
+      {
+        name: "Jonathan Bangert",
+        role: "Software Engineer",
+        avatar: "/pfp.jpg",
+      },
+      {
+        name: "Elliott Friedrich",
+        role: "Software Engineer",
+        avatar: "/elliott.jpg",
+        link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
+      },
+      {
+        name: "Oscar Landmark",
+        role: "Senior Software Engineer",
+        avatar: "https://avatars.githubusercontent.com/u/22825865?v=4",
+        link: "https://www.linkedin.com/in/oscdot//",
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Tars Mono",
+    tag: "For fun 😎",
+    tagColor: "bg-yellow-100 text-yellow-800",
+    description:
+      "A MONOSPACED TYPEFACE DESIGNED FOR TITLES AND BEYOND. FEATURING THREE DISTINCT STYLES: SHARP FOR PRECISION, ROUNDED FOR WARMTH, AND SMOOTH FOR ELEGANCE.",
+    shortDescription: "A monospaced font designed with precision.",
+    image: "/tars-mono.png",
+    year: "January — February 2025",
+    detailedDescription: "TODO.",
+    technologies: [
+      "Figma",
+      "Adobe Illustrator",
+      "IcoMoon",
+      "Next.js",
+      "Tailwind",
+      "Framer Motion",
+    ],
+    team: [
+      {
+        name: "Jonathan Bangert",
+        role: "Designer & Developer",
+        avatar: "/pfp.jpg",
+      },
     ],
   },
   {
@@ -117,13 +170,11 @@ const works = [
     description:
       "Music Assistant is a music library manager for your offline and online music sources which can easily stream your favourite music to a wide range of supported players and be combined with the power of Home Assistant!",
     shortDescription: "Open source music library manager.",
-    image:
-      "https://www.home-assistant.io/images/blog/2024-05-music-assistant/art.jpg",
+    image: "/music-assistant.jpg",
     cover: "cover",
     year: "2020 — Present",
-    detailedDescription:
-      "TODO.",
-    technologies: ["TypeScript", "Rust", "Go", "Python"],
+    detailedDescription: "TODO.",
+    technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO"],
     team: [
       {
         name: "Jonathan Bangert",
@@ -145,7 +196,7 @@ const works = [
     description:
       "We built a new website for Nørrebro Skakklub, making it easier for members to stay updated, find events, and connect with the club.",
     shortDescription: "Building a better chess club website.",
-    image: "https://nbskak.dk/card.webp",
+    image: "/nbskak.webp",
     year: "2023 — 2024",
     detailedDescription:
       "Nørrebro Skakklub needed a modern, functional website to better serve its members and attract new players. We designed and developed a clean, easy-to-navigate platform where users can find event schedules, club news, and essential information at a glance. The site simplifies communication, improves accessibility, and ensures that both new and existing members can engage with the club effortlessly.",
@@ -169,6 +220,64 @@ const works = [
         link: "https://www.linkedin.com/in/johannes-boerresen/",
       },
     ],
+  },
+  {
+    id: 7,
+    title: "ScanShop",
+    tag: "For fun 😎",
+    tagColor: "bg-yellow-100 text-yellow-800",
+    shortDescription: "Remove items from your shopping list by easily.",
+    description:
+      "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list.",
+    detailedDescription:
+      "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list. It uses the camera on your device to scan barcodes and match them with items on your list, making grocery shopping more efficient and organized.",
+    image: "/scanshop.png",
+    year: "2024",
+    cover: "cover",
+    technologies: ["Next.js", "Tailwind CSS", "Clerk"],
+    team: [
+      {
+        name: "Jonathan Bangert",
+        role: "Designer & Developer",
+        avatar: "/pfp.jpg",
+      },
+    ],
+  },
+  {
+    id: 8,
+    title: "GravityDrop",
+    tag: "For fun 😎",
+    tagColor: "bg-yellow-100 text-yellow-800",
+    shortDescription: "A casual puzzle game about playing with gravity.",
+    image: "/gravitydrop.png",
+    year: "2023",
+    detailedDescription:
+      "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. With simple mechanics and engaging gameplay, it offers a fun way to unwind while exercising your brain.",
+    technologies: ["Unity", "C#"],
+    team: [
+      {
+        name: "Jonathan Bangert",
+        role: "Developer",
+        avatar: "/pfp.jpg",
+      },
+      {
+        name: "Elliott Friedrich",
+        role: "Designer & Developer",
+        avatar: "elliott.jpg",
+        link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
+      },
+      {
+        name: "Johannes Børresen",
+        role: "Developer",
+        avatar: "/johannes.jpg",
+        link: "https://www.linkedin.com/in/johannes-boerresen/",
+      },
+      {
+        name: "Aron",
+        role: "Developer",
+      }
+    ],
+    cover: "cover",
   },
 ];
 
@@ -207,7 +316,7 @@ export default function WorkShowcase({
             transition={{ duration: 0.2 }}
           >
             <div className="space-y-4">
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-xl border">
                 <Image
                   src={work.image || "/placeholder.svg"}
                   alt={work.title}

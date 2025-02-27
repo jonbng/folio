@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Jonathan Bangert - Personal Website",
   description: "Software engineer, educator, and open source enthusiast.",
+  icons: {
+    icon: "/favicon.svg",
+  }
 };
 
 export default function RootLayout({
