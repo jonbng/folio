@@ -32,8 +32,8 @@ export default function PressKit() {
               <a href="https://akademia.dev" className="underline font-bold">
                 Akademia
               </a>
-              , a reimagined platform for schools, but he&apos;s always experimenting
-              with new ideas. He shares his thoughts on{" "}
+              , a reimagined platform for schools, but he&apos;s always
+              experimenting with new ideas. He shares his thoughts on{" "}
               <a href="https://x.com/arctixdev" className="underline font-bold">
                 X
               </a>
@@ -54,16 +54,42 @@ export default function PressKit() {
               High-resolution images for press use. Please credit &quot;Jonathan
               Bangert&quot; when using these images.
             </p>
-            <Image src="/pfp.jpg" alt="Jonathan Bangert" width={400} height={400} />
-            <Button variant="link" asChild>
-              <a
-                href="/pfp.jpg"
-                download
-                className="text-blue-600 hover:underline"
-              >
-                Download
-              </a>
-            </Button>
+            <div className="flex space-x-4">
+              <div className="flex flex-col items-center">
+                <Image
+                  src="/pfp.jpg"
+                  alt="Jonathan Bangert"
+                  width={400}
+                  height={400}
+                />
+                <Button variant="link" asChild>
+                  <a
+                    href="/pfp.jpg"
+                    download
+                    className="text-blue-600 hover:underline"
+                  >
+                    Download
+                  </a>
+                </Button>
+              </div>
+              <div className="flex flex-col items-center">
+                <Image
+                  src="/team.jpg"
+                  alt="Jonathan Bangert & Elliott Friedrich"
+                  width={400}
+                  height={400}
+                />
+                <Button variant="link" asChild>
+                  <a
+                    href="/team.jpg"
+                    download
+                    className="text-blue-600 hover:underline"
+                  >
+                    Download
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
 
           <div>
