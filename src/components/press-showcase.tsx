@@ -40,6 +40,24 @@ const awards = [
     link: "https://ungeforskere.dk/finalist/forbedret-opgave-og-noteplatform-til-undervisning/",
     type: "award",
   },
+  {
+    id: 5,
+    title: "Best overall game Coding Pirates Game Jam",
+    organization: "Coding Pirates",
+    date: "2021 and 2023",
+    image: "/codingpirates.png",
+    link: "https://youtu.be/ISCwyceiP0U?feature=shared&t=482",
+    type: "award",
+  },
+  {
+    id: 6,
+    title: "Best game design Coding Pirates Game Jam",
+    organization: "Coding Pirates",
+    date: "2022",
+    image: "/codingpirates.png",
+    link: "https://nth1nk.itch.io/gravitydrop",
+    type: "award",
+  },
 ];
 
 const allItems = [...pressItems, ...awards].sort(

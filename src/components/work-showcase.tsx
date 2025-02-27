@@ -7,6 +7,7 @@ const works = [
     id: 1,
     title: "Akademia",
     tag: "Founder",
+    link: "https://akademia.cc",
     tagColor: "bg-green-100 text-green-800",
     description:
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
@@ -44,6 +45,7 @@ const works = [
     cover: "cover",
     title: "AlfaBeta",
     tag: "For fun 😎",
+    link: "https://alfabeta.dk",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "The only link shortener you'll ever need.",
     image: "/alfabeta.png",
@@ -63,6 +65,7 @@ const works = [
     id: 2,
     title: "Flimmer",
     tag: "Work",
+    link: "https://flimmer.app",
     tagColor: "bg-blue-100 text-blue-800",
     description:
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
@@ -138,6 +141,7 @@ const works = [
   {
     id: 5,
     title: "Tars Mono",
+    link: "https://tars.jonathanb.dk/",
     tag: "For fun 😎",
     tagColor: "bg-yellow-100 text-yellow-800",
     description:
@@ -167,6 +171,7 @@ const works = [
     title: "Music Assistant",
     tag: "Contributor",
     tagColor: "bg-purple-100 text-purple-800",
+    link: "https://music-assistant.io/",
     description:
       "Music Assistant is a music library manager for your offline and online music sources which can easily stream your favourite music to a wide range of supported players and be combined with the power of Home Assistant!",
     shortDescription: "Open source music library manager.",
@@ -192,6 +197,7 @@ const works = [
     id: 4,
     title: "Nørrebro Skakklub",
     tag: "Contract",
+    link: "https://nbskak.dk",
     tagColor: "bg-orange-100 text-orange-800",
     description:
       "We built a new website for Nørrebro Skakklub, making it easier for members to stay updated, find events, and connect with the club.",
@@ -224,6 +230,7 @@ const works = [
   {
     id: 7,
     title: "ScanShop",
+    link: "https://scanshop.arctix.dev/",
     tag: "For fun 😎",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "Remove items from your shopping list by easily.",
@@ -277,7 +284,7 @@ const works = [
       {
         name: "Aron",
         role: "Developer",
-      }
+      },
     ],
   },
 ];

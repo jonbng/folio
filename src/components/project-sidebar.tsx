@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -118,6 +118,19 @@ export default function ProjectSidebar({
                     <p className="text-xl text-zinc-600">
                       {selectedWork.description}
                     </p>
+                    {selectedWork.link && (
+                      <Button asChild className="mt-4" variant={"actualGhost"}>
+                        <a
+                          href={selectedWork.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center"
+                        >
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          View Project
+                        </a>
+                      </Button>
+                    )}
                   </div>
 
                   <div className="aspect-video relative overflow-hidden rounded-2xl">
