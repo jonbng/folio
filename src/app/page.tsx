@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Github, Mail, Twitter, Linkedin, Clock, Book } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
@@ -13,10 +12,12 @@ import { useState, useEffect } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
+import ExchangeYearBadge from "@/components/exchange-year-badge";
+import CTAButton from "@/components/cta-button";
 
 export default function Home() {
   const [isWorkOpen, setIsWorkOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState < {
+  const [selectedWork, setSelectedWork] = useState<{
     id: number;
     title: string;
     tag: string;
@@ -72,14 +73,22 @@ export default function Home() {
           style={{ transformOrigin: "center" }}
           className="relative"
         >
-          <div className="max-w-4xl mx-auto px-6 sm:px-4 sm:py-20 py-8">
-            <header className="flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-8 sm:mb-16">
+          <div className="max-w-4xl mx-auto px-6 sm:px-4 pt-2 pb-10">
+            <header
+              className={
+                "sticky top-0 z-10 flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 py-6 sm:mb-3" +
+                (isWorkOpen ? "" : " bg-white")
+              }
+            >
               <div className="flex flex-row items-center gap-4">
                 <h1 className="text-lg font-medium">Jonathan Bangert</h1>
-                <div className="hidden sm:flex items-center gap-2 text-sm text-zinc-500">
-                  <Clock className="w-4 h-4" />
-                  <span>Denver</span>
-                  <span>{denverTime}</span>
+                <div className="hidden sm:flex items-center gap-3">
+                  <div className="flex items-center gap-2 text-sm text-zinc-500">
+                    <Clock className="w-4 h-4" />
+                    <span>Denver</span>
+                    <span>{denverTime}</span>
+                  </div>
+                  <ExchangeYearBadge />
                 </div>
               </div>
               <nav className="flex gap-4 items-center">
@@ -121,7 +130,7 @@ export default function Home() {
             </header>
 
             <section className="mb-10">
-              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-8">
+              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
                 <div className="flex-1">
                   <h2 className="text-4xl font-bold tracking-tight mb-8">
                     Hello! <span className="wave">👋</span>
@@ -132,24 +141,17 @@ export default function Home() {
                     care about making technology simple, intuitive, and actually
                     useful.
                   </p>
-                  <div className="flex flex-row items-start gap-2 mt-6">
-                    <Twitter className="w-6 h-6" />
-                    <Button
-                      asChild
-                      className="p-0 h-auto my-auto"
-                      variant={"link"}
-                    >
-                      <Link
-                        href="https://twitter.com/arctixdev"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="items-center flex gap-1"
-                      >
-                        <span className="animate-underline">
-                          Follow me on Twitter
-                        </span>
-                      </Link>
-                    </Button>
+                  <div className="flex flex-wrap gap-4">
+                    <CTAButton
+                      text="Let's Connect"
+                      href="mailto:contact@jonathanb.dk"
+                      icon={<Mail className="w-5 h-5" />}
+                    />
+                    <CTAButton
+                      text="Follow on Twitter"
+                      href="https://twitter.com/arctixdev"
+                      icon={<Twitter className="w-5 h-5" />}
+                    />
                   </div>
                 </div>
                 <div className="shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
@@ -166,7 +168,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6">
                 <div className="space-y-4">
                   <p className="text-lg text-zinc-600 leading-relaxed">
                     I care about building things that last. Not just in terms of
@@ -211,6 +213,28 @@ export default function Home() {
             {/* <Separator className="my-20" /> */}
 
             {/* <BlogPreview /> */}
+
+            <Separator className="my-16" />
+
+            <section id="contact" className="text-center">
+              <h2 className="text-3xl font-bold mb-4">Let&apos;s Connect!</h2>
+              <p className="text-xl text-zinc-700 mb-6">
+                I&apos;m always open to collaborating or just chatting! Feel
+                free to reach out.
+              </p>
+              <div className="flex justify-center gap-4">
+                <CTAButton
+                  text="Get in Touch"
+                  href="mailto:contact@jonathanb.dk"
+                  icon={<Mail className="w-5 h-5" />}
+                />
+                <CTAButton
+                  text="Follow on Twitter"
+                  href="https://twitter.com/jonathanb"
+                  icon={<Twitter className="w-5 h-5" />}
+                />
+              </div>
+            </section>
 
             <footer className="mt-14 pt-8 border-t border-zinc-200">
               <div className="flex justify-between items-center">
