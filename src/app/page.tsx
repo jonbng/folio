@@ -16,7 +16,7 @@ import { ContactButton } from "@/components/contact-button";
 
 export default function Home() {
   const [isWorkOpen, setIsWorkOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState<{
+  const [selectedWork, setSelectedWork] = useState < {
     id: number;
     title: string;
     tag: string;
@@ -27,8 +27,8 @@ export default function Home() {
     year: string;
     detailedDescription: string;
     technologies: string[];
-    link?: string;
-    team: { name: string; role: string; avatar: string; link?: string }[];
+    team: { name: string; role: string; avatar?: string; link?: string }[];
+    cover?: string;
   } | null>(null);
   const [time, setTime] = useState(new Date());
 

@@ -17,7 +17,7 @@ interface ProjectSidebarProps {
     image?: string;
     detailedDescription: string;
     technologies: string[];
-    team: { name: string; avatar: string; role: string; link?: string }[];
+    team: { name: string; avatar?: string; role: string; link?: string }[];
     cover?: string;
     link?: string;
   } | null;
@@ -153,7 +153,7 @@ export default function ProjectSidebar({
                       {selectedWork.team.map(
                         (member: {
                           name: string;
-                          avatar: string;
+                          avatar?: string;
                           role: string;
                           link?: string;
                         }) => (
@@ -167,7 +167,7 @@ export default function ProjectSidebar({
                           >
                             <Avatar className="h-12 w-12">
                               <AvatarImage
-                                src={member.avatar}
+                                src={member.avatar || undefined}
                                 alt={member.name}
                               />
                               <AvatarFallback>{member.name[0]}</AvatarFallback>

@@ -251,9 +251,11 @@ const works = [
     shortDescription: "A casual puzzle game about playing with gravity.",
     image: "/gravitydrop.png",
     year: "2023",
+    description: "A casual puzzle game about playing with gravity.",
     detailedDescription:
       "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. With simple mechanics and engaging gameplay, it offers a fun way to unwind while exercising your brain.",
     technologies: ["Unity", "C#"],
+    cover: "cover",
     team: [
       {
         name: "Jonathan Bangert",
@@ -277,7 +279,6 @@ const works = [
         role: "Developer",
       }
     ],
-    cover: "cover",
   },
 ];
 
