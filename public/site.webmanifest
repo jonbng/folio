@@ -1,0 +1,23 @@
+{
+  "name": "Jonathan Bangert - Folio",
+  "short_name": "Folio",
+  "description": "My place on the internet! Welcome.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["website"],
+  "author": "Jonathan Bangert",
+  "creator": "Jonathan Bangert",
+  "publisher": "Jonathan Bangert",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "lang": "en-US"
+}
