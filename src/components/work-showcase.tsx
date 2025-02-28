@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useState } from "react";
+import { Button } from "./ui/button";
 
 const works = [
   {
@@ -303,6 +305,14 @@ export default function WorkShowcase({
     onOpenChange?.(true);
   };
 
+  let isMobile = false;
+
+  if (window) {
+    isMobile = window.matchMedia("(max-width: 600px)").matches;
+  }
+  const [ showedWork, setShowedWork ] = useState(isMobile ? works.slice(0, 4) : works);
+
+
   return (
     <section className="space-y-12">
       <h2 className="text-sm font-medium text-zinc-500 tracking-widest uppercase">
@@ -315,7 +325,7 @@ export default function WorkShowcase({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, staggerChildren: 0.1 }}
       >
-        {works.map((work) => (
+        {showedWork.map((work) => (
           <motion.div
             key={work.id}
             className="group cursor-pointer"
@@ -350,6 +360,23 @@ export default function WorkShowcase({
             <div className="text-sm text-zinc-500 mt-4">{work.year}</div>
           </motion.div>
         ))}
+        {showedWork.length < works.length ? (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold"
+            onClick={() => setShowedWork(works)}
+          >
+            <span className="animate-underline">Show more</span>
+          </Button>
+        ) : isMobile ? (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold"
+            onClick={() => setShowedWork(works.slice(0, 4))}
+          >
+            <span className="animate-underline">Show less</span>
+          </Button>
+        ) : null}
       </motion.div>
     </section>
   );

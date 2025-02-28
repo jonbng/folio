@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Award, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const pressItems = [
   {
@@ -65,6 +66,8 @@ const allItems = [...pressItems, ...awards].sort(
 );
 
 export default function PressAndRecognitionShowcase() {
+  const [ showedItems, setShowedItems ] = useState(allItems.slice(0, 3));
+
   return (
     <section className="space-y-8">
       <div className="flex justify-between items-center">
@@ -85,11 +88,11 @@ export default function PressAndRecognitionShowcase() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, staggerChildren: 0.1 }}
       >
-        {allItems.map((item) => (
+        {showedItems.map((item) => (
           <motion.a
             key={item.id}
             href={item.link}
-            className="group flex flex-row fitems-center gap-6 cursor-pointer"
+            className="group flex flex-row fitems-center gap-6 cursor-pointer mb-5"
             whileHover={{ x: 10 }}
             transition={{ duration: 0.2 }}
           >
@@ -130,6 +133,23 @@ export default function PressAndRecognitionShowcase() {
             </div>
           </motion.a>
         ))}
+        {(showedItems.length < allItems.length && (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold"
+            onClick={() => setShowedItems(allItems)}
+          >
+            <span className="animate-underline">Show more</span>
+          </Button>
+        )) || (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold"
+            onClick={() => setShowedItems(allItems.slice(0, 3))}
+          >
+            <span className="animate-underline">Show less</span>
+          </Button>
+        )}
       </motion.div>
     </section>
   );
