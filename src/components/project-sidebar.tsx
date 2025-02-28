@@ -81,7 +81,7 @@ export default function ProjectSidebar({
               className="absolute right-0 top-0 h-fit w-full sm:w-[calc(100%-2rem)] md:max-w-2xl bg-white sm:rounded-3xl sm:m-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative min-h-full p-5 sm:p-12 pt-16">
+              <div className="relative min-h-full p-5 sm:p-12 pt-8 sm:pt-16">
                 {showCloseButton && (
                   <motion.div
                     initial={{ scale: 0 }}

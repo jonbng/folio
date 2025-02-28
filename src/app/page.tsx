@@ -76,7 +76,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto px-6 sm:px-4 pt-2 pb-10">
             <header
               className={
-                "sticky top-0 z-10 flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 py-6 sm:mb-3" +
+                "sticky top-0 z-10 flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 py-6 sm:mb-8" +
                 (isWorkOpen ? "" : " bg-white")
               }
             >
@@ -136,7 +136,7 @@ export default function Home() {
                     Hello! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-6">
-                    I&apos;m Jonathan — software engineer, builder, and problem
+                    I&apos;m Jonathan — 17 y/o software engineer, builder, and problem
                     solver. I co-founded Akademia and work as a SWE @ Flimmer. I
                     care about making technology simple, intuitive, and actually
                     useful.
