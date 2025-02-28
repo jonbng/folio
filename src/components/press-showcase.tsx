@@ -10,9 +10,9 @@ import { useState } from "react";
 const pressItems = [
   {
     id: 1,
-    title: "Løvens Hule Junior - Akademia (Episode 10)",
+    title: "Shark Tank Junior (DK) - Akademia (Episode 10)",
     publication: "DRDK",
-    date: "May 22, 2023",
+    date: "December 6, 2024",
     image:
       "https://media.licdn.com/dms/image/v2/D4D22AQFrIeX1zeVobg/feedshare-shrink_2048_1536/B4DZUkjb_oG4Ao-/0/1740075025958?e=1743638400&v=beta&t=DUJ78pczzgxj9N5o5S9_AJNEs3VWwIDzacjbHhOqKPQ",
     link: "https://www.dr.dk/drtv/serie/loevens-hule-junior_479046",
@@ -22,7 +22,7 @@ const pressItems = [
     id: 2,
     title: "Ung forsker nåede til tops igen (Mentioned)",
     publication: "Sjællandske Nyhedder",
-    date: "24. April 2024",
+    date: "April 24, 2024",
     image:
       "https://smooth-storage.aptoma.no/users/sndk/images/105164211.jpg?t[quality]=100&t[resize][width]=970&t[resize][height]=645&accessToken=5a11f02202a5b69bdc3d91af3804ac7c34a6e9e7be7a90b800d9a4b9cb5695e5",
     link: "https://www.sn.dk/art245862/roskilde-kommune/uddannelse/ung-forsker-naaede-til-tops-igen/#:~:text=Hj%C3%A6lp%20til%20at,B%C3%B8rne%2D%20og%20Undervisningsministeriet.",
@@ -33,9 +33,9 @@ const pressItems = [
 const awards = [
   {
     id: 4,
-    title: "1st place winner of the Junior Technology Category",
+    title: "Junior Technology Category 1st Place",
     organization: "Astra Unge Forskere",
-    date: "2024",
+    date: "May 2024",
     image:
       "https://media.licdn.com/dms/image/v2/D4D22AQHKOPkkcg_ogw/feedshare-shrink_1280/feedshare-shrink_1280/0/1714164350562?e=1743638400&v=beta&t=hcalH-9D9POmwvNPZOHG6VsRZSrEXJ9dqqbpabfEnaU",
     link: "https://ungeforskere.dk/finalist/forbedret-opgave-og-noteplatform-til-undervisning/",
@@ -45,9 +45,9 @@ const awards = [
     id: 5,
     title: "Best overall game Coding Pirates Game Jam",
     organization: "Coding Pirates",
-    date: "2021 and 2023",
+    date: "2021",
     image: "/codingpirates.png",
-    link: "https://youtu.be/ISCwyceiP0U?feature=shared&t=482",
+    link: "TODO",
     type: "award",
   },
   {
@@ -59,9 +59,18 @@ const awards = [
     link: "https://nth1nk.itch.io/gravitydrop",
     type: "award",
   },
+  {
+    id: 7,
+    title: "Best overall game Coding Pirates Game Jam",
+    organization: "Coding Pirates",
+    date: "2023",
+    image: "/codingpirates.png",
+    link: "https://youtu.be/ISCwyceiP0U?feature=shared&t=482",
+    type: "award",
+  },
 ];
 
-const allItems = [...pressItems, ...awards].sort(
+const allItems = [...awards, ...pressItems].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
