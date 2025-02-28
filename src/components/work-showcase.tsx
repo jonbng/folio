@@ -307,7 +307,7 @@ export default function WorkShowcase({
 
   let isMobile = false;
 
-  if (window) {
+  if (typeof window !== "undefined") {
     isMobile = window.matchMedia("(max-width: 600px)").matches;
   }
   const [ showedWork, setShowedWork ] = useState(isMobile ? works.slice(0, 4) : works);
