@@ -56,7 +56,7 @@ export function ImageModal({
   hasPrevious,
   hasNext,
 }: ImageModalProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   useEffect(() => {
@@ -80,9 +80,13 @@ export function ImageModal({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
-        hasPrevious && onPrevious();
+        if (hasPrevious) {
+          onPrevious();
+        }
       } else if (e.key === "ArrowRight") {
-        hasNext && onNext();
+        if (hasNext) {
+          onNext();
+        }
       } else if (e.key === "Escape") {
         onClose();
       }
@@ -206,7 +210,7 @@ export function ImageModal({
                   fill
                   priority
                   sizes="(max-width: 1280px) 100vw, 1280px"
-                  onLoadingComplete={() => setIsLoaded(true)}
+                  // onLoadingComplete={() => setIsLoaded(true)}
                 />
               </motion.div>
             </AnimatePresence>

@@ -1,22 +1,24 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Twitter } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { getSampleImages } from "@/lib/get-images";
 import { Button } from "@/components/ui/button";
+import ShareButton from "@/components/ShareButton";
 
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
-}): Promise<Metadata> {
+  params: Promise<{ id: string }>;
+  }): Promise<Metadata> {
+  const { id } = await params;
+
   const images = await getSampleImages();
-  const image = images.find((img) => img.id === params.id);
+  const image = images.find((img) => img.id === id);
 
   if (!image) {
     return {};
   }
-
   return {
     title: `Image ${image.id} | Jonathan Bangert Gallery`,
     description: image.alt,
@@ -40,10 +42,12 @@ export async function generateStaticParams() {
 export default async function ImagePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+
   const images = await getSampleImages();
-  const image = images.find((img) => img.id === params.id);
+  const image = images.find((img) => img.id === id);
 
   if (!image) {
     return <div>Image not found</div>;
@@ -70,26 +74,7 @@ export default async function ImagePage({
           className="rounded-lg"
           priority
         />
-        <Button
-          variant="outline"
-          size="sm"
-          className="mt-4"
-          onClick={() => {
-            const tweetText = encodeURIComponent(
-              `Check out this amazing photo from Jonathan Bangert's gallery!`,
-            );
-            const tweetUrl = encodeURIComponent(
-              `https://yourdomain.com/p/${image.id}`,
-            );
-            window.open(
-              `https://twitter.com/intent/tweet?text=${tweetText}&url=${tweetUrl}`,
-              "_blank",
-            );
-          }}
-        >
-          <Twitter className="w-4 h-4 mr-2" />
-          Share on Twitter
-        </Button>
+        <ShareButton imageId={image.id} />
       </div>
     </div>
   );
