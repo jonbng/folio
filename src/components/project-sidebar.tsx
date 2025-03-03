@@ -78,7 +78,7 @@ export default function ProjectSidebar({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="absolute right-0 top-0 h-fit w-full sm:w-[calc(100%-2rem)] md:max-w-2xl bg-white sm:rounded-3xl sm:m-4"
+              className="absolute right-0 min-h-full sm:min-h-[97.5%] top-0 h-fit w-full sm:w-[calc(100%-2rem)] md:max-w-2xl bg-white sm:rounded-3xl sm:m-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative min-h-full p-5 sm:p-12 pt-8 sm:pt-16">

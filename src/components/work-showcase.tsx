@@ -17,7 +17,7 @@ const works = [
     image: "/akademia.png",
     year: "2023 — Present",
     detailedDescription:
-      "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused.",
+      "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused. This project won 1st place in the Junior Technology category at Unge Forskere, and we got to present it at Shark Tank Junior where we got a mentor.",
     technologies: [
       "Svelte",
       "Kubernetes",
@@ -52,9 +52,11 @@ const works = [
     shortDescription: "The only link shortener you'll ever need.",
     image: "/alfabeta.png",
     year: "2024",
-    detailedDescription: "TODO.",
-    description: "TODO.",
-    technologies: ["Next.js", "Tailwind CSS", "Clerk"],
+    detailedDescription:
+      "I made AlfaBeta because I needed a link shortener that was better than other sites such as bit.ly and tinyurl, yet simpler than dub.co. I wanted to be able to create short links with custom aliases and domains and track their performance. It was also just made as a fun side project.",
+    description:
+      "AlfaBeta is a link shortener that allows you to create short links with custom aliases and track their performance.",
+    technologies: ["Next.js", "Tailwind CSS", "Supabase", "ShadCN UI"],
     team: [
       {
         name: "Jonathan Bangert",
@@ -147,11 +149,11 @@ const works = [
     tag: "For fun 😎",
     tagColor: "bg-yellow-100 text-yellow-800",
     description:
-      "A MONOSPACED TYPEFACE DESIGNED FOR TITLES AND BEYOND. FEATURING THREE DISTINCT STYLES: SHARP FOR PRECISION, ROUNDED FOR WARMTH, AND SMOOTH FOR ELEGANCE.",
+      "A monospaced typeface designed for titles and beyond. Featuring three distinct styles: sharp for precision, rounded for warmth, and smooth for elegance.",
     shortDescription: "A monospaced font designed with precision.",
     image: "/tars-mono.png",
     year: "January — February 2025",
-    detailedDescription: "TODO.",
+    detailedDescription: "Made as a part of my Graphics Design course, ",
     technologies: [
       "Figma",
       "Adobe Illustrator",
