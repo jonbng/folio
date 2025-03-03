@@ -138,7 +138,7 @@ export default function ProjectSidebar({
                       src={selectedWork.image || "/placeholder.svg"}
                       alt={selectedWork.title}
                       fill
-                      className={`object-${selectedWork.cover || "contain"}`}
+                      className={"rounded-md "+`object-${selectedWork.cover || "contain"}`}
                     />
                   </div>
 
