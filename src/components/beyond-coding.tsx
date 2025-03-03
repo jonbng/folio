@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "motion/react";
 // import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const photos = [
   {
@@ -28,7 +30,7 @@ export default function BeyondCoding() {
         When I&apos;m not coding, you can find me exploring nature trails and
         capturing moments through my lens.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
         {photos.map((photo) => (
           <motion.div
             key={photo.id}
@@ -50,10 +52,10 @@ export default function BeyondCoding() {
         asChild
         className="p-0 h-auto font-semibold text-zinc-900 hover:no-underline group"
       >
-        {/* <Link href="/photography" className="flex items-center gap-1">
-          <span className="animate-underline">View full portfolio</span>
+        <Link href="/photography" className="flex items-center gap-1">
+          <span className="animate-underline">View all photos</span>
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link> */}
+        </Link>
       </Button>
     </section>
   );

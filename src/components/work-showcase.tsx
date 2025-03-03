@@ -56,7 +56,13 @@ const works = [
       "I made AlfaBeta because I needed a link shortener that was better than other sites such as bit.ly and tinyurl, yet simpler than dub.co. I wanted to be able to create short links with custom aliases and domains and track their performance. It was also just made as a fun side project.",
     description:
       "AlfaBeta is a link shortener that allows you to create short links with custom aliases and track their performance.",
-    technologies: ["Next.js", "Tailwind CSS", "Supabase", "ShadCN UI"],
+    technologies: [
+      "Next.js",
+      "Tailwind CSS",
+      "Supabase",
+      "ShadCN UI",
+      "Vercel",
+    ],
     team: [
       {
         name: "Jonathan Bangert",
@@ -161,6 +167,7 @@ const works = [
       "Next.js",
       "Tailwind",
       "Framer Motion",
+      "Cloudflare",
     ],
     team: [
       {
@@ -182,8 +189,9 @@ const works = [
     image: "/music-assistant.jpg",
     cover: "cover",
     year: "2020 — Present",
-    detailedDescription: "TODO.",
-    technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO"],
+    detailedDescription:
+      "I joined this project fairly early on, initally only working on the Deezer provider, but later creating and maintaining the Companion app as well. This was my first time contributing to open source project, and on a personal note a really awesome team to be working with, and thought me a ton. I am one of the core members, sadly being less active at the moment.",
+    technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO", "Deezer API"],
     team: [
       {
         name: "Jonathan Bangert",
@@ -195,6 +203,14 @@ const works = [
         role: "Contributors",
         avatar: "/placeholder.svg?height=40&width=40",
       },
+      {
+        name: "Micha",
+        role: "Maintainer",
+      },
+      {
+        name: "TODO, add other maintainers",
+        role: "yup"
+      }
     ],
   },
   {
@@ -210,7 +226,13 @@ const works = [
     year: "2023 — 2024",
     detailedDescription:
       "Nørrebro Skakklub needed a modern, functional website to better serve its members and attract new players. We designed and developed a clean, easy-to-navigate platform where users can find event schedules, club news, and essential information at a glance. The site simplifies communication, improves accessibility, and ensures that both new and existing members can engage with the club effortlessly.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "StaticCMS",
+      "Cloudflare",
+    ],
     team: [
       {
         name: "Jonathan Bangert",
@@ -241,11 +263,19 @@ const works = [
     description:
       "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list.",
     detailedDescription:
-      "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list. It uses the camera on your device to scan barcodes and match them with items on your list, making grocery shopping more efficient and organized.",
+      "Built in a weekend to make shopping easier for personal use, ScanShop uses the camera on your device to scan barcodes and match them with items on your list. More specifically, its built by combining MSAL, Microsoft ToDo API, Kroger API and the OpenAI API. When a user scan the barcode, the UPC number is sent to Kroger to fetch an Image, Price and Name of the Item, we then fetch microsoft (authenticated with MSAL) for the users updated shoppinglist, we then format and send all the data to OpenAI and get an LLM to detect if the item from the kroger api is present in the Shopping List, if it is, we allow the user to effortlessly remove the item in one click. yes i do know this is pretty useless ;)",
     image: "/scanshop.png",
     year: "2024",
     cover: "cover",
-    technologies: ["Next.js", "Tailwind CSS", "Clerk"],
+    technologies: [
+      "Next.js",
+      "Tailwind CSS",
+      "Kroger API",
+      "Microsoft API",
+      "MSAL",
+      "OpenAI",
+      "Vercel",
+    ],
     team: [
       {
         name: "Jonathan Bangert",
@@ -265,7 +295,14 @@ const works = [
     description: "A casual puzzle game about playing with gravity.",
     detailedDescription:
       "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. With simple mechanics and engaging gameplay, it offers a fun way to unwind while exercising your brain.",
-    technologies: ["Unity", "C#"],
+    technologies: [
+      "Unity",
+      "C#",
+      "IronSource",
+      "Google Analytics",
+      "Google Play SDK",
+      "Figma",
+    ],
     cover: "cover",
     team: [
       {
@@ -312,8 +349,9 @@ export default function WorkShowcase({
   if (typeof window !== "undefined") {
     isMobile = window.matchMedia("(max-width: 600px)").matches;
   }
-  const [ showedWork, setShowedWork ] = useState(isMobile ? works.slice(0, 4) : works);
-
+  const [showedWork, setShowedWork] = useState(
+    isMobile ? works.slice(0, 4) : works,
+  );
 
   return (
     <section className="space-y-12">

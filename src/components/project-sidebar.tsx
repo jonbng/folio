@@ -103,7 +103,7 @@ export default function ProjectSidebar({
                   </motion.div>
                 )}
                 <div
-                  className="space-y-8 sm:space-y-12 max-w-xl mx-auto"
+                  className="space-y-8 max-w-xl mx-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="space-y-4">
@@ -119,7 +119,7 @@ export default function ProjectSidebar({
                       {selectedWork.description}
                     </p>
                     {selectedWork.link && (
-                      <Button asChild className="mt-4" variant={"actualGhost"}>
+                      <Button asChild variant={"actualGhost"}>
                         <a
                           href={selectedWork.link}
                           target="_blank"

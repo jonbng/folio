@@ -129,7 +129,7 @@ export default function Home() {
               </nav>
             </header>
 
-            <section className="mb-10">
+            <section className="mb-6">
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
                 <div className="flex-1">
                   <h2 className="text-4xl font-bold tracking-tight mb-8">
