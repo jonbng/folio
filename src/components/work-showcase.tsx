@@ -81,9 +81,9 @@ const works = [
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
     image: "/flimmer.svg",
-    year: "2022 — Present",
+    year: "2024 — Present",
     detailedDescription:
-      "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning.",
+      "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning. Specifically I worked on the mobile app, working with both the frontend and backend maintaining and creating new features for the app.",
     technologies: [
       "React Native",
       "Expo",
@@ -188,7 +188,7 @@ const works = [
     shortDescription: "Open source music library manager.",
     image: "/music-assistant.jpg",
     cover: "cover",
-    year: "2020 — Present",
+    year: "Early 2023 — Present",
     detailedDescription:
       "I joined this project fairly early on, initally only working on the Deezer provider, but later creating and maintaining the Companion app as well. This was my first time contributing to open source project, and on a personal note a really awesome team to be working with, and thought me a ton. I am one of the core members, sadly being less active at the moment.",
     technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO", "Deezer API"],
@@ -209,8 +209,8 @@ const works = [
       },
       {
         name: "TODO, add other maintainers",
-        role: "yup"
-      }
+        role: "yup",
+      },
     ],
   },
   {
@@ -291,7 +291,7 @@ const works = [
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "A casual puzzle game about playing with gravity.",
     image: "/gravitydrop.png",
-    year: "2023",
+    year: "2023 — 2024",
     description: "A casual puzzle game about playing with gravity.",
     detailedDescription:
       "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. With simple mechanics and engaging gameplay, it offers a fun way to unwind while exercising your brain.",
