@@ -5,9 +5,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Award, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const pressItems = [
+interface PressItem {
+  id: number;
+  title: string;
+  publication: string;
+  date: string;
+  image: string;
+  link: string;
+  type: "press";
+}
+
+interface AwardItem {
+  id: number;
+  title: string;
+  organization: string;
+  date: string;
+  image: string;
+  link: string;
+  type: "award";
+}
+
+type Item = PressItem | AwardItem;
+
+const pressItems: PressItem[] = [
   {
     id: 1,
     title: "Shark Tank Junior (DK) - Akademia (Episode 10)",
@@ -30,7 +52,7 @@ const pressItems = [
   },
 ];
 
-const awards = [
+const awards: AwardItem[] = [
   {
     id: 4,
     title: "Junior Technology Category 1st Place",
@@ -70,12 +92,18 @@ const awards = [
   },
 ];
 
-const allItems = [...awards, ...pressItems].sort(
+const allItems: Item[] = [...awards, ...pressItems].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
 export default function PressAndRecognitionShowcase() {
-  const [ showedItems, setShowedItems ] = useState(allItems.slice(0, 3));
+  const [showedItems, setShowedItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    setShowedItems(allItems.slice(0, 3));
+  }, []);
+
+  const isPressItem = (item: Item): item is PressItem => item.type === "press";
 
   return (
     <section className="space-y-8">
@@ -101,16 +129,14 @@ export default function PressAndRecognitionShowcase() {
           <motion.a
             key={item.id}
             href={item.link}
-            className="group flex flex-row fitems-center gap-6 cursor-pointer mb-5"
+            className="group flex flex-row items-center gap-6 cursor-pointer mb-5"
             whileHover={{ x: 10 }}
             transition={{ duration: 0.2 }}
           >
             <div className="flex-shrink-0 w-auto">
               <Image
                 src={item.image || "/placeholder.svg"}
-                alt={
-                  "publication" in item ? item.publication : item.organization
-                }
+                alt={isPressItem(item) ? item.publication : item.organization}
                 width={100}
                 height={100}
                 className="rounded-lg object-cover w-[100px] h-[100px]"
@@ -121,21 +147,15 @@ export default function PressAndRecognitionShowcase() {
                 {item.title}
               </h3>
               <p className="text-zinc-600 mt-1">
-                {item.type === "press" ? (
+                {isPressItem(item) ? (
                   <>
                     <Newspaper className="inline-block w-4 h-4 mr-1" />
-                    {"publication" in item
-                      ? item.publication
-                      : item.organization}{" "}
-                    • {item.date}
+                    {item.publication} • {item.date}
                   </>
                 ) : (
                   <>
                     <Award className="inline-block w-4 h-4 mr-1" />
-                    {"organization" in item
-                      ? item.organization
-                      : item.publication}{" "}
-                    • {item.date}
+                    {item.organization} • {item.date}
                   </>
                 )}
               </p>

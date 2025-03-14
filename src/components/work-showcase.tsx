@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 const works = [
@@ -344,14 +344,25 @@ export default function WorkShowcase({
     onOpenChange?.(true);
   };
 
-  let isMobile = false;
+  const [isMobile, setIsMobile] = useState(false);
+  const [showedWork, setShowedWork] = useState(works);
 
-  if (typeof window !== "undefined") {
-    isMobile = window.matchMedia("(max-width: 600px)").matches;
-  }
-  const [showedWork, setShowedWork] = useState(
-    isMobile ? works.slice(0, 4) : works,
-  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia("(max-width: 600px)").matches);
+    };
+
+    handleResize(); // Check initial size
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    setShowedWork(isMobile ? works.slice(0, 4) : works);
+  }, [isMobile]);
 
   return (
     <section className="space-y-12">
