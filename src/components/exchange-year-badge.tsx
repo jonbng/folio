@@ -8,7 +8,7 @@ export default function ExchangeYearBadge() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="inline-flex items-center gap-1.5 text-sm text-zinc-600 dark:text-zinc-400"
+      className="inline-flex items-center gap-1.5 text-sm text-zinc-500"
     >
       <span>🇩🇰</span>
       <span className="text-xs">→</span>

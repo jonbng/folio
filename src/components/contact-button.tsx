@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 
 const cursors = [
@@ -49,18 +48,31 @@ const shuffleArray = (array: string[]) => {
 };
 
 const useChangingCursor = () => {
+  // mounted flag to delay randomized behavior until client-side
+  const [mounted, setMounted] = useState(false);
   const [cursorIndex, setCursorIndex] = useState(0);
-  const scrambledCursors = useMemo(() => shuffleArray(cursors), []);
+  const [scrambledCursors, setScrambledCursors] = useState<string[]>([
+    "default",
+  ]);
 
   useEffect(() => {
+    // set mounted flag to true once on client
+    setMounted(true);
+
+    // Only perform the randomization on client
+    const shuffled = shuffleArray(cursors);
+    setScrambledCursors(shuffled);
+
+    // Set up the interval for changing cursor every 250ms
     const interval = setInterval(() => {
-      setCursorIndex((prevIndex) => (prevIndex + 1) % scrambledCursors.length);
-    }, 250); // Changed from 500ms to 250ms
+      setCursorIndex((prevIndex) => (prevIndex + 1) % shuffled.length);
+    }, 250);
 
     return () => clearInterval(interval);
-  }, [scrambledCursors]);
+  }, []);
 
-  return scrambledCursors[cursorIndex];
+  // On the server (or before mounting), always return "default" to match SSR
+  return mounted ? scrambledCursors[cursorIndex] : "default";
 };
 
 export const ContactButton: React.FC = () => {
@@ -79,4 +91,3 @@ export const ContactButton: React.FC = () => {
     </Button>
   );
 };
-

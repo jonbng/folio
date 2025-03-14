@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   keywords: ["Jonathan Bangert", "folio", "portfolio", "website"],
   creator: "Jonathan Bangert",
   publisher: "Jonathan Bangert",
-  themeColor: "#ffffff",
   formatDetection: {
     url: true,
     date: false,

@@ -81,9 +81,9 @@ export default function Home() {
               }
             >
               <div className="flex flex-row items-center gap-4">
-                <h1 className="text-lg font-medium">Jonathan Bangert</h1>
+                <h1 className="text-lg font-semibold">Jonathan Bangert</h1>
                 <div className="hidden sm:flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-sm text-zinc-500">
+                  <div className="flex items-center gap-2 text-zinc-500">
                     <Clock className="w-4 h-4" />
                     <span>Denver</span>
                     <span>{denverTime}</span>
@@ -132,13 +132,13 @@ export default function Home() {
             <section className="mb-6">
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
                 <div className="flex-1">
-                  <h2 className="text-4xl font-bold tracking-tight mb-8">
-                    Hello! <span className="wave">👋</span>
+                  <h2 className="text-4xl font-normal tracking-tight mb-8">
+                    Hello, I&apos;m Jonathan! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    I&apos;m Jonathan — 17 y/o software engineer, builder, and problem
-                    solver. I co-founded Akademia and work as a SWE @ Flimmer. I
-                    care about making technology simple, intuitive, and actually
+                    17 y/o software engineer, builder, and problem solver. I
+                    co-founded Akademia and work as a SWE @ Flimmer. I care
+                    about making technology simple, intuitive, and actually
                     useful.
                   </p>
                   <div className="flex flex-wrap gap-4">
@@ -168,23 +168,23 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-4">
+              <div className="mt-4">
                 <div className="space-y-4">
-                  <p className="text-lg text-zinc-600 leading-relaxed">
+                  <p className="text-xl text-zinc-600 leading-relaxed">
                     I care about building things that last. Not just in terms of
                     code, but in how they impact people. The best products
-                    aren&apos;t just functional. They become part of how we work,
-                    think, and create.
+                    aren&apos;t just functional. They become part of how we
+                    work, think, and create.
                   </p>
                 </div>
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   <p className="text-lg text-zinc-600 leading-relaxed">
                     Technology should work for people, not the other way around.
                     I focus on the details, the experience, and the long-term
                     impact, because great tools don&apos;t just solve problems,
                     they change what&apos;s possible.
                   </p>
-                </div>
+                </div> */}
               </div>
             </section>
 
