@@ -4,9 +4,9 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 // import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import Link from "next/link";
+// import { ArrowRight } from "lucide-react";
 
 const photos = [
   {
@@ -47,7 +47,7 @@ export default function BeyondCoding() {
           </motion.div>
         ))}
       </div>
-      <Button
+      {/* <Button
         variant="link"
         asChild
         className="p-0 h-auto font-semibold text-zinc-900 hover:no-underline group"
@@ -56,7 +56,7 @@ export default function BeyondCoding() {
           <span className="animate-underline">View all photos</span>
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
-      </Button>
+      </Button> */}
     </section>
   );
 }
