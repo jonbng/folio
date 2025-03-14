@@ -140,7 +140,7 @@ export default function Home() {
               </nav>
             </header>
 
-            <section className="mb-6">
+            <section className="mb-6 sm:mt-12">
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
                 <div className="flex-1">
                   <h2 className="text-4xl font-normal tracking-tight mb-8">
@@ -199,14 +199,14 @@ export default function Home() {
               </div>
             </section>
 
-            <div className="flex items-center gap-2 mb-12 text-zinc-600">
+            <div className="flex items-center gap-2 mb-14 text-zinc-600">
               <Book className="w-5 h-5" />
               <span>
                 Currently reading: &quot;Outliers&quot; by Malcolm Gladwell
               </span>
             </div>
 
-            <Separator className="mb-14" />
+            <Separator className="mb-16" />
 
             <WorkShowcase
               onOpenChange={setIsWorkOpen}
@@ -228,7 +228,7 @@ export default function Home() {
             <Separator className="my-16" />
 
             <section id="contact" className="text-center">
-              <h2 className="text-3xl font-bold mb-4">Let&apos;s Connect!</h2>
+              <h2 className="text-3xl font-bold mb-4">Let&apos;s Chat!</h2>
               <p className="text-xl text-zinc-700 mb-6">
                 I&apos;m always open to collaborating or just chatting! Feel
                 free to reach out.
@@ -247,7 +247,7 @@ export default function Home() {
               </div>
             </section>
 
-            <footer className="mt-14 pt-8 border-t border-zinc-200">
+            <footer className="mt-14 pt-10 border-t border-zinc-200">
               <div className="flex justify-between items-center">
                 <p className="text-sm text-zinc-500">
                   © {new Date().getFullYear()} Jonathan Bangert. All rights
