@@ -31,21 +31,32 @@ export default function Home() {
     team: { name: string; role: string; avatar?: string; link?: string }[];
     cover?: string;
   } | null>(null);
-  const [time, setTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
+  const [time, setTime] = useState<Date | null>(null);
 
-  // Update time every minute
+  // Set mounted flag and initialize time on client-side only.
   useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 30000);
+    setMounted(true);
+    const now = new Date();
+    setTime(now);
+
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 30000);
+
     return () => clearInterval(timer);
   }, []);
 
   // Format time for Denver
-  const denverTime = time.toLocaleTimeString("en-US", {
-    timeZone: "America/Denver",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const denverTime =
+    mounted && time
+      ? time.toLocaleTimeString("en-US", {
+          timeZone: "America/Denver",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        })
+      : "Loading...";
 
   // Prevent scrolling when sidebar is open
   useEffect(() => {
