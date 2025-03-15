@@ -224,6 +224,7 @@ const works = [
     shortDescription: "Building a better chess club website.",
     image: "/nbskak.webp",
     year: "2023 — 2024",
+    cover: "cover",
     detailedDescription:
       "Nørrebro Skakklub needed a modern, functional website to better serve its members and attract new players. We designed and developed a clean, easy-to-navigate platform where users can find event schedules, club news, and essential information at a glance. The site simplifies communication, improves accessibility, and ensures that both new and existing members can engage with the club effortlessly.",
     technologies: [
