@@ -225,9 +225,9 @@ export default function Home() {
 
             {/* <BlogPreview /> */}
 
-            <Separator className="my-16" />
+            {/* <Separator className="my-16" /> */}
 
-            <section id="contact" className="text-center">
+            {/* <section id="contact" className="text-center">
               <h2 className="text-3xl font-bold mb-4">Let&apos;s Chat!</h2>
               <p className="text-xl text-zinc-700 mb-6">
                 I&apos;m always open to collaborating or just chatting! Feel
@@ -245,7 +245,7 @@ export default function Home() {
                   icon={<Twitter className="w-5 h-5" />}
                 />
               </div>
-            </section>
+            </section> */}
 
             <footer className="mt-14 pt-10 border-t border-zinc-200">
               <div className="flex justify-between items-center">
