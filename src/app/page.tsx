@@ -113,7 +113,7 @@ export default function Home() {
                   <span className="sr-only">Twitter</span>
                 </Link>
                 <Link
-                  href="https://github.com/arctixdev"
+                  href="https://github.com/jonbng"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
