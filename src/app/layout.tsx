@@ -27,17 +27,19 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jonathan Bangert - Folio",
     description: "My place on the internet! Welcome.",
-    creatorId: "@arctixdev",
-    siteId: "@arctixdev",
-    site: "@arctixdev",
-    creator: "@arctixdev",
-    images: [{
-      url: "/og.png",
-      alt: "Jonathan Bangert - Folio",
-      width: 1200,
-      height: 630,
-      type: "image/png",
-    }],
+    creatorId: "@jonba_",
+    siteId: "@jonba_",
+    site: "@jonba_",
+    creator: "@jonba_",
+    images: [
+      {
+        url: "/og.png",
+        alt: "Jonathan Bangert - Folio",
+        width: 1200,
+        height: 630,
+        type: "image/png",
+      },
+    ],
   },
   openGraph: {
     title: "Jonathan Bangert - Folio",
@@ -48,13 +50,15 @@ export const metadata: Metadata = {
     siteName: "Jonathan Bangert - Folio",
     url: "https://jonathanb.dk",
     emails: ["contact@jonathanb.dk"],
-    images: [{
-      url: "/og.png",
-      alt: "Jonathan Bangert - Folio",
-      width: 1200,
-      height: 630,
-      type: "image/png",
-    }],
+    images: [
+      {
+        url: "/og.png",
+        alt: "Jonathan Bangert - Folio",
+        width: 1200,
+        height: 630,
+        type: "image/png",
+      },
+    ],
   },
   icons: {
     icon: "/favicon.svg",

@@ -166,7 +166,7 @@ export function ImageModal({
                       `Check out this amazing photo from Jonathan Bangert's gallery!`,
                     );
                     const tweetUrl = encodeURIComponent(
-                      `https://yourdomain.com/p/${currentPhoto.id}`,
+                      `https://jonathanb.dk/p/${currentPhoto.id}`,
                     );
                     window.open(
                       `https://twitter.com/intent/tweet?text=${tweetText}&url=${tweetUrl}`,

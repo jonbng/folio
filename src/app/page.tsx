@@ -104,7 +104,7 @@ export default function Home() {
               </div>
               <nav className="flex gap-4 items-center">
                 <Link
-                  href="https://twitter.com/arctixdev"
+                  href="https://x.com/jonba_"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
@@ -160,7 +160,7 @@ export default function Home() {
                     />
                     <CTAButton
                       text="Follow on Twitter"
-                      href="https://twitter.com/arctixdev"
+                      href="https://x.com/jonba_"
                       icon={<Twitter className="w-5 h-5" />}
                     />
                   </div>
@@ -241,7 +241,7 @@ export default function Home() {
                 />
                 <CTAButton
                   text="Follow on Twitter"
-                  href="https://twitter.com/jonathanb"
+                  href="https://x.com/jonba_"
                   icon={<Twitter className="w-5 h-5" />}
                 />
               </div>
