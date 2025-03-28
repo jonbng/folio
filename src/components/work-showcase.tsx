@@ -160,7 +160,8 @@ const works = [
     image: "/tars-mono.png",
     cover: "cover",
     year: "January — February 2025",
-    detailedDescription: "Made as a part of my Graphics Design course, ",
+    detailedDescription:
+      "Tars Mono is a clean, monospaced font designed for titles and coding. Created during my Graphics Design course, it features three styles: sharp, rounded, and smooth. Built in Figma, Adobe Illustrator, and showcased through a Next.js site.",
     technologies: [
       "Figma",
       "Adobe Illustrator",
@@ -202,15 +203,24 @@ const works = [
       {
         name: "Marcel Van Der Veldt",
         role: "Contributors",
-        avatar: "/placeholder.svg?height=40&width=40",
+        avatar: "/marcel.jpg",
+        link: "https://github.com/marcelveldt",
+      },
+      {
+        name: "Jozef Kruszynski",
+        role: "Maintainer",
+        link: "https://github.com/jozefKruszynski",
+        avatar: "ma.jpg",
       },
       {
         name: "Micha",
         role: "Maintainer",
+        link: "https://github.com/micha91",
       },
       {
-        name: "TODO, add other maintainers",
-        role: "yup",
+        name: "And ALOT of other contributors",
+        role: "Contributors",
+        link: "https://www.music-assistant.io/#the-team",
       },
     ],
   },
@@ -227,7 +237,7 @@ const works = [
     year: "2023 — 2024",
     cover: "cover",
     detailedDescription:
-      "Nørrebro Skakklub needed a modern, functional website to better serve its members and attract new players. We designed and developed a clean, easy-to-navigate platform where users can find event schedules, club news, and essential information at a glance. The site simplifies communication, improves accessibility, and ensures that both new and existing members can engage with the club effortlessly.",
+      "Nørrebro Skakklub needed a new, modern, functional website to provide information to current members and attract new ones. The old site was outdated, ugly, complicated and expensive to host. We worked with the club to find a design that fit them. We ended up with a new modern site that was easier for them to maintain, and is completely free for them to host. ",
     technologies: [
       "Next.js",
       "TypeScript",
@@ -289,6 +299,7 @@ const works = [
   {
     id: 8,
     title: "GravityDrop",
+    link: "https://nth1nk.itch.io/gravitydrop",
     tag: "For fun 😎",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "A casual puzzle game about playing with gravity.",
@@ -296,7 +307,7 @@ const works = [
     year: "2023 — 2024",
     description: "A casual puzzle game about playing with gravity.",
     detailedDescription:
-      "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. With simple mechanics and engaging gameplay, it offers a fun way to unwind while exercising your brain.",
+      "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. The game is made with Unity and is designed to be released to mobile platforms, although the project is on hold for now. The game won the best overall game at the Coding Pirates Game Jam 2023, and was a great experience to work on.",
     technologies: [
       "Unity",
       "C#",
@@ -422,11 +433,11 @@ export default function WorkShowcase({
         >
           <span className="animate-underline">Show more</span>
         </Button>
-      ) :  (
+      ) : (
         <Button
           variant="link"
           className="p-0 h-auto font-semibold w-full"
-          onClick={() => setShowedWork(works.slice(0, (isMobile ? 4 : 6)))}
+          onClick={() => setShowedWork(works.slice(0, isMobile ? 4 : 6))}
         >
           <span className="animate-underline">Show less</span>
         </Button>

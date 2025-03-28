@@ -28,7 +28,7 @@ export default function BeyondCoding() {
       <h2 className="text-2xl font-bold mb-8">Beyond Coding 🏞️</h2>
       <p className="text-lg text-zinc-600 mb-8">
         When I&apos;m not coding, you can find me exploring nature trails and
-        capturing moments through my lens.
+        capturing moments with my camera.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
         {photos.map((photo) => (
