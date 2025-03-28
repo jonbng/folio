@@ -362,7 +362,7 @@ export default function WorkShowcase({
   }, []);
 
   useEffect(() => {
-    setShowedWork(isMobile ? works.slice(0, 4) : works);
+    setShowedWork(isMobile ? works.slice(0, 4) : works.slice(0, 6));
   }, [isMobile]);
 
   return (
@@ -412,24 +412,24 @@ export default function WorkShowcase({
             <div className="text-sm text-zinc-500 mt-4">{work.year}</div>
           </motion.div>
         ))}
-        {showedWork.length < works.length ? (
-          <Button
-            variant="link"
-            className="p-0 h-auto font-semibold"
-            onClick={() => setShowedWork(works)}
-          >
-            <span className="animate-underline">Show more</span>
-          </Button>
-        ) : isMobile ? (
-          <Button
-            variant="link"
-            className="p-0 h-auto font-semibold"
-            onClick={() => setShowedWork(works.slice(0, 4))}
-          >
-            <span className="animate-underline">Show less</span>
-          </Button>
-        ) : null}
       </motion.div>
+      {showedWork.length < works.length ? (
+        <Button
+          variant="link"
+          className="p-0 h-auto font-semibold w-full"
+          onClick={() => setShowedWork(works)}
+        >
+          <span className="animate-underline">Show more</span>
+        </Button>
+      ) :  (
+        <Button
+          variant="link"
+          className="p-0 h-auto font-semibold w-full"
+          onClick={() => setShowedWork(works.slice(0, (isMobile ? 4 : 6)))}
+        >
+          <span className="animate-underline">Show less</span>
+        </Button>
+      )}
     </section>
   );
 }
