@@ -149,10 +149,10 @@ export default function Home() {
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
                     17 y/o software engineer, builder, and problem solver. I
                     co-founded Akademia and work as a SWE @ Flimmer. I care
-                    about making technology simple, intuitive, and actually
+                    about making technology beautiful, intuitive, and actually
                     useful.
                   </p>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
                       text="Let's Connect"
                       href="mailto:contact@jonathanb.dk"
@@ -182,10 +182,13 @@ export default function Home() {
               <div className="mt-4">
                 <div className="space-y-4">
                   <p className="text-xl text-zinc-600 leading-relaxed">
-                    I care about building things that last. Not just in terms of
-                    code, but in how they impact people. The best products
-                    aren&apos;t just functional. They become part of how we
-                    work, think, and create.
+                    I&apos;ve been passionate about technology and design since
+                    getting my first computer at age 6. I started coding at 10,
+                    hacked my school PC at 12 for admin access because I
+                    didn&apos;t have my own, and haven&apos;t looked back since.
+                    Since then, I&apos;ve developed a strong passion for
+                    creating helpful products and design, contributing to
+                    countless of projects over the years.
                   </p>
                 </div>
                 {/* <div className="space-y-4">
