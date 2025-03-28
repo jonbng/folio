@@ -158,6 +158,7 @@ const works = [
       "A monospaced typeface designed for titles and beyond. Featuring three distinct styles: sharp for precision, rounded for warmth, and smooth for elegance.",
     shortDescription: "A monospaced font designed with precision.",
     image: "/tars-mono.png",
+    cover: "cover",
     year: "January — February 2025",
     detailedDescription: "Made as a part of my Graphics Design course, ",
     technologies: [
