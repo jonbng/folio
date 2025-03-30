@@ -36,7 +36,7 @@ const pressItems: PressItem[] = [
     publication: "DRDK",
     date: "December 6, 2024",
     image:
-      "https://media.licdn.com/dms/image/v2/D4D22AQFrIeX1zeVobg/feedshare-shrink_2048_1536/B4DZUkjb_oG4Ao-/0/1740075025958?e=1743638400&v=beta&t=DUJ78pczzgxj9N5o5S9_AJNEs3VWwIDzacjbHhOqKPQ",
+      "/dr.jpg",
     link: "https://www.dr.dk/drtv/serie/loevens-hule-junior_479046",
     type: "press",
   },
@@ -46,7 +46,7 @@ const pressItems: PressItem[] = [
     publication: "Sjællandske Nyhedder",
     date: "April 24, 2024",
     image:
-      "https://smooth-storage.aptoma.no/users/sndk/images/105164211.jpg?t[quality]=100&t[resize][width]=970&t[resize][height]=645&accessToken=5a11f02202a5b69bdc3d91af3804ac7c34a6e9e7be7a90b800d9a4b9cb5695e5",
+      "/sn.jpg",
     link: "https://www.sn.dk/art245862/roskilde-kommune/uddannelse/ung-forsker-naaede-til-tops-igen/#:~:text=Hj%C3%A6lp%20til%20at,B%C3%B8rne%2D%20og%20Undervisningsministeriet.",
     type: "press",
   },
@@ -59,7 +59,7 @@ const awards: AwardItem[] = [
     organization: "Astra Unge Forskere",
     date: "May 2024",
     image:
-      "https://media.licdn.com/dms/image/v2/D4D22AQHKOPkkcg_ogw/feedshare-shrink_1280/feedshare-shrink_1280/0/1714164350562?e=1743638400&v=beta&t=hcalH-9D9POmwvNPZOHG6VsRZSrEXJ9dqqbpabfEnaU",
+      "/uf.jpg",
     link: "https://ungeforskere.dk/finalist/forbedret-opgave-og-noteplatform-til-undervisning/",
     type: "award",
   },

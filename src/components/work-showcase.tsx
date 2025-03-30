@@ -119,14 +119,14 @@ const works = [
         name: "Emma Illgner",
         role: "SoMe Manager",
         avatar:
-          "https://ca.slack-edge.com/T6U833XV2-U0894V6AYUA-19543bcf68d3-512",
+          "/emma.jpg",
         link: "https://www.linkedin.com/in/emma-illgner-8527a7222/",
       },
       {
         name: "Jan-Georges Jersild Balin",
         role: "Senior Software Engineer",
         avatar:
-          "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSycH4nNuxZY_szug1Q-ZlYQK_be-gngwghI1Zc3wI4t9dVKX_y",
+          "/jan.jpg",
         link: "https://www.linkedin.com/in/jan-georges-jersild-balin-55719a1b8/",
       },
       {
@@ -143,7 +143,7 @@ const works = [
       {
         name: "Oscar Landmark",
         role: "Senior Software Engineer",
-        avatar: "https://avatars.githubusercontent.com/u/22825865?v=4",
+        avatar: "/oscar.jpg",
         link: "https://www.linkedin.com/in/oscdot//",
       },
     ],
