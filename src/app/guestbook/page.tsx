@@ -1,17 +1,37 @@
 "use client";
 
 import type React from "react";
-
-import { useState } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Edit2 } from "lucide-react";
 import Balloon, { BalloonEntry, getBalloonColor } from "@/components/balloon";
 import { SessionProvider, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import {
+  AddGuestbookEntry,
+  EditGuestbookEntry,
+  GetAllGuestbookEntries,
+} from "@/lib/guestbookActions";
+
+const colorOptions = [
+  { name: "Blue", value: "blue" },
+  { name: "Pink", value: "pink" },
+  { name: "Yellow", value: "yellow" },
+  { name: "Green", value: "green" },
+  { name: "Purple", value: "purple" },
+  { name: "Orange", value: "orange" },
+];
+
+type FormData = {
+  name: string;
+  username: string;
+  message: string;
+  selectedColor: string;
+};
 
 export default function Home() {
   return (
     <SessionProvider>
-      <main className="min-h-screen p-8 bg-gradient-to-br from-blue-50 to-purple-50">
+      <main className="min-h-screen p-8">
         <h1 className="text-3xl font-bold text-center mb-8">Guestbook</h1>
         <BalloonGuestbook />
       </main>
@@ -21,135 +41,120 @@ export default function Home() {
 
 function BalloonGuestbook() {
   const { data: session } = useSession();
-
-  console.log(session);
-
-  // Sample entries for the guestbook
-  const defaultEntries: BalloonEntry[] = [
-    {
-      id: "1",
-      name: "Emma Thompson",
-      username: "emma_t",
-      message: "Love your website! Keep up the great work.",
-      color: "blue",
-      timestamp: "2023-04-15T14:32:00",
-    },
-    {
-      id: "2",
-      name: "Liam Johnson",
-      username: "liam_j",
-      message: "Just stopping by to say hello from California!",
-      color: "pink",
-      timestamp: "2023-04-16T09:45:00",
-    },
-    {
-      id: "3",
-      name: "Olivia Martinez",
-      username: "olivia_m",
-      message: "This is such a creative guestbook idea!",
-      color: "yellow",
-      timestamp: "2023-04-17T16:20:00",
-    },
-    {
-      id: "4",
-      name: "Noah Williams",
-      username: "noah_w",
-      message: "First time visitor, definitely coming back!",
-      color: "green",
-      timestamp: "2023-04-18T11:15:00",
-    },
-    {
-      id: "5",
-      name: "Ava Brown",
-      username: "ava_b",
-      message: "Greetings from New York City!",
-      color: "purple",
-      timestamp: "2023-04-19T20:05:00",
-    },
-    {
-      id: "6",
-      name: "Ethan Davis",
-      username: "ethan_d",
-      message: "Your portfolio is inspiring!",
-      color: "orange",
-      timestamp: "2023-04-20T13:50:00",
-    },
-    {
-      id: "7",
-      name: "Sophia Miller",
-      username: "sophia_m",
-      message: "Thanks for sharing your work with us.",
-      color: "blue",
-      timestamp: "2023-04-21T08:30:00",
-    },
-    {
-      id: "8",
-      name: "Mason Wilson",
-      username: "mason_w",
-      message: "I'm impressed by your projects!",
-      color: "pink",
-      timestamp: "2023-04-22T15:40:00",
-    },
-    {
-      id: "9",
-      name: "Isabella Moore",
-      username: "isabella_m",
-      message: "Looking forward to seeing more of your work.",
-      color: "yellow",
-      timestamp: "2023-04-23T12:25:00",
-    },
-    {
-      id: "10",
-      name: "Logan Taylor",
-      username: "logan_t",
-      message: "Great design and user experience!",
-      color: "green",
-      timestamp: "2023-04-24T17:10:00",
-    },
-    {
-      id: "11",
-      name: "Mia Anderson",
-      username: "mia_a",
-      message: "Hello from a fellow developer!",
-      color: "purple",
-      timestamp: "2023-04-25T10:55:00",
-    },
-    {
-      id: "12",
-      name: "Lucas Thomas",
-      username: "lucas_t",
-      message: "Your site is awesome!",
-      color: "orange",
-      timestamp: "2023-04-26T19:15:00",
-    },
-  ];
-
-  // Sort entries by timestamp (newest first)
-  const sortedDefaultEntries = [...defaultEntries].sort(
-    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-  );
-
-  const [entries, setEntries] = useState<BalloonEntry[]>(sortedDefaultEntries);
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [message, setMessage] = useState("");
-  const [selectedColor, setSelectedColor] = useState("blue");
+  const [colors, setColors] = useState(colorOptions);
+  const [entries, setEntries] = useState<BalloonEntry[]>([]);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    username: "",
+    message: "",
+    selectedColor: "blue",
+  });
   const [userEntryId, setUserEntryId] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const colorOptions = [
-    { name: "Blue", value: "blue" },
-    { name: "Pink", value: "pink" },
-    { name: "Yellow", value: "yellow" },
-    { name: "Green", value: "green" },
-    { name: "Purple", value: "purple" },
-    { name: "Orange", value: "orange" },
-  ];
+  // Fetch entries and initialize form data from the session
+  useEffect(() => {
+    async function fetchEntries() {
+      try {
+        const fetchedEntries = await GetAllGuestbookEntries();
+        const sortedEntries = fetchedEntries.sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+        setEntries(sortedEntries);
 
-  const addEntry = (e: React.FormEvent) => {
+        // Load existing entry if the user has already signed the guestbook
+        const existingEntry = sortedEntries.find(
+          (entry) => entry.username === session?.user?.email
+        );
+        if (existingEntry) {
+          setUserEntryId(existingEntry.id);
+          setFormData({
+            name: existingEntry.name,
+            username: existingEntry.username,
+            message: existingEntry.message,
+            selectedColor: existingEntry.color,
+          });
+          setIsEditing(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch guestbook entries:", error);
+      }
+    }
+
+    if (session) {
+      setFormData((prev) => ({
+        ...prev,
+        name: session.user?.name || "",
+        username: session.user?.email || "",
+        selectedColor:
+          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+      }));
+      setColors([...colorOptions].sort(() => Math.random() - 0.5));
+    }
+
+    fetchEntries();
+  }, [session]);
+
+  // Handle input changes for text fields
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Handle balloon color selection
+  const handleColorSelect = (color: string) => {
+    setFormData((prev) => ({ ...prev, selectedColor: color }));
+  };
+
+  // Unified submit handler for both adding and editing entries
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (name.trim() && username.trim() && message.trim()) {
-      const timestamp = new Date().toISOString();
+    const { name, username, message, selectedColor } = formData;
+    if (!name.trim() || !username.trim() || !message.trim()) return;
+
+    const timestamp = new Date().toISOString();
+
+    if (isEditing && userEntryId) {
+      // Edit entry
+      const updatedEntries = entries
+        .map((entry) =>
+          entry.id === userEntryId
+            ? {
+                ...entry,
+                name: name.trim(),
+                username: username.trim(),
+                message: message.trim(),
+                color: selectedColor,
+                timestamp,
+              }
+            : entry
+        )
+        .sort(
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+      setEntries(updatedEntries);
+
+      try {
+        await EditGuestbookEntry(
+          userEntryId,
+          name.trim(),
+          message.trim(),
+          username.trim(),
+          selectedColor
+        );
+        console.log("Guestbook entry updated successfully.");
+        setUserEntryId(userEntryId);
+        setIsEditing(false);
+      } catch (error) {
+        console.error("Failed to update guestbook entry:", error);
+        alert("Failed to update the entry. Please try again.");
+      }
+    } else {
+      // Add new entry
       const newEntry: BalloonEntry = {
         id: Date.now().toString(),
         name: name.trim(),
@@ -158,84 +163,64 @@ function BalloonGuestbook() {
         color: selectedColor,
         timestamp,
       };
-
-      // Add the new entry and sort
       const updatedEntries = [...entries, newEntry].sort(
         (a, b) =>
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
-
       setEntries(updatedEntries);
       setUserEntryId(newEntry.id);
-      resetForm();
-    }
-  };
-
-  const editEntry = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (userEntryId && name.trim() && username.trim() && message.trim()) {
-      const updatedEntries = entries
-        .map((entry) => {
-          if (entry.id === userEntryId) {
-            return {
-              ...entry,
-              name: name.trim(),
-              username: username.trim(),
-              message: message.trim(),
-              color: selectedColor,
-              timestamp: new Date().toISOString(), // Update timestamp on edit
-            };
-          }
-          return entry;
-        })
-        .sort(
-          (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-        );
-
-      setEntries(updatedEntries);
       setIsEditing(false);
-    }
-  };
 
-  const startEditing = () => {
-    if (userEntryId) {
-      const userEntry = entries.find((entry) => entry.id === userEntryId);
-      if (userEntry) {
-        setName(userEntry.name);
-        setUsername(userEntry.username);
-        setMessage(userEntry.message);
-        setSelectedColor(userEntry.color);
-        setIsEditing(true);
+      try {
+        await AddGuestbookEntry(
+          newEntry.name,
+          newEntry.message,
+          newEntry.username,
+          newEntry.color
+        );
+        console.log("Guestbook entry added successfully.");
+      } catch (error) {
+        console.error("Failed to add guestbook entry:", error);
       }
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setUsername("");
-    setMessage("");
-    setSelectedColor("blue");
+  // Populate form for editing the user's entry
+  const startEditing = () => {
+    const userEntry = entries.find((entry) => entry.id === userEntryId);
+    if (userEntry) {
+      setFormData({
+        name: userEntry.name,
+        username: userEntry.username,
+        message: userEntry.message,
+        selectedColor: userEntry.color,
+      });
+      setIsEditing(true);
+    }
   };
 
   const cancelEdit = () => {
     setIsEditing(false);
-    resetForm();
   };
 
   return (
     <div className="max-w-5xl mx-auto">
-      {(session && (
+      <div
+        className="p-8 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg relative"
+        style={{ minHeight: "500px" }}
+      >
+        {entries.map((entry, index) => (
+          <Balloon key={entry.id} entry={entry} index={index} />
+        ))}
+      </div>
+      {session ? (
         <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
           {!userEntryId || isEditing ? (
             <>
               <h2 className="text-xl font-semibold mb-4">
                 {isEditing ? "Edit Your Message" : "Sign the Guestbook"}
               </h2>
-              <form
-                onSubmit={isEditing ? editEntry : addEntry}
-                className="space-y-4"
-              >
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -247,32 +232,41 @@ function BalloonGuestbook() {
                     <input
                       id="name"
                       type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={formData.name}
+                      onChange={handleInputChange}
                       placeholder="Enter your name"
                       className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     />
                   </div>
                   <div>
-                    <label
-                      htmlFor="username"
-                      className="block text-sm font-medium text-gray-700 mb-1"
-                    >
-                      Username
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Balloon Color
                     </label>
-                    <input
-                      id="username"
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Enter your username"
-                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
+                    <div className="flex flex-wrap gap-2">
+                      {colors.map((color) => (
+                        <button
+                          key={color.value}
+                          type="button"
+                          onClick={() => handleColorSelect(color.value)}
+                          className={`w-8 h-8 rounded-full border-2 ${
+                            formData.selectedColor === color.value
+                              ? "border-gray-800"
+                              : "border-transparent"
+                          }`}
+                          style={{
+                            backgroundColor: getBalloonColor(color.value).bg,
+                            boxShadow:
+                              formData.selectedColor === color.value
+                                ? "0 0 0 2px rgba(0,0,0,0.1)"
+                                : "none",
+                          }}
+                          aria-label={`Select ${color.name} color`}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-
                 <div>
                   <label
                     htmlFor="message"
@@ -282,42 +276,13 @@ function BalloonGuestbook() {
                   </label>
                   <textarea
                     id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder="Leave a message"
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-24"
                     required
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Balloon Color
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {colorOptions.map((color) => (
-                      <button
-                        key={color.value}
-                        type="button"
-                        onClick={() => setSelectedColor(color.value)}
-                        className={`w-8 h-8 rounded-full border-2 ${
-                          selectedColor === color.value
-                            ? "border-gray-800"
-                            : "border-transparent"
-                        }`}
-                        style={{
-                          backgroundColor: getBalloonColor(color.value).bg,
-                          boxShadow:
-                            selectedColor === color.value
-                              ? "0 0 0 2px rgba(0,0,0,0.1)"
-                              : "none",
-                        }}
-                        aria-label={`Select ${color.name} color`}
-                      />
-                    ))}
-                  </div>
-                </div>
-
                 <div className="flex gap-2">
                   <button
                     type="submit"
@@ -325,7 +290,6 @@ function BalloonGuestbook() {
                   >
                     {isEditing ? "Update Balloon" : "Add Balloon"}
                   </button>
-
                   {isEditing && (
                     <button
                       type="button"
@@ -341,7 +305,8 @@ function BalloonGuestbook() {
           ) : (
             <div className="flex items-center justify-between">
               <p className="text-gray-600">
-                Thanks for signing the guestbook! Your balloon has been added.
+                Thanks for signing the guestbook! You can edit your message if
+                you want.
               </p>
               <button
                 onClick={startEditing}
@@ -353,21 +318,12 @@ function BalloonGuestbook() {
             </div>
           )}
         </div>
-      )) || (
+      ) : (
         <div>
-          <h1> You need to sign in</h1>
+          <h1>You need to sign in</h1>
           <button onClick={() => signIn("github")}>Sign In</button>
         </div>
       )}
-
-      <div
-        className="p-8 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg relative"
-        style={{ minHeight: "500px" }}
-      >
-        {entries.map((entry, index) => (
-          <Balloon key={entry.id} entry={entry} index={index} />
-        ))}
-      </div>
     </div>
   );
 }
