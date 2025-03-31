@@ -1,6 +1,6 @@
 import type React from "react";
 import "./globals.css";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: "Jonathan Bangert - Folio",
@@ -63,8 +63,11 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-  colorScheme: "only light",
+};
+
+export const viewport: Viewport = {
   themeColor: "#ffffff",
+  colorScheme: "only light",
 };
 
 export default function RootLayout({

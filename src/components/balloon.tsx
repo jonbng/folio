@@ -141,6 +141,7 @@ export default function Balloon({
             className="absolute left-1/2 -translate-x-1/2"
           >
             <path
+              suppressHydrationWarning
               ref={stringRef}
               d={`M15,0 C${15 + curveX1.current},${curveY1.current} ${15 + curveX2.current},${curveY2.current} 15,100`}
               stroke="black"

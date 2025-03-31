@@ -5,18 +5,25 @@ import type React from "react";
 import { useState } from "react";
 import { Edit2 } from "lucide-react";
 import Balloon, { BalloonEntry, getBalloonColor } from "@/components/balloon";
-
+import { SessionProvider, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-8 bg-gradient-to-br from-blue-50 to-purple-50">
-      <h1 className="text-3xl font-bold text-center mb-8">Guestbook</h1>
-      <BalloonGuestbook />
-    </main>
+    <SessionProvider>
+      <main className="min-h-screen p-8 bg-gradient-to-br from-blue-50 to-purple-50">
+        <h1 className="text-3xl font-bold text-center mb-8">Guestbook</h1>
+        <BalloonGuestbook />
+      </main>
+    </SessionProvider>
   );
 }
 
 function BalloonGuestbook() {
+  const { data: session } = useSession();
+
+  console.log(session);
+
   // Sample entries for the guestbook
   const defaultEntries: BalloonEntry[] = [
     {
@@ -119,7 +126,7 @@ function BalloonGuestbook() {
 
   // Sort entries by timestamp (newest first)
   const sortedDefaultEntries = [...defaultEntries].sort(
-    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   );
 
   const [entries, setEntries] = useState<BalloonEntry[]>(sortedDefaultEntries);
@@ -155,7 +162,7 @@ function BalloonGuestbook() {
       // Add the new entry and sort
       const updatedEntries = [...entries, newEntry].sort(
         (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
 
       setEntries(updatedEntries);
@@ -183,7 +190,7 @@ function BalloonGuestbook() {
         })
         .sort(
           (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
 
       setEntries(updatedEntries);
@@ -218,133 +225,140 @@ function BalloonGuestbook() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
-        {!userEntryId || isEditing ? (
-          <>
-            <h2 className="text-xl font-semibold mb-4">
-              {isEditing ? "Edit Your Message" : "Sign the Guestbook"}
-            </h2>
-            <form
-              onSubmit={isEditing ? editEntry : addEntry}
-              className="space-y-4"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Your Name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Enter your name"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="username"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Username
-                  </label>
-                  <input
-                    id="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter your username"
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Leave a message"
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-24"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Balloon Color
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {colorOptions.map((color) => (
-                    <button
-                      key={color.value}
-                      type="button"
-                      onClick={() => setSelectedColor(color.value)}
-                      className={`w-8 h-8 rounded-full border-2 ${
-                        selectedColor === color.value
-                          ? "border-gray-800"
-                          : "border-transparent"
-                      }`}
-                      style={{
-                        backgroundColor: getBalloonColor(color.value).bg,
-                        boxShadow:
-                          selectedColor === color.value
-                            ? "0 0 0 2px rgba(0,0,0,0.1)"
-                            : "none",
-                      }}
-                      aria-label={`Select ${color.name} color`}
+      {(session && (
+        <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
+          {!userEntryId || isEditing ? (
+            <>
+              <h2 className="text-xl font-semibold mb-4">
+                {isEditing ? "Edit Your Message" : "Sign the Guestbook"}
+              </h2>
+              <form
+                onSubmit={isEditing ? editEntry : addEntry}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Your Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter your name"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
                     />
-                  ))}
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Username
+                    </label>
+                    <input
+                      id="username"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Enter your username"
+                      className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex gap-2">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                >
-                  {isEditing ? "Update Balloon" : "Add Balloon"}
-                </button>
-
-                {isEditing && (
-                  <button
-                    type="button"
-                    onClick={cancelEdit}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Cancel
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Leave a message"
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-24"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Balloon Color
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {colorOptions.map((color) => (
+                      <button
+                        key={color.value}
+                        type="button"
+                        onClick={() => setSelectedColor(color.value)}
+                        className={`w-8 h-8 rounded-full border-2 ${
+                          selectedColor === color.value
+                            ? "border-gray-800"
+                            : "border-transparent"
+                        }`}
+                        style={{
+                          backgroundColor: getBalloonColor(color.value).bg,
+                          boxShadow:
+                            selectedColor === color.value
+                              ? "0 0 0 2px rgba(0,0,0,0.1)"
+                              : "none",
+                        }}
+                        aria-label={`Select ${color.name} color`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                  >
+                    {isEditing ? "Update Balloon" : "Add Balloon"}
                   </button>
-                )}
-              </div>
-            </form>
-          </>
-        ) : (
-          <div className="flex items-center justify-between">
-            <p className="text-gray-600">
-              Thanks for signing the guestbook! Your balloon has been added.
-            </p>
-            <button
-              onClick={startEditing}
-              className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
-            >
-              <Edit2 className="w-4 h-4" />
-              <span>Edit</span>
-            </button>
-          </div>
-        )}
-      </div>
+
+                  {isEditing && (
+                    <button
+                      type="button"
+                      onClick={cancelEdit}
+                      className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </form>
+            </>
+          ) : (
+            <div className="flex items-center justify-between">
+              <p className="text-gray-600">
+                Thanks for signing the guestbook! Your balloon has been added.
+              </p>
+              <button
+                onClick={startEditing}
+                className="flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+              >
+                <Edit2 className="w-4 h-4" />
+                <span>Edit</span>
+              </button>
+            </div>
+          )}
+        </div>
+      )) || (
+        <div>
+          <h1> You need to sign in</h1>
+          <button onClick={() => signIn("github")}>Sign In</button>
+        </div>
+      )}
 
       <div
         className="p-8 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg relative"
