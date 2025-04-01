@@ -14,7 +14,7 @@ import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
 import ExchangeYearBadge from "@/components/exchange-year-badge";
 import CTAButton from "@/components/cta-button";
-import GuestbookShowcase from "@/components/guestbookShowcase";
+// import GuestbookShowcase from "@/components/guestbookShowcase";
 
 export default function Home() {
   const [isWorkOpen, setIsWorkOpen] = useState(false);
@@ -217,13 +217,13 @@ export default function Home() {
               onSelectWork={setSelectedWork}
             />
 
-            <Separator className="my-14" />
-
-            <GuestbookShowcase />
-
             {/* <Separator className="my-14" />
 
-            <BeyondCoding /> */}
+            <GuestbookShowcase /> */}
+
+            <Separator className="my-14" />
+
+            <BeyondCoding />
 
             <Separator className="my-20" />
 
