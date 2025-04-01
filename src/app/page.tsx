@@ -258,8 +258,8 @@ export default function Home() {
             <footer className="mt-14 pt-10 border-t border-zinc-200">
               <div className="flex justify-between items-center">
                 <p className="text-sm text-zinc-500">
-                  © {new Date().getFullYear()} Jonathan Bangert. All rights
-                  reserved.
+                  Designed with ❤️ by Jonathan Bangert. ©{" "}
+                  {new Date().getFullYear()} All rights reserved.
                 </p>
                 <ContactButton />
               </div>
