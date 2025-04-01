@@ -145,13 +145,14 @@ export default function Home() {
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
                 <div className="flex-1">
                   <h2 className="text-4xl font-normal tracking-tight mb-8">
-                    Hello, I&apos;m Jonathan! <span className="wave">👋</span>
+                    Hey, I&apos;m Jonathan! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    17 y/o software engineer, builder, and problem solver. I
-                    co-founded Akademia and work as a SWE @ Flimmer. I care
-                    about making technology beautiful, intuitive, and actually
-                    useful.
+                    I&apos;m a 17-year-old software engineer, builder, and
+                    problem solver. I co-founded <strong>Akademia</strong> and
+                    currently work as a SWE @ <strong>Flimmer</strong>. I care
+                    deeply about making technology beautiful, intuitive, and
+                    genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
@@ -184,7 +185,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <p className="text-xl text-zinc-600 leading-relaxed">
                     I&apos;ve been passionate about technology and design since
-                    getting my first computer at age 6. I started coding at 10,
+                    I got my first computer at age 6. I started coding at 10,
                     hacked my school PC at 12 for admin access because I
                     didn&apos;t have my own, and haven&apos;t looked back since.
                     Since then, I&apos;ve developed a strong passion for
@@ -192,14 +193,6 @@ export default function Home() {
                     countless of projects over the years.
                   </p>
                 </div>
-                {/* <div className="space-y-4">
-                  <p className="text-lg text-zinc-600 leading-relaxed">
-                    Technology should work for people, not the other way around.
-                    I focus on the details, the experience, and the long-term
-                    impact, because great tools don&apos;t just solve problems,
-                    they change what&apos;s possible.
-                  </p>
-                </div> */}
               </div>
             </section>
 
