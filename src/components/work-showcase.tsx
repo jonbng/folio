@@ -400,6 +400,7 @@ export default function WorkShowcase({
                 <div className="space-y-4">
                   <div className="overflow-hidden rounded-xl border">
                     <Image
+                      priority
                       src={work.image || "/placeholder.svg"}
                       alt={work.title}
                       width={600}
