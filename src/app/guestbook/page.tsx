@@ -205,6 +205,7 @@ function BalloonGuestbook() {
 
   return (
     <div className="max-w-5xl mx-auto">
+
       <div
         className="p-8 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg relative"
         style={{ minHeight: "500px" }}

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface BalloonEntry {
   id: string;
@@ -22,44 +22,49 @@ export default function Balloon({
   const [showTooltip, setShowTooltip] = useState(false);
   const stringRef = useRef<SVGPathElement>(null);
 
-  // Generate random positions
+  // Only use random offsets and grid layout when NOT in a line
   const xOffset = useRef(Math.random() * 80 - 40); // -40px to +40px
-  const yOffset = useRef(Math.random() * 50 - 25); // -30px to +30px
+  const yOffset = useRef(Math.random() * 50 - 25); // -25px to +25px
 
-  // Generate random animation parameters
+  // Random animation parameters (always applied)
   const floatDuration = useRef(3 + Math.random() * 3); // 3-6 seconds
   const floatHeight = useRef(15 + Math.random() * 25); // 15-40px float height
   const delayOffset = useRef(Math.random() * 2); // 0-2 second delay
 
-  // Generate random string curve
+  // Random string curve values (always applied)
   const curveX1 = useRef(Math.random() * 30 - 15); // -15px to +15px
   const curveY1 = useRef(30 + Math.random() * 20); // 30px to 50px
   const curveX2 = useRef(Math.random() * 30 - 15); // -15px to +15px
   const curveY2 = useRef(60 + Math.random() * 30); // 60px to 90px
 
-  // Calculate grid position
-  const gridCols = 7;
-  const row = Math.floor(index / gridCols);
-  const col = index % gridCols;
-
-  // Base position (approximate grid layout)
+  // When not using inALine layout, calculate grid positions
   let baseX = 0;
   let baseY = 0;
   if (!inALine) {
+    const gridCols = 7;
+    const row = Math.floor(index / gridCols);
+    const col = index % gridCols;
     baseX = (col / gridCols) * 100;
     baseY = row * 120;
-  } else {
-    baseY = 0;
-    baseX = index * 10;
-    xOffset.current = 0;
   }
 
-  // Calculate z-index based on y-position (higher balloons are behind)
-  const finalY = baseY + yOffset.current;
+  // Only use offsets when not inALine
+  const computedXOffset = inALine ? 0 : xOffset.current;
+  const computedYOffset = inALine ? 0 : yOffset.current;
+  const computedBaseX = inALine ? 0 : baseX;
+  const computedBaseY = inALine ? 0 : baseY;
+
+  // Calculate final position (only used when not inALine)
+  const finalY = computedBaseY + computedYOffset;
   const zIndex = Math.floor(finalY);
 
   // Format timestamp for display
-  const formattedDate = new Date(entry.timestamp).toLocaleString();
+  const [formattedDate, setFormattedDate] = useState("");
+
+  useEffect(() => {
+    const timestampInMs = Number(entry.timestamp);
+    setFormattedDate(new Date(timestampInMs).toLocaleString());
+  }, [entry.timestamp]);
 
   // Framer Motion animation variants
   const floatVariants = {
@@ -81,12 +86,17 @@ export default function Balloon({
 
   return (
     <div
-      className="absolute"
-      style={{
-        left: `calc(${baseX}% + ${xOffset.current}px)`,
-        top: `${finalY}px`,
-        zIndex: zIndex,
-      }}
+      className={inALine ? "w-fit" : "absolute"}
+      // Only add absolute positioning when NOT inALine; otherwise let flex handle layout
+      style={
+        !inALine
+          ? {
+              left: `calc(${computedBaseX}% + ${computedXOffset}px)`,
+              top: `${finalY}px`,
+              zIndex: zIndex,
+            }
+          : {}
+      }
       suppressHydrationWarning
     >
       <motion.div
@@ -108,16 +118,16 @@ export default function Balloon({
           whileTap={{ scale: 1 }}
         >
           {/* Text */}
-          <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg cursor-pointer">
+          <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
             {entry.name}
           </span>
         </motion.div>
 
-        {/* Triangle knot - outside and below the balloon */}
+        {/* Triangle knot */}
         <div
           className="relative h-4 w-8 mx-auto"
           style={{
-            marginTop: "-2px", // Slightly overlap with balloon
+            marginTop: "-2px",
           }}
         >
           <div
@@ -141,9 +151,10 @@ export default function Balloon({
             className="absolute left-1/2 -translate-x-1/2"
           >
             <path
-              suppressHydrationWarning
               ref={stringRef}
-              d={`M15,0 C${15 + curveX1.current},${curveY1.current} ${15 + curveX2.current},${curveY2.current} 15,100`}
+              d={`M15,0 C${15 + curveX1.current},${curveY1.current} ${
+                15 + curveX2.current
+              },${curveY2.current} 15,100`}
               stroke="black"
               strokeWidth="1"
               fill="none"
@@ -164,7 +175,6 @@ export default function Balloon({
                 right: "50%",
                 translateX: "50%",
                 transformOrigin: "bottom center",
-                marginLeft: "0", // Center the tooltip
               }}
             >
               <div className="flex items-baseline justify-between mb-1">
@@ -172,7 +182,7 @@ export default function Balloon({
               </div>
               <div className="flex items-baseline gap-2 mb-2">
                 <div className="font-bold text-gray-800">{entry.name}</div>
-                <div className="text-xs text-gray-400">@{entry.username}</div>
+                <div className="text-xs text-gray-400">{entry.username}</div>
               </div>
               <div className="text-gray-600">{entry.message}</div>
               <div
