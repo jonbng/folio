@@ -221,9 +221,9 @@ export default function Home() {
 
             <GuestbookShowcase />
 
-            <Separator className="my-14" />
+            {/* <Separator className="my-14" />
 
-            <BeyondCoding />
+            <BeyondCoding /> */}
 
             <Separator className="my-20" />
 
