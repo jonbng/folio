@@ -34,7 +34,7 @@ const pressItems: PressItem[] = [
     id: 1,
     title: "Shark Tank Junior (DK) - Akademia (Episode 10)",
     publication: "DRDK",
-    date: "December 6, 2024",
+    date: "2024-12-06",
     image: "/dr.jpg",
     link: "https://www.dr.dk/drtv/serie/loevens-hule-junior_479046",
     type: "press",
@@ -43,7 +43,7 @@ const pressItems: PressItem[] = [
     id: 2,
     title: "Ung forsker nåede til tops igen (Mentioned)",
     publication: "Sjællandske Nyhedder",
-    date: "April 24, 2024",
+    date: "2024-04-24",
     image: "/sn.jpg",
     link: "https://www.sn.dk/art245862/roskilde-kommune/uddannelse/ung-forsker-naaede-til-tops-igen/#:~:text=Hj%C3%A6lp%20til%20at,B%C3%B8rne%2D%20og%20Undervisningsministeriet.",
     type: "press",
@@ -55,7 +55,7 @@ const awards: AwardItem[] = [
     id: 4,
     title: "Junior Technology Category 1st Place",
     organization: "Astra Unge Forskere",
-    date: "May 2024",
+    date: "2024-05-01",
     image: "/uf.jpg",
     link: "https://ungeforskere.dk/finalist/forbedret-opgave-og-noteplatform-til-undervisning/",
     type: "award",
@@ -64,8 +64,8 @@ const awards: AwardItem[] = [
     id: 5,
     title: "Best overall game Coding Pirates Game Jam",
     organization: "Coding Pirates",
-    date: "2021",
-    image: "/codingpirates.png",
+    date: "2021-01-01",
+    image: "/codingpirates.webp",
     link: "TODO",
     type: "award",
   },
@@ -73,8 +73,8 @@ const awards: AwardItem[] = [
     id: 6,
     title: "Best game design Coding Pirates Game Jam",
     organization: "Coding Pirates",
-    date: "2022",
-    image: "/codingpirates.png",
+    date: "2022-01-01",
+    image: "/codingpirates.webp",
     link: "https://nth1nk.itch.io/gravitydrop",
     type: "award",
   },
@@ -82,8 +82,8 @@ const awards: AwardItem[] = [
     id: 7,
     title: "Best overall game Coding Pirates Game Jam",
     organization: "Coding Pirates",
-    date: "2023",
-    image: "/codingpirates.png",
+    date: "2023-01-01",
+    image: "/codingpirates.webp",
     link: "https://youtu.be/ISCwyceiP0U?feature=shared&t=482",
     type: "award",
   },
@@ -95,7 +95,6 @@ const allItems: Item[] = [...awards, ...pressItems].sort(
 
 export default function PressAndRecognitionShowcase() {
   const [count, setCount] = useState(3);
-
   const displayedItems = allItems.slice(0, count);
 
   const isPressItem = (item: Item): item is PressItem => item.type === "press";
@@ -125,7 +124,7 @@ export default function PressAndRecognitionShowcase() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, staggerChildren: 0.1 }}
         >
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {displayedItems.map((item, index) => (
               <motion.a
                 layout

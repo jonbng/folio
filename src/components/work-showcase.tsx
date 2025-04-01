@@ -14,7 +14,7 @@ const works = [
     description:
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
     shortDescription: "Reimagining the Danish school systems software.",
-    image: "/akademia.png",
+    image: "/akademia.webp",
     year: "2023 — Present",
     detailedDescription:
       "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused. This project won 1st place in the Junior Technology category at Unge Forskere, and we got to present it at Shark Tank Junior where we got a mentor.",
@@ -50,7 +50,7 @@ const works = [
     link: "https://alfabeta.dk",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "The only link shortener you'll ever need.",
-    image: "/alfabeta.png",
+    image: "/alfabeta.webp",
     year: "2024",
     detailedDescription:
       "I made AlfaBeta because I needed a link shortener that was better than other sites such as bit.ly and tinyurl, yet simpler than dub.co. I wanted to be able to create short links with custom aliases and domains and track their performance. It was also just made as a fun side project.",
@@ -97,22 +97,19 @@ const works = [
       {
         name: "Rasmus Kolbe",
         role: "Founder",
-        avatar:
-          "https://flimmer.app/_next/image?url=%2Fteam-pics%2Frasmus.png&w=3840&q=75",
+        avatar: "/rasmus.webp",
         link: "https://www.linkedin.com/in/rasmus-kolbe-761a7453",
       },
       {
         name: "Maria Baagøe Bove",
         role: "Chief Operating Officer",
-        avatar:
-          "https://flimmer.app/_next/image?url=%2Fteam-pics%2Fmaria.png&w=3840&q=75",
+        avatar: "/maria.webp",
         link: "https://www.linkedin.com/in/maria-baag%C3%B8e-bove-11611687",
       },
       {
         name: "Mark Pallisgaard",
         role: "Head of Content",
-        avatar:
-          "https://flimmer.app/_next/image?url=%2Fteam-pics%2Fmark.png&w=3840&q=75",
+        avatar: "/mark.webp",
         link: "https://www.linkedin.com/in/mark-pallisgaard-hansen-74235583",
       },
       {
@@ -155,7 +152,7 @@ const works = [
     description:
       "A monospaced typeface designed for titles and beyond. Featuring three distinct styles: sharp for precision, rounded for warmth, and smooth for elegance.",
     shortDescription: "A monospaced font designed with precision.",
-    image: "/tars-mono.png",
+    image: "/tars-mono.webp",
     cover: "cover",
     year: "January — February 2025",
     detailedDescription:
@@ -274,7 +271,7 @@ const works = [
       "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list.",
     detailedDescription:
       "Built in a weekend to make shopping easier for personal use, ScanShop uses the camera on your device to scan barcodes and match them with items on your list. More specifically, its built by combining MSAL, Microsoft ToDo API, Kroger API and the OpenAI API. When a user scan the barcode, the UPC number is sent to Kroger to fetch an Image, Price and Name of the Item, we then fetch microsoft (authenticated with MSAL) for the users updated shoppinglist, we then format and send all the data to OpenAI and get an LLM to detect if the item from the kroger api is present in the Shopping List, if it is, we allow the user to effortlessly remove the item in one click. yes i do know this is pretty useless ;)",
-    image: "/scanshop.png",
+    image: "/scanshop.webp",
     year: "2024",
     cover: "cover",
     technologies: [
@@ -301,7 +298,7 @@ const works = [
     tag: "For fun 😎",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "A casual puzzle game about playing with gravity.",
-    image: "/gravitydrop.png",
+    image: "/gravitydrop.webp",
     year: "2023 — 2024",
     description: "A casual puzzle game about playing with gravity.",
     detailedDescription:

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     creator: "@jonba_",
     images: [
       {
-        url: "/og.png",
+        url: "/og.webp",
         alt: "Jonathan Bangert - Folio",
         width: 1200,
         height: 630,
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     emails: ["contact@jonathanb.dk"],
     images: [
       {
-        url: "/og.png",
+        url: "/og.webp",
         alt: "Jonathan Bangert - Folio",
         width: 1200,
         height: 630,
