@@ -8,14 +8,14 @@ Check it out at https://jonathanb.dk/
 ![output_optimized](https://github.com/user-attachments/assets/21d9ad02-7cad-4a5f-89fb-74b42e7a076d)
 Please consider leaving a message! It would be greatly appreciated! ❤️
 
-## Press section
-![video of press sections](https://github.com/user-attachments/assets/3a9f1f09-f6b2-44c7-a146-ada4aa947715)
-Showcase of a few press mentions and recognitions.
-
 ## Work section
 https://github.com/user-attachments/assets/e164c359-1a6b-40d3-aa28-84c136e898c9
 
 A showcase of a few of my projects over the years!
+
+## Press section
+![video of press sections](https://github.com/user-attachments/assets/3a9f1f09-f6b2-44c7-a146-ada4aa947715)
+Showcase of a few press mentions and recognitions.
 
 ---
 
