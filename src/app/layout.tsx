@@ -2,6 +2,7 @@ import type React from "react";
 import "./globals.css";
 import { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Jonathan Bangert - Folio",
@@ -81,6 +82,7 @@ export default function RootLayout({
       <body className={`$antialiased`}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
