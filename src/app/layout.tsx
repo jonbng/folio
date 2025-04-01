@@ -1,6 +1,7 @@
 import type React from "react";
 import "./globals.css";
 import { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Jonathan Bangert - Folio",
@@ -77,7 +78,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`$antialiased`}>{children}</body>
+      <body className={`$antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
