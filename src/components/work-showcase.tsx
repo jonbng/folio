@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
@@ -118,15 +118,13 @@ const works = [
       {
         name: "Emma Illgner",
         role: "SoMe Manager",
-        avatar:
-          "/emma.jpg",
+        avatar: "/emma.jpg",
         link: "https://www.linkedin.com/in/emma-illgner-8527a7222/",
       },
       {
         name: "Jan-Georges Jersild Balin",
         role: "Senior Software Engineer",
-        avatar:
-          "/jan.jpg",
+        avatar: "/jan.jpg",
         link: "https://www.linkedin.com/in/jan-georges-jersild-balin-55719a1b8/",
       },
       {
@@ -384,64 +382,71 @@ export default function WorkShowcase({
       </h2>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, staggerChildren: 0.1 }}
+        layout
+        transition={{ layout: { duration: 0.5 } }}
+        style={{ overflow: "hidden" }}
       >
-        {showedWork.map((work) => (
-          <motion.div
-            key={work.id}
-            className="group cursor-pointer"
-            onClick={() => handleWorkClick(work)}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <AnimatePresence>
+            {showedWork.map((work) => (
+              <motion.div
+                key={work.id}
+                layout
+                initial={{ opacity: 0, y: -25 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -25 }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                className="group cursor-pointer"
+                onClick={() => handleWorkClick(work)}
+              >
+                <div className="space-y-4">
+                  <div className="overflow-hidden rounded-xl border">
+                    <Image
+                      src={work.image || "/placeholder.svg"}
+                      alt={work.title}
+                      width={600}
+                      height={400}
+                      className={`object-${work.cover || "contain"} w-full h-48 transition-transform duration-300 group-hover:scale-105`}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <span
+                      className={`text-sm font-medium px-2 py-1 rounded-full ${work.tagColor}`}
+                    >
+                      {work.tag}
+                    </span>
+                    <h3 className="text-2xl font-semibold group-hover:text-zinc-600 transition-colors mt-2">
+                      {work.title}
+                    </h3>
+                    <p className="text-zinc-600 leading-relaxed">
+                      {work.shortDescription}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-sm text-zinc-500 mt-4">{work.year}</div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+        {showedWork.length < works.length ? (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold w-full mt-4"
+            onClick={() => setShowedWork(works)}
           >
-            <div className="space-y-4">
-              <div className="overflow-hidden rounded-xl border">
-                <Image
-                  src={work.image || "/placeholder.svg"}
-                  alt={work.title}
-                  width={600}
-                  height={400}
-                  className={`object-${work.cover || "contain"} w-full h-48 transition-transform duration-300 group-hover:scale-105`}
-                />
-              </div>
-              <div className="space-y-2">
-                <span
-                  className={`text-sm font-medium px-2  py-1 rounded-full ${work.tagColor}`}
-                >
-                  {work.tag}
-                </span>
-                <h3 className="text-2xl font-semibold group-hover:text-zinc-600 transition-colors mt-2">
-                  {work.title}
-                </h3>
-                <p className="text-zinc-600 leading-relaxed">
-                  {work.shortDescription}
-                </p>
-              </div>
-            </div>
-            <div className="text-sm text-zinc-500 mt-4">{work.year}</div>
-          </motion.div>
-        ))}
+            <span className="animate-underline">Show more</span>
+          </Button>
+        ) : (
+          <Button
+            variant="link"
+            className="p-0 h-auto font-semibold w-full mt-4"
+            onClick={() => setShowedWork(works.slice(0, isMobile ? 4 : 6))}
+          >
+            <span className="animate-underline">Show less</span>
+          </Button>
+        )}
       </motion.div>
-      {showedWork.length < works.length ? (
-        <Button
-          variant="link"
-          className="p-0 h-auto font-semibold w-full"
-          onClick={() => setShowedWork(works)}
-        >
-          <span className="animate-underline">Show more</span>
-        </Button>
-      ) : (
-        <Button
-          variant="link"
-          className="p-0 h-auto font-semibold w-full"
-          onClick={() => setShowedWork(works.slice(0, isMobile ? 4 : 6))}
-        >
-          <span className="animate-underline">Show less</span>
-        </Button>
-      )}
     </section>
   );
 }

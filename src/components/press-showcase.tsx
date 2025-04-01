@@ -1,11 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Award, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface PressItem {
   id: number;
@@ -35,8 +35,7 @@ const pressItems: PressItem[] = [
     title: "Shark Tank Junior (DK) - Akademia (Episode 10)",
     publication: "DRDK",
     date: "December 6, 2024",
-    image:
-      "/dr.jpg",
+    image: "/dr.jpg",
     link: "https://www.dr.dk/drtv/serie/loevens-hule-junior_479046",
     type: "press",
   },
@@ -45,8 +44,7 @@ const pressItems: PressItem[] = [
     title: "Ung forsker nåede til tops igen (Mentioned)",
     publication: "Sjællandske Nyhedder",
     date: "April 24, 2024",
-    image:
-      "/sn.jpg",
+    image: "/sn.jpg",
     link: "https://www.sn.dk/art245862/roskilde-kommune/uddannelse/ung-forsker-naaede-til-tops-igen/#:~:text=Hj%C3%A6lp%20til%20at,B%C3%B8rne%2D%20og%20Undervisningsministeriet.",
     type: "press",
   },
@@ -58,8 +56,7 @@ const awards: AwardItem[] = [
     title: "Junior Technology Category 1st Place",
     organization: "Astra Unge Forskere",
     date: "May 2024",
-    image:
-      "/uf.jpg",
+    image: "/uf.jpg",
     link: "https://ungeforskere.dk/finalist/forbedret-opgave-og-noteplatform-til-undervisning/",
     type: "award",
   },
@@ -93,15 +90,13 @@ const awards: AwardItem[] = [
 ];
 
 const allItems: Item[] = [...awards, ...pressItems].sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 );
 
 export default function PressAndRecognitionShowcase() {
-  const [showedItems, setShowedItems] = useState<Item[]>([]);
+  const [count, setCount] = useState(3);
 
-  useEffect(() => {
-    setShowedItems(allItems.slice(0, 3));
-  }, []);
+  const displayedItems = allItems.slice(0, count);
 
   const isPressItem = (item: Item): item is PressItem => item.type === "press";
 
@@ -120,65 +115,80 @@ export default function PressAndRecognitionShowcase() {
       </div>
 
       <motion.div
-        className="space-y-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, staggerChildren: 0.1 }}
+        layout
+        transition={{ layout: { duration: 0.5 } }}
+        style={{ overflow: "hidden" }}
       >
-        {showedItems.map((item) => (
-          <motion.a
-            key={item.id}
-            href={item.link}
-            className="group flex flex-row items-center gap-6 cursor-pointer mb-5"
-            whileHover={{ x: 10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="flex-shrink-0 w-auto">
-              <Image
-                src={item.image || "/placeholder.svg"}
-                alt={isPressItem(item) ? item.publication : item.organization}
-                width={100}
-                height={100}
-                className="rounded-lg object-cover w-[100px] h-[100px]"
-              />
-            </div>
-            <div className="flex-grow">
-              <h3 className="text-xl font-semibold group-hover:text-zinc-600 transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-zinc-600 mt-1">
-                {isPressItem(item) ? (
-                  <>
-                    <Newspaper className="inline-block w-4 h-4 mr-1" />
-                    {item.publication} • {item.date}
-                  </>
-                ) : (
-                  <>
-                    <Award className="inline-block w-4 h-4 mr-1" />
-                    {item.organization} • {item.date}
-                  </>
-                )}
-              </p>
-            </div>
-          </motion.a>
-        ))}
-        {(showedItems.length < allItems.length && (
-          <Button
-            variant="link"
-            className="p-0 h-auto font-semibold"
-            onClick={() => setShowedItems(allItems)}
-          >
-            <span className="animate-underline">Show more</span>
-          </Button>
-        )) || (
-          <Button
-            variant="link"
-            className="p-0 h-auto font-semibold"
-            onClick={() => setShowedItems(allItems.slice(0, 3))}
-          >
-            <span className="animate-underline">Show less</span>
-          </Button>
-        )}
+        <motion.div
+          className="space-y-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, staggerChildren: 0.1 }}
+        >
+          <AnimatePresence>
+            {displayedItems.map((item, index) => (
+              <motion.a
+                layout
+                key={item.id}
+                href={item.link}
+                className="group flex flex-row items-center gap-6 cursor-pointer mb-5"
+                initial={index >= 3 ? { opacity: 0, y: -25 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -25 }}
+                transition={{ duration: 0.4 }}
+                whileHover={{ x: 10 }}
+              >
+                <div className="flex-shrink-0 w-auto">
+                  <Image
+                    src={item.image || "/placeholder.svg"}
+                    alt={
+                      isPressItem(item) ? item.publication : item.organization
+                    }
+                    width={100}
+                    height={100}
+                    className="rounded-lg object-cover w-[100px] h-[100px]"
+                  />
+                </div>
+                <div className="flex-grow">
+                  <h3 className="text-xl font-semibold group-hover:text-zinc-600 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-600 mt-1">
+                    {isPressItem(item) ? (
+                      <>
+                        <Newspaper className="inline-block w-4 h-4 mr-1" />
+                        {item.publication} • {item.date}
+                      </>
+                    ) : (
+                      <>
+                        <Award className="inline-block w-4 h-4 mr-1" />
+                        {item.organization} • {item.date}
+                      </>
+                    )}
+                  </p>
+                </div>
+              </motion.a>
+            ))}
+          </AnimatePresence>
+          {count < allItems.length && (
+            <Button
+              variant="link"
+              className="p-0 h-auto font-semibold"
+              onClick={() => setCount(allItems.length)}
+            >
+              <span className="animate-underline">Show more</span>
+            </Button>
+          )}
+          {count === allItems.length && (
+            <Button
+              variant="link"
+              className="p-0 h-auto font-semibold"
+              onClick={() => setCount(3)}
+            >
+              <span className="animate-underline">Show less</span>
+            </Button>
+          )}
+        </motion.div>
       </motion.div>
     </section>
   );
