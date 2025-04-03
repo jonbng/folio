@@ -205,7 +205,7 @@ const works = [
         name: "Jozef Kruszynski",
         role: "Maintainer",
         link: "https://github.com/jozefKruszynski",
-        avatar: "ma.jpg",
+        avatar: "/ma.jpg",
       },
       {
         name: "Micha",
