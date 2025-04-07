@@ -6,7 +6,7 @@ import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
 import { DuplicateShowcasedEntries } from "@/lib/utils";
 import Balloon, { BalloonEntry } from "./balloon";
 import { Button } from "./ui/button";
-import { Maximize, Minimize } from "lucide-react";
+import { Maximize, Minimize, XIcon } from "lucide-react";
 import MessageInput from "./message-input";
 import { useSession } from "next-auth/react";
 import Login from "./login";
@@ -108,8 +108,35 @@ export default function Guestbook({
         />
       )}
 
+      {isExpanded && (
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0 }}
+          className="fixed right-8 sm:right-24 top-8 sm:top-16 z-50 cursor-pointer"
+          transition={{
+            type: "spring",
+            damping: 20,
+            stiffness: 300,
+          }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Button
+            variant="actualGhost"
+            size="icon"
+            className="hover:bg-zinc-700 rounded-full bg-zinc-800 z-50 cursor-pointer"
+            onClick={toggleExpand}
+          >
+            <XIcon className="h-6 w-6 text-white" width={5} />
+            <span className="sr-only">Close</span>
+          </Button>
+        </motion.div>
+      )}
+
       <motion.div
-        className={`overflow-hidden rounded-2xl bg-zinc-50 p-6 z-50 flex flex-col justify-between border-2 border-zinc-700 ${
+        className={`overflow-hidden rounded-2xl bg-zinc-50 p-6 z-40 flex flex-col justify-between border-2 border-zinc-700 ${
           isExpanded || isFixed ? "fixed" : "absolute"
         }`}
         animate={isExpanded ? "expanded" : undefined}
@@ -124,14 +151,20 @@ export default function Guestbook({
               </h2>
               <p className="text-md text-zinc-500">
                 Please consider leaving a message! It would mean a lot to me!
+                <span className="animate-pulse duration-1500 from-95% to-100%">
+                  {" "}
+                  ❤️
+                </span>
               </p>
             </div>
-            <p className="text-sm text-zinc-500 p-0 h-auto">
-              <span className="font-semibold text-zinc-500">
-                {entries.length} messages
-              </span>
-              <span className="text-zinc-400"> from my lovely visitors</span>
-            </p>
+            {!isExpanded && (
+              <p className="text-sm text-zinc-500 p-0 h-auto">
+                <span className="font-semibold text-zinc-500">
+                  {entries.length} messages
+                </span>
+                <span className="text-zinc-400"> from my lovely visitors</span>
+              </p>
+            )}
           </div>
 
           <div className={`w-full relative${isExpanded ? "" : " mb-48"}`}>

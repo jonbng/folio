@@ -1,12 +1,11 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, XIcon } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
-import XIcon from "./XIcon";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
@@ -88,20 +87,23 @@ export default function ProjectSidebar({
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="fixed right-8 sm:right-16 top-8 sm:top-16 z-50"
-                    transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                    className="fixed right-8 sm:right-16 top-8 sm:top-16 z-50 cursor-pointer"
+                    transition={{
+                      type: "spring",
+                      damping: 20,
+                      stiffness: 300,
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Button
                       variant="actualGhost"
                       size="icon"
-                      className="hover:bg-zinc-700 rounded-full bg-zinc-800 z-50"
+                      className="hover:bg-zinc-700 rounded-full bg-zinc-800 z-50 cursor-pointer"
                       onClick={onClose}
                     >
-                      <XIcon
-                        className="h-6 w-6 text-white"
-                        width={5}
-                      />
+                      <XIcon className="h-6 w-6 text-white" width={5} />
                       <span className="sr-only">Close</span>
                     </Button>
                   </motion.div>
