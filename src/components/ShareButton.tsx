@@ -1,7 +1,7 @@
 "use client";
 
-import { Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import XIcon from "./XIcon";
 
 export default function ShareButton({ imageId }: { imageId: string }) {
   return (
@@ -22,8 +22,8 @@ export default function ShareButton({ imageId }: { imageId: string }) {
         );
       }}
     >
-      <Twitter className="w-4 h-4 mr-2" />
-      Share on Twitter
+      <XIcon className="w-4 h-4 mr-2" />
+      Share on X
     </Button>
   );
 }

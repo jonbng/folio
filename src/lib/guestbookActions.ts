@@ -42,7 +42,10 @@ export async function GetAllGuestbookEntries(): Promise<
       };
     })
   );
-  return entries;
+  const sortedEntries = entries.sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+  return sortedEntries;
 }
 
 export async function AddGuestbookEntry(
@@ -50,7 +53,8 @@ export async function AddGuestbookEntry(
   message: string,
   username: string,
   color: string
-) {const session = await auth();
+) {
+  const session = await auth();
   if (!session) throw new Error("Unauthorized: No session found.");
   // Ensure the user is authorized to edit this entry by checking email
   const userEmail = session!.user!.email;

@@ -41,11 +41,11 @@ export default function Balloon({
   let baseX = 0;
   let baseY = 0;
   if (!inALine) {
-    const gridCols = 7;
+    const gridCols = Math.floor((window.innerWidth - 100) / 175);
     const row = Math.floor(index / gridCols);
     const col = index % gridCols;
-    baseX = (col / gridCols) * 100;
-    baseY = row * 120;
+    baseX = (col / gridCols) * 100 + 2.5;
+    baseY = row * 150 + 50;
   }
 
   // Only use offsets when not inALine
@@ -116,6 +116,8 @@ export default function Balloon({
           whileHover={{ scale: 1.1 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           whileTap={{ scale: 1 }}
+          onFocus={() => setShowTooltip(true)}
+          onBlur={() => setShowTooltip(false)}
         >
           {/* Text */}
           <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">

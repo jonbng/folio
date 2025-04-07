@@ -11,6 +11,9 @@ import {
   EditGuestbookEntry,
   GetAllGuestbookEntries,
 } from "@/lib/guestbookActions";
+import Login from "@/components/login";
+import MessageInput from "@/components/message-input";
+import { motion } from "motion/react";
 
 const colorOptions = [
   { name: "Blue", value: "blue" },
@@ -28,6 +31,24 @@ type FormData = {
   selectedColor: string;
 };
 
+function IdkMan() {
+  const { data: session } = useSession();
+
+  return (
+    <motion.div
+      initial={{ y: "100%", opacity: 0 }}
+      animate={{ y: "0%", opacity: 1 }}
+      transition={{ type: "spring", stiffness: 100 }}
+      className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white text-black p-5 rounded-full shadow-lg z-50 gap-4"
+    >
+      {session ? (
+        <MessageInput onMessageAdded={(entry) => console.log(entry)} />
+      ) : (
+        <Login />
+      )}
+    </motion.div>
+  );
+}
 export default function Home() {
   return (
     <SessionProvider>
@@ -35,6 +56,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">Guestbook</h1>
         <BalloonGuestbook />
       </main>
+      <IdkMan />
     </SessionProvider>
   );
 }
@@ -204,10 +226,9 @@ function BalloonGuestbook() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
-
+    <div className="max-w-5xl mx-auto bg-zinc-100 h-screen w-screen">
       <div
-        className="p-8 bg-white/50 backdrop-blur-sm rounded-lg shadow-lg relative"
+        className="p-8 bg-zinc-200 backdrop-blur-sm rounded-lg shadow-lg relative"
         style={{ minHeight: "500px" }}
       >
         {entries.map((entry, index) => (

@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, X } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
+import XIcon from "./XIcon";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
@@ -97,7 +98,10 @@ export default function ProjectSidebar({
                       className="hover:bg-zinc-700 rounded-full bg-zinc-800 z-50"
                       onClick={onClose}
                     >
-                      <X className="h-6 w-6 text-white" width={5} />
+                      <XIcon
+                        className="h-6 w-6 text-white"
+                        width={5}
+                      />
                       <span className="sr-only">Close</span>
                     </Button>
                   </motion.div>
@@ -138,7 +142,10 @@ export default function ProjectSidebar({
                       src={selectedWork.image || "/placeholder.svg"}
                       alt={selectedWork.title}
                       fill
-                      className={"rounded-md "+`object-${selectedWork.cover || "contain"}`}
+                      className={
+                        "rounded-md " +
+                        `object-${selectedWork.cover || "contain"}`
+                      }
                     />
                   </div>
 
@@ -192,7 +199,7 @@ export default function ProjectSidebar({
                               </p>
                             </div>
                           </a>
-                        ),
+                        )
                       )}
                     </div>
                   </div>

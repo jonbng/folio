@@ -24,17 +24,19 @@ export default function PressKit() {
               Jonathan Bangert has been building things for as long as he can
               remember, starting with small coding projects, breaking things
               apart just to understand how they work, and obsessing over every
-              detail until it feels right. Right now, he&apos;s working at{" "}
+              detail until it feels right.{" "}
+              {/*Right now, he&apos;s working at{" "}
               <a href="https://flimmer.app" className="underline font-bold">
                 Flimmer
               </a>{" "}
-              as a software engineer and Co-Founder at{" "}
+              as a software engineer and */}{" "}
+              He is the Co-Founder of{" "}
               <a href="https://akademia.dev" className="underline font-bold">
                 Akademia
               </a>
               , a reimagined platform for schools, but he&apos;s always
               experimenting with new ideas. He shares his thoughts on{" "}
-              <a href="https://x.com/jonba_" className="underline font-bold">
+              <a href="https://x.com/jonba_" className="underlroine font-bold">
                 X
               </a>
               , and if you want to chat, you can reach him at{" "}
