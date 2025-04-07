@@ -17,6 +17,7 @@ import CTAButton from "@/components/cta-button";
 import Guestbook from "@/components/guestbook";
 import XIcon from "@/components/XIcon";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Home() {
   const guestbookReference = useRef<HTMLDivElement>(null);
@@ -78,11 +79,16 @@ export default function Home() {
   return (
     <>
       <SessionProvider>
+        <Toaster />
         <div className="relative min-h-screen bg-white">
           {guestbookReference.current && scrollReference.current && (
             <Guestbook
-              guestbookReference={guestbookReference as React.RefObject<HTMLDivElement>}
-              scrollReference={scrollReference as React.RefObject<HTMLDivElement>}
+              guestbookReference={
+                guestbookReference as React.RefObject<HTMLDivElement>
+              }
+              scrollReference={
+                scrollReference as React.RefObject<HTMLDivElement>
+              }
             />
           )}
           <motion.main
