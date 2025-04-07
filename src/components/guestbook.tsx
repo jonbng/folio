@@ -1,112 +1,46 @@
 "use client";
 
-import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
+import { DuplicateShowcasedEntries } from "@/lib/utils";
 import Balloon, { BalloonEntry } from "./balloon";
 import { Button } from "./ui/button";
 import { Maximize, Minimize } from "lucide-react";
-import { DuplicateShowcasedEntries } from "@/lib/utils";
 import MessageInput from "./message-input";
 import { useSession } from "next-auth/react";
 import Login from "./login";
+import { useGuestbookPosition } from "@/hooks/use-guestbook-position";
+import { useScrollDetection } from "@/hooks/use-scroll-detection";
+
+type GuestbookProps = {
+  guestbookReference: React.RefObject<HTMLDivElement>;
+  scrollReference: React.RefObject<HTMLDivElement>;
+};
 
 export default function Guestbook({
   guestbookReference,
   scrollReference,
-}: {
-  guestbookReference: React.RefObject<HTMLDivElement>;
-  scrollReference: React.RefObject<HTMLDivElement>;
-}) {
+}: GuestbookProps) {
   const { data: session } = useSession();
   const [entries, setEntries] = useState<BalloonEntry[]>([]);
   const [showedEntries, setShowedEntries] = useState<BalloonEntry[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isFixed, setIsFixed] = useState(false);
-  const [hasInitialPosition, setHasInitialPosition] = useState(false);
-  const [absoluteStyle, setAbsoluteStyle] = useState({
-    top: "0px",
-    left: "0px",
-    width: "0px",
-    height: "0px",
-  });
-  const [fixedStyle, setFixedStyle] = useState({
-    top: "0px",
-    left: "0px",
-    width: "0px",
-    height: "0px",
-  });
 
-  const updateCollapsedPosition = () => {
-    if (!guestbookReference.current) return;
-    const rect = guestbookReference.current.getBoundingClientRect();
-    setAbsoluteStyle({
-      top: `${rect.top + window.scrollY}px`,
-      left: `${rect.left + window.scrollX}px`,
-      width: `${rect.width}px`,
-      height: `${rect.height}px`,
-    });
-    setFixedStyle({
-      top: `${rect.top}px`,
-      left: `${rect.left}px`,
-      width: `${rect.width}px`,
-      height: `${rect.height}px`,
-    });
-  };
+  // Get positioning values from the custom hook
+  const {
+    absoluteStyle,
+    fixedStyle,
+    hasInitialPosition,
+    updateCollapsedPosition,
+  } = useGuestbookPosition(guestbookReference, isExpanded);
+  const isFixed = useScrollDetection(
+    guestbookReference,
+    isExpanded,
+    updateCollapsedPosition
+  );
 
-  // ⏱ Wait until layout settles before showing component
-  useLayoutEffect(() => {
-    const timeout = setTimeout(() => {
-      updateCollapsedPosition();
-      setHasInitialPosition(true);
-    }, 500); // Adjust to match your animation duration
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  // Resize listener
-  useLayoutEffect(() => {
-    if (isExpanded) return;
-    const onResize = () => updateCollapsedPosition();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [guestbookReference, isExpanded]);
-
-  // Scroll detection + lazy fixed switch
-  useEffect(() => {
-    if (isExpanded) return;
-    let scrollTimeout: NodeJS.Timeout;
-
-    const handleScroll = () => {
-      setIsFixed(false);
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        if (!guestbookReference.current) return;
-        const rect = guestbookReference.current.getBoundingClientRect();
-        const fullyInView =
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= window.innerHeight &&
-          rect.right <= window.innerWidth;
-
-        if (fullyInView) {
-          requestAnimationFrame(() => {
-            updateCollapsedPosition();
-            setIsFixed(true);
-          });
-        }
-      }, 100);
-    };
-
-    requestAnimationFrame(() => updateCollapsedPosition());
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [guestbookReference, isExpanded]);
-
-  // Load entries
+  // Load guestbook entries on mount
   useEffect(() => {
     async function fetchEntries() {
       try {
@@ -120,7 +54,7 @@ export default function Guestbook({
     fetchEntries();
   }, []);
 
-  // Expand/collapse behavior
+  // Expand/collapse logic with smooth scroll when expanding
   useEffect(() => {
     if (isExpanded) {
       const timer = setTimeout(() => {
@@ -130,15 +64,13 @@ export default function Guestbook({
         });
       }, 50);
       setShowedEntries(entries);
-      return () => {
-        clearTimeout(timer);
-        document.body.style.overflow = "auto";
-      };
+      return () => clearTimeout(timer);
     } else {
       setShowedEntries(DuplicateShowcasedEntries(entries));
     }
   }, [isExpanded, entries, scrollReference]);
 
+  // Handler for when a new message is added
   const handleMessageAdded = (newEntry: BalloonEntry) => {
     setEntries((prev) => {
       const updated = [...prev, newEntry];
@@ -147,8 +79,10 @@ export default function Guestbook({
     });
   };
 
+  // Toggle expand/collapse state
   const toggleExpand = () => setIsExpanded((prev) => !prev);
 
+  // Animation variants for expanded state
   const variants = {
     expanded: {
       top: "2.5%",
@@ -159,10 +93,8 @@ export default function Guestbook({
     },
   };
 
-  // ⛔ Block full render until layout is measured
-  if (!hasInitialPosition) {
-    return <div style={{ display: "none" }} />;
-  }
+  // Do not render until initial layout is measured
+  if (!hasInitialPosition) return <div style={{ display: "none" }} />;
 
   return (
     <>
@@ -172,6 +104,7 @@ export default function Guestbook({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={toggleExpand}
         />
       )}
 
@@ -201,12 +134,11 @@ export default function Guestbook({
             </p>
           </div>
 
-          <div className={"w-full relative" + (isExpanded ? "" : " mb-48")}>
+          <div className={`w-full relative${isExpanded ? "" : " mb-48"}`}>
             <div
-              className={
-                "flex flex-row gap-8 h-0" +
-                (!isExpanded ? " animate-marquee" : "")
-              }
+              className={`flex flex-row gap-8 h-0${
+                !isExpanded ? " animate-marquee" : ""
+              }`}
             >
               {[...Array(3)].flatMap((_, i) =>
                 showedEntries.map((entry, index) => (
@@ -252,11 +184,10 @@ export default function Guestbook({
 
         {isExpanded && (
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            initial={{ y: 50, opacity: 0, x: "-50%" }}
+            animate={{ y: 0, opacity: 1, x: "-50%" }}
             transition={{ type: "spring", stiffness: 100 }}
             className="fixed bottom-10 left-1/2 bg-white text-black p-4 rounded-full shadow-lg z-50 text-center flex flex-row items-center justify-center gap-4 px-6"
-            style={{ transform: "translateX(-50%)" }}
           >
             {session ? (
               <MessageInput onMessageAdded={handleMessageAdded} />
