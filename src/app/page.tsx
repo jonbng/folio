@@ -7,21 +7,43 @@ import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
 // import BlogPreview from "@/components/blog-preview";
 import BeyondCoding from "@/components/beyond-coding";
-import { motion } from "motion/react";
-import { useState, useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState, useEffect } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
 import ExchangeYearBadge from "@/components/exchange-year-badge";
 import CTAButton from "@/components/cta-button";
-import Guestbook from "@/components/guestbook";
 import XIcon from "@/components/XIcon";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
+import GuestbookFull from "@/components/guestbookFull";
+import GuestbookPreview from "@/components/guestbookPreview";
+import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
+import { BalloonEntry } from "@/components/balloon";
+import { createPortal } from "react-dom";
+
+const STARTER_ENTRIES = [
+  {
+    id: "1",
+    name: "John Doe",
+    message: "Hello, world!",
+    username: "John Doe",
+    color: "#000000",
+    timestamp: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    name: "Jane Doe",
+    message: "Hello, world!",
+    username: "Jane Doe",
+    color: "#000000",
+    timestamp: new Date().toISOString(),
+  },
+
+];
 
 export default function Home() {
-  const guestbookReference = useRef<HTMLDivElement>(null);
-  const scrollReference = useRef<HTMLDivElement>(null);
   const [isWorkOpen, setIsWorkOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState<{
     id: number;
@@ -39,6 +61,13 @@ export default function Home() {
   } | null>(null);
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<Date | null>(null);
+  const [isGuestbookExpanded, setIsGuestbookExpanded] = useState(false);
+  const [entries, setEntries] = useState<BalloonEntry[]>(STARTER_ENTRIES);
+  const [isClient, setIsClient] = useState(false); // <-- Add this state
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Set mounted flag and initialize time on client-side only.
   useEffect(() => {
@@ -51,6 +80,19 @@ export default function Home() {
     }, 30000);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Load guestbook entries on mount
+  useEffect(() => {
+    async function fetchEntries() {
+      try {
+        const fetchedEntries = await GetAllGuestbookEntries();
+        setEntries(fetchedEntries);
+      } catch (error) {
+        console.error("Failed to fetch guestbook entries:", error);
+      }
+    }
+    fetchEntries();
   }, []);
 
   // Format time for Denver
@@ -81,16 +123,6 @@ export default function Home() {
       <SessionProvider>
         <Toaster />
         <div className="relative min-h-screen bg-white">
-          {guestbookReference.current && scrollReference.current && (
-            <Guestbook
-              guestbookReference={
-                guestbookReference as React.RefObject<HTMLDivElement>
-              }
-              scrollReference={
-                scrollReference as React.RefObject<HTMLDivElement>
-              }
-            />
-          )}
           <motion.main
             animate={{
               scale: isWorkOpen ? 0.93 : 1,
@@ -234,15 +266,15 @@ export default function Home() {
 
               <Separator className="my-14" />
 
-              {/* The reference element for calculating the initial position.
-              It’s invisible but occupies layout space.
-              (Its child with ID "guestbook" helps with scroll anchoring.) */}
-              <div ref={guestbookReference} className="h-[28rem] invisible">
-                <div
-                  id="guestbook"
-                  className="relative bottom-96"
-                  ref={scrollReference}
-                />
+              <div className="relative h-96">
+                  {!isGuestbookExpanded &&
+                   (
+                    <GuestbookPreview
+                    key="guestbook-preview"
+                    entries={entries}
+                    onExpand={() => setIsGuestbookExpanded(true)}
+                  />
+                  )}
               </div>
 
               <Separator className="my-14" />
@@ -291,7 +323,21 @@ export default function Home() {
             </div>
           </motion.main>
         </div>
+      {isClient && isGuestbookExpanded && createPortal(
+        <AnimatePresence>
+          {isGuestbookExpanded && ( 
+            <GuestbookFull
+                      key="guestbook-full" 
+                      entries={entries}
+                      setEntries={setEntries}
+                      onCollapse={() => setIsGuestbookExpanded(false)}
+                    />
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
       </SessionProvider>
+
 
       <ProjectSidebar
         isOpen={isWorkOpen}

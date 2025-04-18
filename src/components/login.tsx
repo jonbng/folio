@@ -1,4 +1,5 @@
 import { Lock } from "lucide-react";
+import { motion } from "motion/react";
 // import { signIn } from "next-auth/react";
 
 // const GithubIcon = createLucideIcon("Github", [
@@ -19,12 +20,12 @@ import { Lock } from "lucide-react";
 
 export default function Login() {
   return (
-    <div className="flex flex-row items-center justify-between gap-3 ml-1">
+    <motion.div className="flex flex-row items-center justify-between gap-3 ml-1">
       <Lock className="h-6 w-6" />
-      <p>You need to Sign In to leave a message &lt;3</p>
+      <p>Sign in and say hi!</p>
       {/* <button onClick={() => signIn("github")} className="cursor-pointer">
         <GithubIcon size={52} />
       </button> */}
-    </div>
+    </motion.div>
   );
 }

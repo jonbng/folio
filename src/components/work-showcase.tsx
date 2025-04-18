@@ -381,7 +381,6 @@ export default function WorkShowcase({
       <motion.div
         layout
         transition={{ layout: { duration: 0.5 } }}
-        style={{ overflow: "hidden" }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <AnimatePresence>
