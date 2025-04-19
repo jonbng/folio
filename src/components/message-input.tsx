@@ -97,7 +97,7 @@ export default function MessageInput({ onMessageAdded }: MessageInputProps) {
               exit={{ opacity: 0, scale: 0.8, y: 20 }}
               className="w-32 h-32 flex-shrink-0"
             >
-              <Balloon entry={previewEntry} index={0} inALine={true} />
+              <Balloon entry={previewEntry} index={0} layoutMode="inline" />
             </motion.div>
           )}
         </AnimatePresence>

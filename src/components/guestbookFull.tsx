@@ -17,7 +17,7 @@ export default function GuestbookFull({entries, setEntries, onCollapse}: {entrie
     setEntries([...entries, newEntry]);
   };
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 512px)");
 
   const balloonLayoutMode = isMobile ? "mobile" : "desktop";
 
