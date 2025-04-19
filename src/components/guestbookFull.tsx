@@ -74,12 +74,6 @@ export default function GuestbookFull({entries, setEntries, onCollapse}: {entrie
                 </span>
               </p>
             </div>
-            <p className="text-sm text-zinc-500 p-0 h-auto">
-              <span className="font-semibold text-zinc-500">
-                {entries.length} messages
-                </span>
-                <span className="text-zinc-400"> from my lovely visitors</span>
-              </p>
           </div>
 
           <div className="w-full relative">

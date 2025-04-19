@@ -1,5 +1,7 @@
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface BalloonEntry {
   id: string;
@@ -9,6 +11,12 @@ export interface BalloonEntry {
   color: string;
   timestamp: string;
 }
+
+// Default non-random values for initial render
+const defaultDuration = 4.5;
+const defaultHeight = 27.5;
+const defaultCurveY1 = 40;
+const defaultCurveY2 = 75;
 
 export default function Balloon({
   entry,
@@ -20,62 +28,100 @@ export default function Balloon({
   inALine?: boolean;
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const stringRef = useRef<SVGPathElement>(null);
+  const [isMounted, setIsMounted] = useState(false); // Track client-side mount
 
-  // Only use random offsets and grid layout when NOT in a line
-  const xOffset = useRef(Math.random() * 80 - 40); // -40px to +40px
-  const yOffset = useRef(Math.random() * 50 - 25); // -25px to +25px
-
-  // Random animation parameters (always applied)
-  const floatDuration = useRef(3 + Math.random() * 3); // 3-6 seconds
-  const floatHeight = useRef(15 + Math.random() * 25); // 15-40px float height
-  const delayOffset = useRef(Math.random() * 2); // 0-2 second delay
-
-  // Random string curve values (always applied)
-  const curveX1 = useRef(Math.random() * 30 - 15); // -15px to +15px
-  const curveY1 = useRef(30 + Math.random() * 20); // 30px to 50px
-  const curveX2 = useRef(Math.random() * 30 - 15); // -15px to +15px
-  const curveY2 = useRef(60 + Math.random() * 30); // 60px to 90px
-
-  // When not using inALine layout, calculate grid positions
-  let baseX = 0;
-  let baseY = 0;
-  if (!inALine) {
-    const gridCols = Math.floor((window.innerWidth - 100) / 175);
-    const row = Math.floor(index / gridCols);
-    const col = index % gridCols;
-    baseX = (col / gridCols) * 100 + 2.5;
-    baseY = row * 150 + 50;
-  }
-
-  // Only use offsets when not inALine
-  const computedXOffset = inALine ? 0 : xOffset.current;
-  const computedYOffset = inALine ? 0 : yOffset.current;
-  const computedBaseX = inALine ? 0 : baseX;
-  const computedBaseY = inALine ? 0 : baseY;
-
-  // Calculate final position (only used when not inALine)
-  const finalY = computedBaseY + computedYOffset;
-  const zIndex = Math.floor(finalY);
-
-  // Format timestamp for display
+  // State for values that need to be client-side calculated
+  const [positionStyle, setPositionStyle] = useState({});
+  const [zIndex, setZIndex] = useState(0);
+  const [floatParams, setFloatParams] = useState({
+    duration: defaultDuration,
+    height: defaultHeight,
+    delay: 0,
+  });
+  const [curveParams, setCurveParams] = useState({
+    x1: 0,
+    y1: defaultCurveY1,
+    x2: 0,
+    y2: defaultCurveY2,
+  });
   const [formattedDate, setFormattedDate] = useState("");
 
   useEffect(() => {
-    const timestampInMs = Number(entry.timestamp);
-    setFormattedDate(new Date(timestampInMs).toLocaleString());
-  }, [entry.timestamp]);
+    // Random animation parameters
+    const randomDuration = 3 + Math.random() * 3;
+    const randomHeight = 15 + Math.random() * 25;
+    const randomDelay = Math.random() * 2;
+    setFloatParams({
+      duration: randomDuration,
+      height: randomHeight,
+      delay: randomDelay,
+    });
 
-  // Framer Motion animation variants
+    // Random string curve values
+    const randomCurveX1 = Math.random() * 30 - 15;
+    const randomCurveY1 = 30 + Math.random() * 20;
+    const randomCurveX2 = Math.random() * 30 - 15;
+    const randomCurveY2 = 60 + Math.random() * 30;
+    setCurveParams({
+      x1: randomCurveX1,
+      y1: randomCurveY1,
+      x2: randomCurveX2,
+      y2: randomCurveY2,
+    });
+
+    if (!inALine) {
+      const randomXOffset = Math.random() * 80 - 40;
+      const randomYOffset = Math.random() * 50 - 25;
+
+      // Calculate grid position based on window width
+      // Default values if window is not available (shouldn't happen here, but safe)
+      let gridCols = 5; // Default fallback
+      if (typeof window !== "undefined") {
+        gridCols = Math.max(1, Math.floor((window.innerWidth - 100) / 175)); // Ensure at least 1 col
+      }
+      const row = Math.floor(index / gridCols);
+      const col = index % gridCols;
+      const calculatedBaseX = (col / gridCols) * 100 + 2.5; // Percentage based
+      const calculatedBaseY = row * 150 + 50; // Pixel based row spacing
+
+      const finalY = calculatedBaseY + randomYOffset;
+      const finalZIndex = Math.floor(finalY);
+
+      setPositionStyle({
+        // Use percentage for left, makes it somewhat responsive
+        left: `calc(${calculatedBaseX}% + ${randomXOffset}px)`,
+        top: `${finalY}px`,
+        opacity: 1,
+      });
+      setZIndex(finalZIndex);
+    } else {
+      setPositionStyle({ opacity: 1 });
+    }
+
+    try {
+      const timestampInMs = Number(entry.timestamp);
+      if (!isNaN(timestampInMs)) {
+        setFormattedDate(new Date(timestampInMs).toLocaleString());
+      } else {
+        setFormattedDate("Invalid Date");
+      }
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      setFormattedDate("Invalid Date");
+    }
+
+    setIsMounted(true);
+  }, [inALine, index, entry.timestamp]);
+
   const floatVariants = {
     float: {
-      y: [-floatHeight.current, 0, -floatHeight.current],
+      y: [-floatParams.height, 0, -floatParams.height],
       transition: {
         y: {
-          duration: floatDuration.current,
+          duration: floatParams.duration,
           repeat: Number.POSITIVE_INFINITY,
           ease: "easeInOut",
-          delay: delayOffset.current,
+          delay: floatParams.delay,
         },
       },
     },
@@ -84,24 +130,22 @@ export default function Balloon({
   // Get balloon color based on entry color
   const color = getBalloonColor(entry.color);
 
+  const svgPathD = `M15,0 C${15 + curveParams.x1},${curveParams.y1} ${
+    15 + curveParams.x2
+  },${curveParams.y2} 15,100`;
+
   return (
     <div
       className={inALine ? "w-fit" : "absolute"}
-      // Only add absolute positioning when NOT inALine; otherwise let flex handle layout
       style={
-        !inALine
-          ? {
-              left: `calc(${computedBaseX}% + ${computedXOffset}px)`,
-              top: `${finalY}px`,
-              zIndex: zIndex,
-            }
-          : {}
+        isMounted
+          ? { ...positionStyle, zIndex: zIndex }
+          : { opacity: 0, zIndex: 0 }
       }
-      suppressHydrationWarning
     >
       <motion.div
         variants={floatVariants}
-        animate="float"
+        animate={isMounted ? "float" : ""}
         style={{ willChange: "transform" }}
       >
         {/* Balloon */}
@@ -128,9 +172,7 @@ export default function Balloon({
         {/* Triangle knot */}
         <div
           className="relative h-4 w-8 mx-auto"
-          style={{
-            marginTop: "-2px",
-          }}
+          style={{ marginTop: "-2px" }}
         >
           <div
             className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0 h-0"
@@ -153,10 +195,7 @@ export default function Balloon({
             className="absolute left-1/2 -translate-x-1/2"
           >
             <path
-              ref={stringRef}
-              d={`M15,0 C${15 + curveX1.current},${curveY1.current} ${
-                15 + curveX2.current
-              },${curveY2.current} 15,100`}
+              d={svgPathD}
               stroke="black"
               strokeWidth="1"
               fill="none"
@@ -199,7 +238,6 @@ export default function Balloon({
   );
 }
 
-// Helper function to get balloon colors based on color name
 export function getBalloonColor(colorName: string) {
   const colors: Record<
     string,
@@ -236,6 +274,5 @@ export function getBalloonColor(colorName: string) {
       knot: "#ffa07a",
     },
   };
-
   return colors[colorName] || colors.blue;
 }
