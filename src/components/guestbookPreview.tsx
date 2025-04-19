@@ -18,7 +18,7 @@ export default function GuestbookPreview(
         className="overflow-hidden rounded-2xl bg-zinc-50 p-6 flex flex-col justify-between border-2 border-zinc-700 h-96"
       >
         <div className="flex flex-col">
-          <div className="flex justify-between items-center mb-15">
+          <div className="flex justify-between items-center mb-12">
             <div>
               <h2 className="text-md font-semibold text-zinc-700 tracking-widest uppercase">
                 Guestbook!
@@ -37,13 +37,13 @@ export default function GuestbookPreview(
             <div
               className={`flex flex-row gap-8 h-0 animate-marquee`}
             >
-              {[...Array(3)].flatMap((_, i) =>
+              {[...Array(2)].flatMap((_, i) =>
                 entries.map((entry, index) => (
                   <Balloon
                     key={`entry-${i}-${entry.id}`}
                     entry={entry}
                     index={index + i * entries.length}
-                    inALine={true}
+                    layoutMode="inline"
                   />
                 ))
               )}
@@ -55,7 +55,7 @@ export default function GuestbookPreview(
           <Button
             onClick={onExpand}
             variant="actualGhost"
-            className="flex items-center gap-2 z-50 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Maximize className="h-4 w-4" />
             <span>Expand Guestbook</span>
@@ -72,6 +72,7 @@ export default function GuestbookPreview(
             }
           }
           .animate-marquee {
+            will-change: transform;
             animation: marquee 30s linear infinite;
           }
           @media (prefers-reduced-motion: reduce) {

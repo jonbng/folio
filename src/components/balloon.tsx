@@ -17,21 +17,22 @@ const defaultDuration = 4.5;
 const defaultHeight = 27.5;
 const defaultCurveY1 = 40;
 const defaultCurveY2 = 75;
+const MOBILE_STAGGER_OFFSET = "15px";
 
 export default function Balloon({
   entry,
   index,
-  inALine = false,
+  layoutMode = "desktop",
 }: {
   entry: BalloonEntry;
   index: number;
-  inALine?: boolean;
+  layoutMode?: "desktop" | "mobile" | "inline";
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // Track client-side mount
+  const [isMounted, setIsMounted] = useState(false);
 
   // State for values that need to be client-side calculated
-  const [positionStyle, setPositionStyle] = useState({});
+  const [dynamicStyle, setDynamicStyle] = useState({});
   const [zIndex, setZIndex] = useState(0);
   const [floatParams, setFloatParams] = useState({
     duration: defaultDuration,
@@ -47,7 +48,6 @@ export default function Balloon({
   const [formattedDate, setFormattedDate] = useState("");
 
   useEffect(() => {
-    // Random animation parameters
     const randomDuration = 3 + Math.random() * 3;
     const randomHeight = 15 + Math.random() * 25;
     const randomDelay = Math.random() * 2;
@@ -57,7 +57,6 @@ export default function Balloon({
       delay: randomDelay,
     });
 
-    // Random string curve values
     const randomCurveX1 = Math.random() * 30 - 15;
     const randomCurveY1 = 30 + Math.random() * 20;
     const randomCurveX2 = Math.random() * 30 - 15;
@@ -68,35 +67,6 @@ export default function Balloon({
       x2: randomCurveX2,
       y2: randomCurveY2,
     });
-
-    if (!inALine) {
-      const randomXOffset = Math.random() * 80 - 40;
-      const randomYOffset = Math.random() * 50 - 25;
-
-      // Calculate grid position based on window width
-      // Default values if window is not available (shouldn't happen here, but safe)
-      let gridCols = 5; // Default fallback
-      if (typeof window !== "undefined") {
-        gridCols = Math.max(1, Math.floor((window.innerWidth - 100) / 175)); // Ensure at least 1 col
-      }
-      const row = Math.floor(index / gridCols);
-      const col = index % gridCols;
-      const calculatedBaseX = (col / gridCols) * 100 + 2.5; // Percentage based
-      const calculatedBaseY = row * 150 + 50; // Pixel based row spacing
-
-      const finalY = calculatedBaseY + randomYOffset;
-      const finalZIndex = Math.floor(finalY);
-
-      setPositionStyle({
-        // Use percentage for left, makes it somewhat responsive
-        left: `calc(${calculatedBaseX}% + ${randomXOffset}px)`,
-        top: `${finalY}px`,
-        opacity: 1,
-      });
-      setZIndex(finalZIndex);
-    } else {
-      setPositionStyle({ opacity: 1 });
-    }
 
     try {
       const timestampInMs = Number(entry.timestamp);
@@ -110,8 +80,50 @@ export default function Balloon({
       setFormattedDate("Invalid Date");
     }
 
+    // --- Layout Specific Calculations ---
+    let calculatedStyle: React.CSSProperties = { opacity: 1 }; // Start with opacity
+
+    if (layoutMode === "desktop") {
+      const randomXOffset = Math.random() * 80 - 40;
+      const randomYOffset = Math.random() * 50 - 25;
+
+      let gridCols = 5;
+      if (typeof window !== "undefined") {
+        gridCols = Math.max(1, Math.floor((window.innerWidth - 100) / 175));
+      }
+      const row = Math.floor(index / gridCols);
+      const col = index % gridCols;
+      const calculatedBaseX = (col / gridCols) * 100 + 2.5;
+      const calculatedBaseY = row * 150 + 50;
+
+      const finalY = calculatedBaseY + randomYOffset;
+      const finalZIndex = Math.floor(finalY);
+
+      calculatedStyle = {
+        ...calculatedStyle,
+        position: "absolute", // Set position here
+        left: `calc(${calculatedBaseX}% + ${randomXOffset}px)`,
+        top: `${finalY}px`,
+      };
+      setZIndex(finalZIndex); // Set zIndex only for desktop
+    } else if (layoutMode === "mobile") {
+      // Apply stagger transform based on index
+      const staggerX =
+        index % 2 === 0 ? `-${MOBILE_STAGGER_OFFSET}` : MOBILE_STAGGER_OFFSET;
+      calculatedStyle = {
+        ...calculatedStyle,
+        transform: `translateX(${staggerX})`,
+        position: "relative", // Ensure transform works correctly
+      };
+      setZIndex(0); // Reset zIndex for mobile
+    } else {
+      // 'inline' mode - no specific positioning needed
+      setZIndex(0); // Reset zIndex for inline
+    }
+
+    setDynamicStyle(calculatedStyle);
     setIsMounted(true);
-  }, [inALine, index, entry.timestamp]);
+  }, [layoutMode, index, entry.timestamp]); // Rerun effect if layoutMode changes
 
   const floatVariants = {
     float: {
@@ -127,19 +139,31 @@ export default function Balloon({
     },
   };
 
-  // Get balloon color based on entry color
   const color = getBalloonColor(entry.color);
-
   const svgPathD = `M15,0 C${15 + curveParams.x1},${curveParams.y1} ${
     15 + curveParams.x2
   },${curveParams.y2} 15,100`;
 
+  // Determine outer div classes based on layoutMode
+  const getOuterDivClassName = () => {
+    switch (layoutMode) {
+      case "mobile":
+        return "w-fit mb-8"; // Margin bottom for spacing in vertical list
+      case "inline":
+        return "w-fit"; // For marquee
+      case "desktop":
+      default:
+        return ""; // No specific classes needed, position:absolute is handled by style
+    }
+  };
+
   return (
+    // Apply dynamic style and zIndex (zIndex only relevant for desktop)
     <div
-      className={inALine ? "w-fit" : "absolute"}
+      className={getOuterDivClassName()}
       style={
         isMounted
-          ? { ...positionStyle, zIndex: zIndex }
+          ? { ...dynamicStyle, zIndex: zIndex }
           : { opacity: 0, zIndex: 0 }
       }
     >
@@ -150,6 +174,8 @@ export default function Balloon({
       >
         {/* Balloon */}
         <motion.div
+          // Make balloon slightly smaller on mobile? Optional.
+          // className={`w-24 h-24 ${layoutMode === 'mobile' ? 'sm:w-20 sm:h-20' : ''} rounded-full ...`}
           className="w-24 h-24 rounded-full flex items-center justify-center relative cursor-pointer"
           style={{
             background: color.bg,
@@ -162,8 +188,9 @@ export default function Balloon({
           whileTap={{ scale: 1 }}
           onFocus={() => setShowTooltip(true)}
           onBlur={() => setShowTooltip(false)}
+          role="button"
+          tabIndex={0}
         >
-          {/* Text */}
           <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
             {entry.name}
           </span>
@@ -207,6 +234,8 @@ export default function Balloon({
         <AnimatePresence>
           {showTooltip && (
             <motion.div
+              // Make tooltip wider on mobile? Optional.
+              // className={`absolute bottom-full mb-2 w-64 ${layoutMode === 'mobile' ? 'sm:w-72' : ''} bg-white ...`}
               className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg p-4 z-50"
               initial={{ opacity: 0, y: 10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}

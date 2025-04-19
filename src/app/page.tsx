@@ -29,7 +29,7 @@ const STARTER_ENTRIES = [
     name: "John Doe",
     message: "Hello, world!",
     username: "John Doe",
-    color: "#000000",
+    color: "orange",
     timestamp: new Date().toISOString(),
   },
   {
@@ -37,10 +37,41 @@ const STARTER_ENTRIES = [
     name: "Jane Doe",
     message: "Hello, world!",
     username: "Jane Doe",
-    color: "#000000",
+    color: "blue",
     timestamp: new Date().toISOString(),
   },
-
+  {
+    id: "3",
+    name: "John Doe",
+    message: "Hello, world!",
+    username: "John Doe",
+    color: "pink",
+    timestamp: new Date().toISOString(),
+  },
+  {
+    id: "4",
+    name: "John Doe",
+    message: "Hello, world!",
+    username: "John Doe",
+    color: "green",
+    timestamp: new Date().toISOString(),
+  },
+  {
+    id: "5",
+    name: "John Doe",
+    message: "Hello, world!",
+    username: "John Doe",
+    color: "purple",
+    timestamp: new Date().toISOString(),
+  },
+  {
+    id: "6",
+    name: "John Doe",
+    message: "Hello, world!",
+    username: "John Doe",
+    color: "yellow",
+    timestamp: new Date().toISOString(),
+  }
 ];
 
 export default function Home() {

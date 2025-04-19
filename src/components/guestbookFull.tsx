@@ -7,6 +7,7 @@ import { XIcon } from "lucide-react";
 import MessageInput from "./message-input";
 import { useSession } from "next-auth/react";
 import Login from "./login";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export default function GuestbookFull({entries, setEntries, onCollapse}: {entries: BalloonEntry[], setEntries: (entries: BalloonEntry[]) => void, onCollapse: () => void}) {
   const { data: session } = useSession();
@@ -15,6 +16,10 @@ export default function GuestbookFull({entries, setEntries, onCollapse}: {entrie
   const handleMessageAdded = (newEntry: BalloonEntry) => {
     setEntries([...entries, newEntry]);
   };
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const balloonLayoutMode = isMobile ? "mobile" : "desktop";
 
   return (
     <>
@@ -58,7 +63,7 @@ export default function GuestbookFull({entries, setEntries, onCollapse}: {entrie
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed inset-4 sm:inset-6 md:inset-8 rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-40 flex flex-col overflow-hidden"
+        className="fixed inset-4 sm:inset-6 md:inset-8 rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-40 flex flex-col"
       >
         <div className="flex flex-col">
           <div className="flex justify-between items-center mb-15">
@@ -76,21 +81,21 @@ export default function GuestbookFull({entries, setEntries, onCollapse}: {entrie
             </div>
           </div>
 
-          <div className="w-full relative">
-            <div
-              className="flex flex-row gap-8 h-0"
-            >
-              {[...Array(3)].flatMap((_, i) =>
-                entries.map((entry, index) => (
+          <div
+            className={`flex-grow -m-4 p-4 ${
+              balloonLayoutMode === "mobile"
+                ? "flex flex-col items-center"
+                : "relative"
+            }`}
+          >
+                {entries.map((entry, index) => (
                   <Balloon
-                    key={`entry-${i}-${entry.id}`}
+                    key={`expanded-${entry.id}`}
                     entry={entry}
-                    index={index + i * entries.length}
-                    inALine={false}
+                    index={index}
+                    layoutMode={balloonLayoutMode}
                   />
-                ))
-              )}
-            </div>
+                ))}
           </div>
         </div>
 
