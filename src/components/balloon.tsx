@@ -12,12 +12,11 @@ export interface BalloonEntry {
   timestamp: string;
 }
 
-// Default non-random values for initial render
 const defaultDuration = 4.5;
 const defaultHeight = 27.5;
 const defaultCurveY1 = 40;
 const defaultCurveY2 = 75;
-const MOBILE_STAGGER_OFFSET = "15px";
+const MOBILE_STAGGER_OFFSET = "75px";
 
 export default function Balloon({
   entry,
@@ -31,7 +30,6 @@ export default function Balloon({
   const [showTooltip, setShowTooltip] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // State for values that need to be client-side calculated
   const [dynamicStyle, setDynamicStyle] = useState({});
   const [zIndex, setZIndex] = useState(0);
   const [floatParams, setFloatParams] = useState({
@@ -80,50 +78,65 @@ export default function Balloon({
       setFormattedDate("Invalid Date");
     }
 
-    // --- Layout Specific Calculations ---
-    let calculatedStyle: React.CSSProperties = { opacity: 1 }; // Start with opacity
+    let calculatedStyle: React.CSSProperties = { opacity: 1 };
 
     if (layoutMode === "desktop") {
-      const randomXOffset = Math.random() * 80 - 40;
+      const randomXOffset = Math.random() * 60 - 30;
       const randomYOffset = Math.random() * 50 - 25;
 
       let gridCols = 5;
+      const containerPaddingX = 32;
+      const estimatedItemWidth = 165;
+
+      let availableWidth = 1000;
+      const leftPadding = containerPaddingX / 2;
+
       if (typeof window !== "undefined") {
-        gridCols = Math.max(1, Math.floor((window.innerWidth - 100) / 175));
+        const containerWidth = window.innerWidth;
+        availableWidth = containerWidth - containerPaddingX;
+        gridCols = Math.max(1, Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth));
       }
+
       const row = Math.floor(index / gridCols);
       const col = index % gridCols;
-      const calculatedBaseX = (col / gridCols) * 100 + 2.5;
-      const calculatedBaseY = row * 150 + 50;
 
+      const actualCellWidthPixels = (availableWidth - containerPaddingX * 4) / gridCols;
+
+      const absoluteCellLeftEdgePixels = leftPadding + col * actualCellWidthPixels;
+
+      const absoluteCenterXPixels = absoluteCellLeftEdgePixels + actualCellWidthPixels / 2;
+
+      const rowHeight = 160;
+      const initialTopOffset = 60;
+      const calculatedBaseY = row * rowHeight + initialTopOffset;
       const finalY = calculatedBaseY + randomYOffset;
       const finalZIndex = Math.floor(finalY);
 
       calculatedStyle = {
         ...calculatedStyle,
-        position: "absolute", // Set position here
-        left: `calc(${calculatedBaseX}% + ${randomXOffset}px)`,
+        position: "absolute",
+        left: `${absoluteCenterXPixels}px`,
         top: `${finalY}px`,
+        transform: `translateX(calc(-50% + ${randomXOffset}px))`,
+        opacity: 1,
       };
-      setZIndex(finalZIndex); // Set zIndex only for desktop
+      setZIndex(finalZIndex);
     } else if (layoutMode === "mobile") {
-      // Apply stagger transform based on index
       const staggerX =
         index % 2 === 0 ? `-${MOBILE_STAGGER_OFFSET}` : MOBILE_STAGGER_OFFSET;
       calculatedStyle = {
         ...calculatedStyle,
         transform: `translateX(${staggerX})`,
-        position: "relative", // Ensure transform works correctly
+        position: "relative",
       };
-      setZIndex(0); // Reset zIndex for mobile
+      setZIndex(0);
     } else {
-      // 'inline' mode - no specific positioning needed
-      setZIndex(0); // Reset zIndex for inline
+      setZIndex(0);
     }
 
     setDynamicStyle(calculatedStyle);
     setIsMounted(true);
-  }, [layoutMode, index, entry.timestamp]); // Rerun effect if layoutMode changes
+  }, [layoutMode, index, entry.timestamp]);
 
   const floatVariants = {
     float: {
@@ -144,21 +157,19 @@ export default function Balloon({
     15 + curveParams.x2
   },${curveParams.y2} 15,100`;
 
-  // Determine outer div classes based on layoutMode
   const getOuterDivClassName = () => {
     switch (layoutMode) {
       case "mobile":
-        return "w-fit mb-8"; // Margin bottom for spacing in vertical list
+        return "w-fit -mb-18";
       case "inline":
-        return "w-fit"; // For marquee
+        return "w-fit";
       case "desktop":
       default:
-        return ""; // No specific classes needed, position:absolute is handled by style
+        return "";
     }
   };
 
   return (
-    // Apply dynamic style and zIndex (zIndex only relevant for desktop)
     <div
       className={getOuterDivClassName()}
       style={
@@ -172,11 +183,8 @@ export default function Balloon({
         animate={isMounted ? "float" : ""}
         style={{ willChange: "transform" }}
       >
-        {/* Balloon */}
         <motion.div
-          // Make balloon slightly smaller on mobile? Optional.
-          // className={`w-24 h-24 ${layoutMode === 'mobile' ? 'sm:w-20 sm:h-20' : ''} rounded-full ...`}
-          className="w-24 h-24 rounded-full flex items-center justify-center relative cursor-pointer"
+          className={`w-24 h-24 ${layoutMode === 'mobile' ? 'sm:w-20 sm:h-20' : ''} rounded-full flex items-center justify-center relative cursor-pointer`}
           style={{
             background: color.bg,
             boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
@@ -196,7 +204,6 @@ export default function Balloon({
           </span>
         </motion.div>
 
-        {/* Triangle knot */}
         <div
           className="relative h-4 w-8 mx-auto"
           style={{ marginTop: "-2px" }}
@@ -212,7 +219,6 @@ export default function Balloon({
           ></div>
         </div>
 
-        {/* String */}
         <div className="h-24 relative">
           <svg
             width="30"
@@ -230,13 +236,10 @@ export default function Balloon({
           </svg>
         </div>
 
-        {/* Tooltip */}
         <AnimatePresence>
           {showTooltip && (
             <motion.div
-              // Make tooltip wider on mobile? Optional.
-              // className={`absolute bottom-full mb-2 w-64 ${layoutMode === 'mobile' ? 'sm:w-72' : ''} bg-white ...`}
-              className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg p-4 z-50"
+              className={`absolute bottom-full mb-2 w-64 ${layoutMode === 'mobile' ? 'sm:w-72' : ''} bg-white rounded-lg shadow-lg p-4 z-50`}
               initial={{ opacity: 0, y: 10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.9 }}
