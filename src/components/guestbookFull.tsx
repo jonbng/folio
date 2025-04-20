@@ -57,10 +57,10 @@ export default function GuestbookFull({
               <Button
                 variant="actualGhost"
                 size="icon"
-                className="hover:bg-zinc-200 rounded-full bg-zinc-100"
+                className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110"
                 onClick={onCollapse}
               >
-                <XIcon className="h-5 w-5 text-zinc-700" />
+                <XIcon className="h-5 w-5 text-zinc-100" />
                 <span className="sr-only">Close</span>
               </Button>
             </motion.div>
