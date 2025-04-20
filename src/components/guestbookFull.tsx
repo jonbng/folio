@@ -86,7 +86,7 @@ export default function GuestbookFull({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-50 flex flex-col min-h-[96vh] sm:min-h-[94vh] md:min-h-[93vh]"
+          className="relative w-full rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-50 flex flex-col min-h-[96.85vh] sm:min-h-[95.25vh] md:min-h-[93.7vh]"
           onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
         >
           <div className="absolute top-4 right-4 z-[51]">
