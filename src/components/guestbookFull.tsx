@@ -102,7 +102,7 @@ export default function GuestbookFull({
                 className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110"
                 onClick={onCollapse}
               >
-                <XIcon className="h-5 w-5 text-zinc-100" />
+                <XIcon className="h-6 w-6 text-zinc-100" strokeWidth={2} />
                 <span className="sr-only">Close</span>
               </Button>
             </motion.div>
