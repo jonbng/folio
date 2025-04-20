@@ -16,7 +16,7 @@ const defaultDuration = 4.5;
 const defaultHeight = 27.5;
 const defaultCurveY1 = 40;
 const defaultCurveY2 = 75;
-const MOBILE_STAGGER_OFFSET = "75px";
+const MOBILE_STAGGER_OFFSET = "80px";
 
 export default function Balloon({
   entry,
@@ -46,102 +46,119 @@ export default function Balloon({
   const [formattedDate, setFormattedDate] = useState("");
 
   useEffect(() => {
-    const randomDuration = 3 + Math.random() * 3;
-    const randomHeight = 15 + Math.random() * 25;
-    const randomDelay = Math.random() * 2;
-    setFloatParams({
-      duration: randomDuration,
-      height: randomHeight,
-      delay: randomDelay,
-    });
+    const calculatePositions = () => {
+      const randomDuration = 3 + Math.random() * 3;
+      const randomHeight = 15 + Math.random() * 25;
+      const randomDelay = Math.random() * 2;
+      setFloatParams({
+        duration: randomDuration,
+        height: randomHeight,
+        delay: randomDelay,
+      });
 
-    const randomCurveX1 = Math.random() * 30 - 15;
-    const randomCurveY1 = 30 + Math.random() * 20;
-    const randomCurveX2 = Math.random() * 30 - 15;
-    const randomCurveY2 = 60 + Math.random() * 30;
-    setCurveParams({
-      x1: randomCurveX1,
-      y1: randomCurveY1,
-      x2: randomCurveX2,
-      y2: randomCurveY2,
-    });
+      const randomCurveX1 = Math.random() * 30 - 15;
+      const randomCurveY1 = 30 + Math.random() * 20;
+      const randomCurveX2 = Math.random() * 30 - 15;
+      const randomCurveY2 = 60 + Math.random() * 30;
+      setCurveParams({
+        x1: randomCurveX1,
+        y1: randomCurveY1,
+        x2: randomCurveX2,
+        y2: randomCurveY2,
+      });
 
-    try {
-      const timestampInMs = Number(entry.timestamp);
-      if (!isNaN(timestampInMs)) {
-        setFormattedDate(new Date(timestampInMs).toLocaleString());
-      } else {
+      try {
+        const timestampInMs = Number(entry.timestamp);
+        if (!isNaN(timestampInMs)) {
+          setFormattedDate(new Date(timestampInMs).toLocaleString());
+        } else {
+          setFormattedDate("Invalid Date");
+        }
+      } catch (error) {
+        console.error("Error formatting date:", error);
         setFormattedDate("Invalid Date");
       }
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      setFormattedDate("Invalid Date");
-    }
 
-    let calculatedStyle: React.CSSProperties = { opacity: 1 };
+      let calculatedStyle: React.CSSProperties = { opacity: 1 };
 
-    if (layoutMode === "desktop") {
-      const randomXOffset = Math.random() * 60 - 30;
-      const randomYOffset = Math.random() * 50 - 25;
+      if (layoutMode === "desktop") {
+        const randomXOffset = Math.random() * 60 - 30;
+        const randomYOffset = Math.random() * 50 - 25;
 
-      let gridCols = 5;
-      const containerPaddingX = 32;
-      const estimatedItemWidth = 165;
+        let gridCols = 5;
+        const containerPaddingX = 32;
+        const estimatedItemWidth = 165;
 
-      let availableWidth = 1000;
-      const leftPadding = containerPaddingX / 2;
+        let availableWidth = 1000;
+        const leftPadding = containerPaddingX / 2;
 
-      if (typeof window !== "undefined") {
-        const containerWidth = window.innerWidth;
-        availableWidth = containerWidth - containerPaddingX;
-        gridCols = Math.max(
-          1,
-          Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth)
-        );
+        if (typeof window !== "undefined") {
+          const containerWidth = window.innerWidth;
+          availableWidth = containerWidth - containerPaddingX;
+          gridCols = Math.max(
+            1,
+            Math.floor(
+              (availableWidth - containerPaddingX) / estimatedItemWidth
+            )
+          );
+        }
+
+        const row = Math.floor(index / gridCols);
+        const col = index % gridCols;
+
+        const actualCellWidthPixels =
+          (availableWidth - containerPaddingX * 4) / gridCols;
+
+        const absoluteCellLeftEdgePixels =
+          leftPadding + col * actualCellWidthPixels;
+
+        const absoluteCenterXPixels =
+          absoluteCellLeftEdgePixels + actualCellWidthPixels / 2;
+
+        const rowHeight = 160;
+        const initialTopOffset = 60;
+        const calculatedBaseY = row * rowHeight + initialTopOffset;
+        const finalY = calculatedBaseY + randomYOffset;
+        const finalZIndex = Math.floor(finalY);
+
+        calculatedStyle = {
+          ...calculatedStyle,
+          position: "absolute",
+          left: `${absoluteCenterXPixels}px`,
+          top: `${finalY}px`,
+          transform: `translateX(calc(-50% + ${randomXOffset}px))`,
+          opacity: 1,
+        };
+        setZIndex(finalZIndex);
+      } else if (layoutMode === "mobile") {
+        const staggerX =
+          index % 2 === 0 ? `-${MOBILE_STAGGER_OFFSET}` : MOBILE_STAGGER_OFFSET;
+        calculatedStyle = {
+          ...calculatedStyle,
+          transform: `translateX(${staggerX})`,
+          position: "relative",
+        };
+        setZIndex(0);
+      } else {
+        setZIndex(0);
       }
 
-      const row = Math.floor(index / gridCols);
-      const col = index % gridCols;
+      setDynamicStyle(calculatedStyle);
+      setIsMounted(true);
+    };
 
-      const actualCellWidthPixels =
-        (availableWidth - containerPaddingX * 4) / gridCols;
+    // Initial calculation
+    calculatePositions();
 
-      const absoluteCellLeftEdgePixels =
-        leftPadding + col * actualCellWidthPixels;
+    // Add resize listener
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", calculatePositions);
 
-      const absoluteCenterXPixels =
-        absoluteCellLeftEdgePixels + actualCellWidthPixels / 2;
-
-      const rowHeight = 160;
-      const initialTopOffset = 60;
-      const calculatedBaseY = row * rowHeight + initialTopOffset;
-      const finalY = calculatedBaseY + randomYOffset;
-      const finalZIndex = Math.floor(finalY);
-
-      calculatedStyle = {
-        ...calculatedStyle,
-        position: "absolute",
-        left: `${absoluteCenterXPixels}px`,
-        top: `${finalY}px`,
-        transform: `translateX(calc(-50% + ${randomXOffset}px))`,
-        opacity: 1,
+      // Cleanup
+      return () => {
+        window.removeEventListener("resize", calculatePositions);
       };
-      setZIndex(finalZIndex);
-    } else if (layoutMode === "mobile") {
-      const staggerX =
-        index % 2 === 0 ? `-${MOBILE_STAGGER_OFFSET}` : MOBILE_STAGGER_OFFSET;
-      calculatedStyle = {
-        ...calculatedStyle,
-        transform: `translateX(${staggerX})`,
-        position: "relative",
-      };
-      setZIndex(0);
-    } else {
-      setZIndex(0);
     }
-
-    setDynamicStyle(calculatedStyle);
-    setIsMounted(true);
   }, [layoutMode, index, entry.timestamp]);
 
   const floatVariants = {
@@ -166,7 +183,7 @@ export default function Balloon({
   const getOuterDivClassName = () => {
     switch (layoutMode) {
       case "mobile":
-        return "w-fit -mb-18";
+        return "w-fit -mb-24";
       case "inline":
         return "w-fit";
       case "desktop":

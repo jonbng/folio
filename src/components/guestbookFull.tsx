@@ -66,15 +66,17 @@ export default function GuestbookFull({
             </motion.div>
           </div>
 
-          <div className="shrink-0 flex justify-between items-start mb-4">
-            <div>
-              <h2 className="text-md font-semibold text-zinc-700 tracking-widest uppercase">
-                Guestbook!
-              </h2>
-              <p className="text-md text-zinc-500">
-                Thanks for visiting! Feel free to leave a message. ❤️
-              </p>
-            </div>
+          <div
+            className={`shrink-0 flex flex-col gap-2
+                ${balloonLayoutMode === "mobile" ? "mb-14" : "mb-4"}
+            `}
+          >
+            <h2 className="text-md font-semibold text-zinc-700 tracking-widest uppercase">
+              Guestbook!
+            </h2>
+            <p className="text-md text-zinc-500">
+              Thanks for visiting! Feel free to leave a message. ❤️
+            </p>
           </div>
 
           <div
