@@ -116,8 +116,11 @@ export default function GuestbookFull({
             <h2 className="text-md font-semibold text-zinc-700 tracking-widest uppercase">
               Guestbook!
             </h2>
-            <p className="text-md text-zinc-500">
+            <p className="text-md text-zinc-500 hidden sm:block">
               Thanks for visiting! Feel free to leave a message. ❤️
+            </p>
+            <p className="text-md text-zinc-500 block sm:hidden">
+              Click on the balloons to read the messages!
             </p>
           </div>
 
