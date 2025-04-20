@@ -67,6 +67,7 @@ export default function GuestbookFull({
       window.addEventListener("resize", updateHeight);
       return () => window.removeEventListener("resize", updateHeight);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entries.length, balloonLayoutMode]);
 
   return (
@@ -155,7 +156,7 @@ export default function GuestbookFull({
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white text-black p-3 sm:p-4 rounded-full shadow-lg z-[51] text-center flex flex-row items-center justify-center gap-4 px-6"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-50 border-2 border-zinc-700 text-black p-3 sm:p-4 rounded-full shadow-lg z-[51] text-center flex flex-row items-center justify-center gap-4 px-6"
       >
         {session ? (
           <MessageInput onMessageAdded={handleMessageAdded} />
