@@ -22,6 +22,7 @@ import GuestbookPreview from "@/components/guestbookPreview";
 import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
 import { BalloonEntry } from "@/components/balloon";
 import { createPortal } from "react-dom";
+import { useSearchParams } from "next/navigation";
 
 const STARTER_ENTRIES = [
   {
@@ -75,6 +76,7 @@ const STARTER_ENTRIES = [
 ];
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [isWorkOpen, setIsWorkOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState<{
     id: number;
@@ -148,6 +150,19 @@ export default function Home() {
       document.body.style.overflow = "unset";
     };
   }, [isWorkOpen]);
+
+  // Handle guestbook URL parameter and scrolling
+  useEffect(() => {
+    if (searchParams.get("guestbookOpen") === "1") {
+      setIsGuestbookExpanded(true);
+      // Use setTimeout to ensure the element exists after state update
+      setTimeout(() => {
+        document
+          .getElementById("guestbook")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [searchParams]);
 
   return (
     <>

@@ -56,13 +56,21 @@ export default function Login() {
           <div className="flex items-center gap-6 justify-center">
             <button
               className="p-2 hover:scale-110 rounded-full transition-transform duration-200 pb-0 cursor-pointer"
-              onClick={() => signIn("github")}
+              onClick={() =>
+                signIn("github", {
+                  redirectTo: "https://jonathanb.dk/?guestbookOpen=1",
+                })
+              }
             >
               <GithubIcon className="h-7 w-7" />
             </button>
             <button
               className="p-2 hover:scale-110 rounded-full transition-transform duration-200 pb-0 cursor-pointer"
-              onClick={() => signIn("google")}
+              onClick={() =>
+                signIn("google", {
+                  redirectTo: "https://jonathanb.dk/?guestbookOpen=1",
+                })
+              }
             >
               <svg className="h-7 w-7" viewBox="0 0 24 24">
                 <path
@@ -85,7 +93,11 @@ export default function Login() {
             </button>
             <button
               className="p-2 hover:scale-110 rounded-full transition-transform duration-200 pb-0 cursor-pointer"
-              onClick={() => signIn("twitter")}
+              onClick={() =>
+                signIn("twitter", {
+                  redirectTo: "https://jonathanb.dk/?guestbookOpen=1",
+                })
+              }
             >
               <Twitter className="h-7 w-7" />
             </button>
