@@ -71,7 +71,7 @@ const STARTER_ENTRIES = [
     username: "John Doe",
     color: "yellow",
     timestamp: new Date().toISOString(),
-  }
+  },
 ];
 
 export default function Home() {
@@ -298,14 +298,13 @@ export default function Home() {
               <Separator className="my-14" />
 
               <div className="relative h-96">
-                  {!isGuestbookExpanded &&
-                   (
-                    <GuestbookPreview
+                {!isGuestbookExpanded && (
+                  <GuestbookPreview
                     key="guestbook-preview"
                     entries={entries}
                     onExpand={() => setIsGuestbookExpanded(true)}
                   />
-                  )}
+                )}
               </div>
 
               <Separator className="my-14" />
@@ -354,21 +353,22 @@ export default function Home() {
             </div>
           </motion.main>
         </div>
-      {isClient && isGuestbookExpanded && createPortal(
-        <AnimatePresence>
-          {isGuestbookExpanded && ( 
-            <GuestbookFull
-                      key="guestbook-full" 
-                      entries={entries}
-                      setEntries={setEntries}
-                      onCollapse={() => setIsGuestbookExpanded(false)}
-                    />
+        {isClient &&
+          isGuestbookExpanded &&
+          createPortal(
+            <AnimatePresence>
+              {isGuestbookExpanded && (
+                <GuestbookFull
+                  key="guestbook-full"
+                  entries={entries}
+                  setEntries={setEntries}
+                  onCollapse={() => setIsGuestbookExpanded(false)}
+                />
+              )}
+            </AnimatePresence>,
+            document.body
           )}
-        </AnimatePresence>,
-        document.body
-      )}
       </SessionProvider>
-
 
       <ProjectSidebar
         isOpen={isWorkOpen}

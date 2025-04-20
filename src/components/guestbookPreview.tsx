@@ -4,15 +4,16 @@ import Balloon, { BalloonEntry } from "./balloon";
 import { Button } from "./ui/button";
 import { Maximize } from "lucide-react";
 
-export default function GuestbookPreview(
-  {entries, onExpand}: {entries: BalloonEntry[], onExpand: () => void}
-) {
+export default function GuestbookPreview({
+  entries,
+  onExpand,
+}: {
+  entries: BalloonEntry[];
+  onExpand: () => void;
+}) {
   return (
     <>
-      <div
-        id="guestbook"
-        className="relative bottom-80 invisible"
-      />
+      <div id="guestbook" className="relative bottom-80 invisible" />
       <motion.div
         layoutId="guestbook-container"
         className="overflow-x-hidden overflow-y-visible rounded-2xl bg-zinc-50 p-6 flex flex-col justify-between border-2 border-zinc-700 h-96"
@@ -32,9 +33,7 @@ export default function GuestbookPreview(
           </div>
 
           <div className={`w-full relative`}>
-            <div
-              className={`flex flex-row gap-8 h-0 animate-marquee`}
-            >
+            <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
               {[...Array(2)].flatMap((_, i) =>
                 entries.map((entry, index) => (
                   <Balloon

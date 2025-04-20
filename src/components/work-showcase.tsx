@@ -378,10 +378,7 @@ export default function WorkShowcase({
         Selected Work
       </h2>
 
-      <motion.div
-        layout
-        transition={{ layout: { duration: 0.5 } }}
-      >
+      <motion.div layout transition={{ layout: { duration: 0.5 } }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <AnimatePresence>
             {showedWork.map((work) => (

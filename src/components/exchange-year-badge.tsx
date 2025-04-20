@@ -13,7 +13,9 @@ export default function ExchangeYearBadge() {
       <span>🇩🇰</span>
       <span className="text-xs">→</span>
       <span>🇺🇸</span>
-      <span className="text-xs font-medium">Exchange Student &apos;24-&apos;25</span>
+      <span className="text-xs font-medium">
+        Exchange Student &apos;24-&apos;25
+      </span>
     </motion.div>
   );
 }

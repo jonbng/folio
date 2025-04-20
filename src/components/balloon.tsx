@@ -94,17 +94,23 @@ export default function Balloon({
       if (typeof window !== "undefined") {
         const containerWidth = window.innerWidth;
         availableWidth = containerWidth - containerPaddingX;
-        gridCols = Math.max(1, Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth));
+        gridCols = Math.max(
+          1,
+          Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth)
+        );
       }
 
       const row = Math.floor(index / gridCols);
       const col = index % gridCols;
 
-      const actualCellWidthPixels = (availableWidth - containerPaddingX * 4) / gridCols;
+      const actualCellWidthPixels =
+        (availableWidth - containerPaddingX * 4) / gridCols;
 
-      const absoluteCellLeftEdgePixels = leftPadding + col * actualCellWidthPixels;
+      const absoluteCellLeftEdgePixels =
+        leftPadding + col * actualCellWidthPixels;
 
-      const absoluteCenterXPixels = absoluteCellLeftEdgePixels + actualCellWidthPixels / 2;
+      const absoluteCenterXPixels =
+        absoluteCellLeftEdgePixels + actualCellWidthPixels / 2;
 
       const rowHeight = 160;
       const initialTopOffset = 60;
@@ -184,7 +190,7 @@ export default function Balloon({
         style={{ willChange: "transform" }}
       >
         <motion.div
-          className={`w-24 h-24 ${layoutMode === 'mobile' ? 'sm:w-20 sm:h-20' : ''} rounded-full flex items-center justify-center relative cursor-pointer`}
+          className={`w-24 h-24 ${layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""} rounded-full flex items-center justify-center relative cursor-pointer`}
           style={{
             background: color.bg,
             boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
@@ -204,10 +210,7 @@ export default function Balloon({
           </span>
         </motion.div>
 
-        <div
-          className="relative h-4 w-8 mx-auto"
-          style={{ marginTop: "-2px" }}
-        >
+        <div className="relative h-4 w-8 mx-auto" style={{ marginTop: "-2px" }}>
           <div
             className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0 h-0"
             style={{
@@ -227,19 +230,14 @@ export default function Balloon({
             fill="none"
             className="absolute left-1/2 -translate-x-1/2"
           >
-            <path
-              d={svgPathD}
-              stroke="black"
-              strokeWidth="1"
-              fill="none"
-            />
+            <path d={svgPathD} stroke="black" strokeWidth="1" fill="none" />
           </svg>
         </div>
 
         <AnimatePresence>
           {showTooltip && (
             <motion.div
-              className={`absolute bottom-full mb-2 w-64 ${layoutMode === 'mobile' ? 'sm:w-72' : ''} bg-white rounded-lg shadow-lg p-4 z-50`}
+              className={`absolute bottom-full mb-2 w-64 ${layoutMode === "mobile" ? "sm:w-72" : ""} bg-white rounded-lg shadow-lg p-4 z-50`}
               initial={{ opacity: 0, y: 10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.9 }}

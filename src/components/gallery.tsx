@@ -32,7 +32,7 @@ export function Gallery({ images }: GalleryProps) {
       setCurrentPhotoId(id);
       setLastViewedPhoto(id);
     },
-    [setLastViewedPhoto],
+    [setLastViewedPhoto]
   );
 
   const changePhotoId = useCallback(
@@ -40,7 +40,7 @@ export function Gallery({ images }: GalleryProps) {
       setCurrentPhotoId(newId);
       setLastViewedPhoto(newId);
     },
-    [setLastViewedPhoto],
+    [setLastViewedPhoto]
   );
 
   const goToPrevious = useCallback(() => {

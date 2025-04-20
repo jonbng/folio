@@ -28,7 +28,7 @@ export async function getSampleImages(): Promise<ImageType[]> {
 
   for (let i = 1; i <= imageCount; i++) {
     images.push({
-      id: "image-"+i,
+      id: "image-" + i,
       mainUrl: "/pfp.jpg",
       modalUrl: "/pfp.jpg",
       fullResUrl: "/pfp.jpg",

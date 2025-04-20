@@ -10,7 +10,7 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
-  }): Promise<Metadata> {
+}): Promise<Metadata> {
   const { id } = await params;
 
   const images = await getSampleImages();

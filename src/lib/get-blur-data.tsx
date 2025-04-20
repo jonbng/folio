@@ -11,7 +11,7 @@ export async function getBlurDataUrl(): Promise<string> {
 
   //   return base64;
   // } catch (error) {
-    // console.error("Error generating blur data:", error);
-    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEtAI8V7yQCgAAAABJRU5ErkJggg==";
+  // console.error("Error generating blur data:", error);
+  return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAEtAI8V7yQCgAAAABJRU5ErkJggg==";
   // }
 }
