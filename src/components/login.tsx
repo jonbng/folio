@@ -42,7 +42,7 @@ export default function Login() {
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
-      <AnimatePresence initial={false} mode="sync">
+      <AnimatePresence initial={false} mode="wait">
         {!isExpanded ? (
           <motion.div
             key="collapsed"
@@ -51,7 +51,11 @@ export default function Login() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
-              opacity: { duration: 0.1 },
+              opacity: { duration: 0.05 },
+              layout: {
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
+              },
             }}
             className="flex flex-row items-center justify-center gap-3 p-2 absolute"
           >
@@ -68,7 +72,11 @@ export default function Login() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
-              opacity: { duration: 0.1 },
+              opacity: { duration: 0.05 },
+              layout: {
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1],
+              },
             }}
             className="flex flex-col items-center justify-center absolute"
           >
