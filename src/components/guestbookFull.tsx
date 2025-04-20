@@ -8,6 +8,7 @@ import MessageInput from "./message-input";
 import { useSession } from "next-auth/react";
 import Login from "./login";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useState, useEffect } from "react";
 
 export default function GuestbookFull({
   entries,
@@ -26,6 +27,47 @@ export default function GuestbookFull({
 
   const isMobile = useMediaQuery("(max-width: 512px)");
   const balloonLayoutMode = isMobile ? "mobile" : "desktop";
+
+  const calculateContainerHeight = () => {
+    if (balloonLayoutMode === "mobile") return undefined;
+
+    // Similar grid calculation logic as in balloon component
+    const containerPaddingX = 32;
+    const estimatedItemWidth = 165;
+    let gridCols = 5;
+
+    if (typeof window !== "undefined") {
+      const availableWidth = window.innerWidth - containerPaddingX;
+      gridCols = Math.max(
+        1,
+        Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth)
+      );
+    }
+
+    const rowHeight = 160;
+    const initialTopOffset = 60;
+    const numRows = Math.ceil(entries.length / gridCols);
+    const totalHeight = numRows * rowHeight + initialTopOffset;
+
+    // Add extra padding at the bottom
+    return `${totalHeight + 100}px`;
+  };
+
+  const [containerHeight, setContainerHeight] = useState<string | undefined>(
+    calculateContainerHeight()
+  );
+
+  useEffect(() => {
+    const updateHeight = () => {
+      setContainerHeight(calculateContainerHeight());
+    };
+
+    updateHeight();
+    if (balloonLayoutMode === "desktop") {
+      window.addEventListener("resize", updateHeight);
+      return () => window.removeEventListener("resize", updateHeight);
+    }
+  }, [entries.length, balloonLayoutMode]);
 
   return (
     <>
@@ -85,17 +127,16 @@ export default function GuestbookFull({
                 ? "flex flex-col items-center"
                 : "min-h-full"
             }`}
+            style={{ minHeight: containerHeight }}
           >
-            {[...Array(1)].flatMap((_, i) =>
-              entries.map((entry, index) => (
-                <Balloon
-                  key={`entry-${i}-${entry.id}`}
-                  entry={entry}
-                  index={index + i * entries.length}
-                  layoutMode={balloonLayoutMode}
-                />
-              ))
-            )}
+            {entries.map((entry, index) => (
+              <Balloon
+                key={`entry-${index}`}
+                entry={entry}
+                index={index}
+                layoutMode={balloonLayoutMode}
+              />
+            ))}
             {!entries.length && (
               <div className="absolute inset-0 flex justify-center items-center min-h-[200px]">
                 <p className="text-sm text-zinc-500">
