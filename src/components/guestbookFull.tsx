@@ -158,7 +158,7 @@ export default function GuestbookFull({
         transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
         className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-50 border-2 border-zinc-700 text-black p-2 sm:p-3 min-w-fit rounded-2xl shadow-lg z-[51] text-center flex flex-row items-center justify-center gap-4 px-6"
       >
-        {session ? (
+        {!session ? (
           <MessageInput onMessageAdded={handleMessageAdded} />
         ) : (
           <Login />

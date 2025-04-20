@@ -96,14 +96,14 @@ export default function MessageInput({ onMessageAdded }: MessageInputProps) {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             className="w-32 h-32 flex-shrink-0"
           >
-            <Balloon entry={previewEntry} index={0} layoutMode="inline" />
+            <Balloon entry={previewEntry} index={0} layoutMode="static" />
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Input pill */}
       <motion.div
-        className={`flex-1 bg-white rounded-full shadow-lg transition-all ${isFocused ? "shadow-xl" : ""}`}
+        className={`flex-1 transition-all`}
         animate={{
           height: isFocused ? "auto" : "56px",
         }}

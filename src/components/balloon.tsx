@@ -25,7 +25,7 @@ export default function Balloon({
 }: {
   entry: BalloonEntry;
   index: number;
-  layoutMode?: "desktop" | "mobile" | "inline";
+  layoutMode?: "desktop" | "mobile" | "inline" | "static";
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -45,27 +45,66 @@ export default function Balloon({
   });
   const [formattedDate, setFormattedDate] = useState("");
 
+  const floatVariants = {
+    float: {
+      y: [-floatParams.height, 0, -floatParams.height],
+      transition: {
+        y: {
+          duration: floatParams.duration,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "easeInOut",
+          delay: floatParams.delay,
+        },
+      },
+    },
+  };
+
+  // Static parameters for static layout mode
+  const staticParams = {
+    duration: defaultDuration,
+    height: defaultHeight,
+    delay: 0,
+    curveX1: 11,
+    curveY1: defaultCurveY1,
+    curveX2: -5,
+    curveY2: defaultCurveY2,
+  };
+
   useEffect(() => {
     const calculatePositions = () => {
-      const randomDuration = 3 + Math.random() * 3;
-      const randomHeight = 15 + Math.random() * 25;
-      const randomDelay = Math.random() * 2;
-      setFloatParams({
-        duration: randomDuration,
-        height: randomHeight,
-        delay: randomDelay,
-      });
+      if (layoutMode === "static") {
+        setFloatParams({
+          duration: staticParams.duration,
+          height: staticParams.height,
+          delay: staticParams.delay,
+        });
+        setCurveParams({
+          x1: staticParams.curveX1,
+          y1: staticParams.curveY1,
+          x2: staticParams.curveX2,
+          y2: staticParams.curveY2,
+        });
+      } else {
+        const randomDuration = 3 + Math.random() * 3;
+        const randomHeight = 15 + Math.random() * 25;
+        const randomDelay = Math.random() * 2;
+        setFloatParams({
+          duration: randomDuration,
+          height: randomHeight,
+          delay: randomDelay,
+        });
 
-      const randomCurveX1 = Math.random() * 30 - 15;
-      const randomCurveY1 = 30 + Math.random() * 20;
-      const randomCurveX2 = Math.random() * 30 - 15;
-      const randomCurveY2 = 60 + Math.random() * 30;
-      setCurveParams({
-        x1: randomCurveX1,
-        y1: randomCurveY1,
-        x2: randomCurveX2,
-        y2: randomCurveY2,
-      });
+        const randomCurveX1 = Math.random() * 30 - 15;
+        const randomCurveY1 = 30 + Math.random() * 20;
+        const randomCurveX2 = Math.random() * 30 - 15;
+        const randomCurveY2 = 60 + Math.random() * 30;
+        setCurveParams({
+          x1: randomCurveX1,
+          y1: randomCurveY1,
+          x2: randomCurveX2,
+          y2: randomCurveY2,
+        });
+      }
 
       try {
         const timestampInMs = Number(entry.timestamp);
@@ -139,6 +178,14 @@ export default function Balloon({
           position: "relative",
         };
         setZIndex(0);
+      } else if (layoutMode === "static") {
+        calculatedStyle = {
+          ...calculatedStyle,
+          position: "relative",
+          left: "50%",
+          transform: "translateX(-50%)",
+        };
+        setZIndex(0);
       } else {
         setZIndex(0);
       }
@@ -161,20 +208,6 @@ export default function Balloon({
     }
   }, [layoutMode, index, entry.timestamp]);
 
-  const floatVariants = {
-    float: {
-      y: [-floatParams.height, 0, -floatParams.height],
-      transition: {
-        y: {
-          duration: floatParams.duration,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-          delay: floatParams.delay,
-        },
-      },
-    },
-  };
-
   const color = getBalloonColor(entry.color);
   const svgPathD = `M15,0 C${15 + curveParams.x1},${curveParams.y1} ${
     15 + curveParams.x2
@@ -186,6 +219,8 @@ export default function Balloon({
         return "w-fit -mb-24";
       case "inline":
         return "w-fit";
+      case "static":
+        return "w-full flex justify-center";
       case "desktop":
       default:
         return "";
@@ -203,8 +238,8 @@ export default function Balloon({
     >
       <motion.div
         variants={floatVariants}
-        animate={isMounted ? "float" : ""}
-        style={{ willChange: "transform" }}
+        animate={isMounted && layoutMode !== "static" ? "float" : ""}
+        style={{ willChange: "transform", width: "fit-content" }}
       >
         <motion.div
           className={`w-24 h-24 ${layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""} rounded-full flex items-center justify-center relative cursor-pointer`}
