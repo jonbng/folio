@@ -73,7 +73,7 @@ export default function MessageInput({ onMessageAdded }: MessageInputProps) {
         newEntry.name,
         newEntry.message,
         newEntry.username,
-        newEntry.color
+        newEntry.color,
       );
       onMessageAdded(newEntry);
       setMessage("");
@@ -235,7 +235,7 @@ export default function MessageInput({ onMessageAdded }: MessageInputProps) {
                                   className="w-5 h-5 rounded-full"
                                   style={{
                                     backgroundColor: getBalloonColor(
-                                      color.value
+                                      color.value,
                                     ).bg,
                                   }}
                                 ></div>

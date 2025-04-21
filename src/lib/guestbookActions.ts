@@ -40,10 +40,10 @@ export async function GetAllGuestbookEntries(): Promise<
         color: String(entry.color || ""),
         timestamp: String(entry.timestamp || ""),
       };
-    })
+    }),
   );
   const sortedEntries = entries.sort(
-    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
   );
   return sortedEntries;
 }
@@ -52,7 +52,7 @@ export async function AddGuestbookEntry(
   name: string,
   message: string,
   username: string,
-  color: string
+  color: string,
 ) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized: No session found.");
@@ -62,7 +62,7 @@ export async function AddGuestbookEntry(
   // Check if the username matches the session email
   if (username !== userEmail) {
     throw new Error(
-      `Unauthorized: You do not have permission to add an entry with username ${username}.`
+      `Unauthorized: You do not have permission to add an entry with username ${username}.`,
     );
   }
 
@@ -92,7 +92,7 @@ export async function EditGuestbookEntry(
   name: string,
   message: string,
   username: string,
-  color: string
+  color: string,
 ) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized: No session found.");
@@ -103,7 +103,7 @@ export async function EditGuestbookEntry(
   if (!entry) throw new Error(`Guestbook entry with id ${id} does not exist.`);
   if (entry.username !== userEmail) {
     throw new Error(
-      `Unauthorized: You do not have permission to edit this entry.`
+      `Unauthorized: You do not have permission to edit this entry.`,
     );
   }
 

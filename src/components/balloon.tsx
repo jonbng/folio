@@ -137,8 +137,8 @@ export default function Balloon({
           gridCols = Math.max(
             1,
             Math.floor(
-              (availableWidth - containerPaddingX) / estimatedItemWidth
-            )
+              (availableWidth - containerPaddingX) / estimatedItemWidth,
+            ),
           );
         }
 
@@ -206,6 +206,7 @@ export default function Balloon({
         window.removeEventListener("resize", calculatePositions);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layoutMode, index, entry.timestamp]);
 
   const color = getBalloonColor(entry.color);

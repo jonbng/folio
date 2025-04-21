@@ -81,13 +81,13 @@ function BalloonGuestbook() {
         const fetchedEntries = await GetAllGuestbookEntries();
         const sortedEntries = fetchedEntries.sort(
           (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
         );
         setEntries(sortedEntries);
 
         // Load existing entry if the user has already signed the guestbook
         const existingEntry = sortedEntries.find(
-          (entry) => entry.username === session?.user?.email
+          (entry) => entry.username === session?.user?.email,
         );
         if (existingEntry) {
           setUserEntryId(existingEntry.id);
@@ -120,7 +120,7 @@ function BalloonGuestbook() {
 
   // Handle input changes for text fields
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -152,11 +152,11 @@ function BalloonGuestbook() {
                 color: selectedColor,
                 timestamp,
               }
-            : entry
+            : entry,
         )
         .sort(
           (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
         );
       setEntries(updatedEntries);
 
@@ -166,7 +166,7 @@ function BalloonGuestbook() {
           name.trim(),
           message.trim(),
           username.trim(),
-          selectedColor
+          selectedColor,
         );
         console.log("Guestbook entry updated successfully.");
         setUserEntryId(userEntryId);
@@ -187,7 +187,7 @@ function BalloonGuestbook() {
       };
       const updatedEntries = [...entries, newEntry].sort(
         (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
       );
       setEntries(updatedEntries);
       setUserEntryId(newEntry.id);
@@ -198,7 +198,7 @@ function BalloonGuestbook() {
           newEntry.name,
           newEntry.message,
           newEntry.username,
-          newEntry.color
+          newEntry.color,
         );
         console.log("Guestbook entry added successfully.");
       } catch (error) {

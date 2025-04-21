@@ -11,14 +11,14 @@ export default function ShareButton({ imageId }: { imageId: string }) {
       className="mt-4"
       onClick={() => {
         const tweetText = encodeURIComponent(
-          `Check out this amazing photo from Jonathan Bangert's gallery!`
+          `Check out this amazing photo from Jonathan Bangert's gallery!`,
         );
         const tweetUrl = encodeURIComponent(
-          `https://jonathanb.dk/p/${imageId}`
+          `https://jonathanb.dk/p/${imageId}`,
         );
         window.open(
           `https://twitter.com/intent/tweet?text=${tweetText}&url=${tweetUrl}`,
-          "_blank"
+          "_blank",
         );
       }}
     >

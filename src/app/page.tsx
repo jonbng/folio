@@ -379,7 +379,7 @@ function HomeContent() {
                 />
               )}
             </AnimatePresence>,
-            document.body
+            document.body,
           )}
       </SessionProvider>
 

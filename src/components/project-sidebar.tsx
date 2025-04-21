@@ -201,7 +201,7 @@ export default function ProjectSidebar({
                               </p>
                             </div>
                           </a>
-                        )
+                        ),
                       )}
                     </div>
                   </div>

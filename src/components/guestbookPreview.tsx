@@ -42,7 +42,7 @@ export default function GuestbookPreview({
                     index={index + i * entries.length}
                     layoutMode="inline"
                   />
-                ))
+                )),
               )}
             </div>
           </div>

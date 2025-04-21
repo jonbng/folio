@@ -40,7 +40,7 @@ export default function GuestbookFull({
       const availableWidth = window.innerWidth - containerPaddingX;
       gridCols = Math.max(
         1,
-        Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth)
+        Math.floor((availableWidth - containerPaddingX) / estimatedItemWidth),
       );
     }
 
@@ -54,7 +54,7 @@ export default function GuestbookFull({
   };
 
   const [containerHeight, setContainerHeight] = useState<string | undefined>(
-    calculateContainerHeight()
+    calculateContainerHeight(),
   );
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function GuestbookFull({
       window.addEventListener("resize", updateHeight);
       return () => window.removeEventListener("resize", updateHeight);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entries.length, balloonLayoutMode]);
 
   return (

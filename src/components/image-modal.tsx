@@ -117,7 +117,7 @@ export function ImageModal({
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-4 transition-opacity duration-300",
-          showControls ? "opacity-100" : "opacity-0"
+          showControls ? "opacity-100" : "opacity-0",
         )}
       >
         <Button
@@ -143,7 +143,7 @@ export function ImageModal({
               e.stopPropagation();
               downloadImage(
                 currentPhoto.fullResUrl,
-                `image-${currentPhoto.id}`
+                `image-${currentPhoto.id}`,
               );
             }}
           >
@@ -164,14 +164,14 @@ export function ImageModal({
             onClick={(e) => {
               e.stopPropagation();
               const tweetText = encodeURIComponent(
-                `Check out this amazing photo from Jonathan Bangert's gallery!`
+                `Check out this amazing photo from Jonathan Bangert's gallery!`,
               );
               const tweetUrl = encodeURIComponent(
-                `https://jonathanb.dk/p/${currentPhoto.id}`
+                `https://jonathanb.dk/p/${currentPhoto.id}`,
               );
               window.open(
                 `https://twitter.com/intent/tweet?text=${tweetText}&url=${tweetUrl}`,
-                "_blank"
+                "_blank",
               );
             }}
           >
@@ -224,7 +224,7 @@ export function ImageModal({
           size="icon"
           className={cn(
             "absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-opacity duration-300",
-            showControls ? "opacity-100" : "opacity-0"
+            showControls ? "opacity-100" : "opacity-0",
           )}
           onClick={(e) => {
             e.stopPropagation();
@@ -241,7 +241,7 @@ export function ImageModal({
           size="icon"
           className={cn(
             "absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-opacity duration-300",
-            showControls ? "opacity-100" : "opacity-0"
+            showControls ? "opacity-100" : "opacity-0",
           )}
           onClick={(e) => {
             e.stopPropagation();
@@ -255,7 +255,7 @@ export function ImageModal({
       <div
         className={cn(
           "absolute bottom-0 left-0 right-0 z-50 overflow-x-auto py-4 px-2 bg-gradient-to-t from-black/80 to-transparent transition-opacity duration-300",
-          showControls ? "opacity-100" : "opacity-0"
+          showControls ? "opacity-100" : "opacity-0",
         )}
         onClick={(e) => e.stopPropagation()}
       >
@@ -267,7 +267,7 @@ export function ImageModal({
                 "relative h-16 w-24 flex-shrink-0 overflow-hidden rounded transition-all",
                 currentPhotoIndex === index
                   ? "ring-2 ring-white"
-                  : "opacity-60 hover:opacity-100"
+                  : "opacity-60 hover:opacity-100",
               )}
               onClick={(e) => {
                 e.stopPropagation();

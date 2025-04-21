@@ -90,7 +90,7 @@ const awards: AwardItem[] = [
 ];
 
 const allItems: Item[] = [...awards, ...pressItems].sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
 export default function PressAndRecognitionShowcase() {

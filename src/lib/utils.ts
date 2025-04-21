@@ -15,13 +15,13 @@ export function FilterShowcasedEntries(
     username: string;
     color: string;
     timestamp: string;
-  }>
+  }>,
 ) {
   return entries
     .filter((entry, index) => SHOWCASED_ENTRIES.includes(index + 1))
     .sort(
       (a, b) =>
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
     );
 }
 
@@ -33,7 +33,7 @@ export function DuplicateShowcasedEntries(
     username: string;
     color: string;
     timestamp: string;
-  }>
+  }>,
 ): Array<{
   id: string;
   name: string;
@@ -43,8 +43,11 @@ export function DuplicateShowcasedEntries(
   timestamp: string;
 }> {
   const showcased = FilterShowcasedEntries(entries);
-  return [...showcased.map((entry, index) => ({
-    ...entry,
-    id: `${entry.id}-duplicate-${index + 1}`, // Append a unique suffix to the ID
-  })), ...showcased]
+  return [
+    ...showcased.map((entry, index) => ({
+      ...entry,
+      id: `${entry.id}-duplicate-${index + 1}`, // Append a unique suffix to the ID
+    })),
+    ...showcased,
+  ];
 }
