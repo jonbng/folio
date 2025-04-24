@@ -39,8 +39,10 @@ export default function Login() {
           ease: [0.4, 0, 0.2, 1],
         },
       }}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onHoverStart={() => setIsExpanded(true)}
+      onHoverEnd={() => setIsExpanded(false)}
+      onFocus={() => setIsExpanded(true)}
+      onBlur={() => setIsExpanded(false)}
     >
       <AnimatePresence initial={false} mode="wait">
         {!isExpanded ? (
@@ -62,7 +64,9 @@ export default function Login() {
             <motion.div layout="position">
               <Feather className="h-6 w-6" />
             </motion.div>
-            <motion.p layout="position">Leave a message!</motion.p>
+            <motion.p layout="position" className="cursor-pointer">
+              Leave a message!
+            </motion.p>
           </motion.div>
         ) : (
           <motion.div

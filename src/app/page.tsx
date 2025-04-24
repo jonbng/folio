@@ -126,7 +126,7 @@ function HomeContent() {
       }
     }
     fetchEntries();
-  }, []);
+  }, [isGuestbookExpanded]);
 
   // Format time for Denver
   const denverTime =

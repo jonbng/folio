@@ -4,16 +4,13 @@ import type React from "react";
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Edit2 } from "lucide-react";
 import Balloon, { BalloonEntry, getBalloonColor } from "@/components/balloon";
-import { SessionProvider, signIn } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import {
   AddGuestbookEntry,
   EditGuestbookEntry,
   GetAllGuestbookEntries,
 } from "@/lib/guestbookActions";
-import Login from "@/components/login";
-import MessageInput from "@/components/message-input";
-import { motion } from "motion/react";
 
 const colorOptions = [
   { name: "Blue", value: "blue" },
@@ -31,24 +28,6 @@ type FormData = {
   selectedColor: string;
 };
 
-function IdkMan() {
-  const { data: session } = useSession();
-
-  return (
-    <motion.div
-      initial={{ y: "100%", opacity: 0 }}
-      animate={{ y: "0%", opacity: 1 }}
-      transition={{ type: "spring", stiffness: 100 }}
-      className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white text-black p-5 rounded-full shadow-lg z-50 gap-4"
-    >
-      {session ? (
-        <MessageInput onMessageAdded={(entry) => console.log(entry)} />
-      ) : (
-        <Login />
-      )}
-    </motion.div>
-  );
-}
 export default function Home() {
   return (
     <SessionProvider>
@@ -56,7 +35,6 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">Guestbook</h1>
         <BalloonGuestbook />
       </main>
-      <IdkMan />
     </SessionProvider>
   );
 }
@@ -235,7 +213,7 @@ function BalloonGuestbook() {
           <Balloon key={entry.id} entry={entry} index={index} />
         ))}
       </div>
-      {session ? (
+      {(
         <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
           {!userEntryId || isEditing ? (
             <>
@@ -339,11 +317,6 @@ function BalloonGuestbook() {
               </button>
             </div>
           )}
-        </div>
-      ) : (
-        <div>
-          <h1>You need to sign in</h1>
-          <button onClick={() => signIn("github")}>Sign In</button>
         </div>
       )}
     </div>
