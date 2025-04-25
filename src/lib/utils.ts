@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { SHA256 } from "crypto-js";
+import encHex from "crypto-js/enc-hex";
+
 const SHOWCASED_ENTRIES = [1, 2, 3];
 
 export function cn(...inputs: ClassValue[]) {
@@ -50,4 +53,8 @@ export function DuplicateShowcasedEntries(
     })),
     ...showcased,
   ];
+}
+
+export function hashEmail(email: string): string {
+  return SHA256(email).toString(encHex);
 }

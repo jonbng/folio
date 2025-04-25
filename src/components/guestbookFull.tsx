@@ -16,7 +16,7 @@ export default function GuestbookFull({
   onCollapse,
 }: {
   entries: BalloonEntry[];
-  setEntries: (entries: BalloonEntry[]) => void;
+  setEntries: React.Dispatch<React.SetStateAction<BalloonEntry[]>>;
   onCollapse: () => void;
 }) {
   const { data: session } = useSession();

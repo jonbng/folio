@@ -3,10 +3,14 @@
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from "react";
 import { Check, ChevronDown, Edit2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Balloon, { type BalloonEntry, getBalloonColor } from "./balloon"; // Assuming BalloonEntry doesn't require username
+import Balloon, { type BalloonEntry, getBalloonColor } from "./balloon";
 import { Button } from "@/components/ui/button";
-import { AddGuestbookEntry, EditGuestbookEntry, hashEmail } from "@/lib/guestbookActions";
+import {
+  AddGuestbookEntry,
+  EditGuestbookEntry,
+} from "@/lib/guestbookActions";
 import { Session } from "next-auth";
+import { hashEmail } from "@/lib/utils";
 
 const colorOptions = [
   { name: "Blue", value: "blue" },
@@ -17,7 +21,6 @@ const colorOptions = [
   { name: "Orange", value: "orange" },
 ];
 
-// FormData no longer includes username
 type FormData = {
   name: string;
   message: string;
@@ -26,9 +29,7 @@ type FormData = {
 
 interface MessageInputProps {
   entries: BalloonEntry[];
-  setEntries: (
-    entries: BalloonEntry[] | ((prevEntries: BalloonEntry[]) => BalloonEntry[]),
-  ) => void;
+  setEntries: React.Dispatch<React.SetStateAction<BalloonEntry[]>>;
   session: Session | null;
 }
 
@@ -121,7 +122,6 @@ const BalloonPreview = ({ entry }: { entry: BalloonEntry }) => {
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
       className="w-32 h-32 flex-shrink-0"
     >
-      {/* Assuming Balloon component doesn't strictly need username */}
       <Balloon entry={entry} index={0} layoutMode="static" />
     </motion.div>
   );
@@ -178,6 +178,21 @@ const MessageForm = ({
   );
 };
 
+// Helper function to get username (ID or hashed email)
+const getUsernameFromSession = (session: Session | null): string | null => {
+  if (!session?.user) {
+    return null;
+  }
+  if (session.user.id) {
+    return session.user.id;
+  }
+  if (session.user.email) {
+    // Assuming hashEmail is synchronous. If it's async, this needs adjustment.
+    return hashEmail(session.user.email);
+  }
+  return null; // No usable identifier
+};
+
 // Main MessageInput Component
 export default function MessageInput({
   entries,
@@ -188,37 +203,27 @@ export default function MessageInput({
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initial form state without username
   const [formData, setFormData] = useState<FormData>({
     name: "",
     message: "",
     selectedColor: "blue",
   });
 
+  // Determine username based on session id or hashed email
+  const username = getUsernameFromSession(session);
+
   // Effect to initialize form data based on session and existing entries
   useEffect(() => {
-    if (!session?.user) return;
+    // If no username could be determined, do nothing
+    if (!username) return;
 
-    let userId = session.user.id;
-    if (!userId) {
-      hashEmail(session.user.email!).then((hashedEmail) => {
-        userId = hashedEmail;
-      });
-    }
-    // Find existing entry based on user ID (assuming BalloonEntry has a userId or similar)
-    // If BalloonEntry doesn't have userId, this find logic needs adjustment
-    // For now, assuming 'id' might correspond to the user's *entry* ID if they have one
-    // Or perhaps the backend provides the user's entry ID separately.
-    // Let's assume `entries` contains the user's entry if they have one, identified by `id`.
-    // This part might need refinement based on how `entries` relates user ID to entry ID.
-    // A common pattern is that `GetAllGuestbookEntries` includes the user's entry ID if logged in.
-    // We'll stick to the previous logic assuming `entries` contains the user's entry.
+    // Find the user's existing entry using their determined username
     const existingEntry = entries.find(
-      (entry) => entry.username === userId, // Assuming BalloonEntry has userId now
-    ); // Adjust this find condition based on your actual data structure
+      (entry) => entry.username === username,
+    );
 
     if (existingEntry) {
-      setUserEntryId(existingEntry.id); // Use the entry's ID
+      setUserEntryId(existingEntry.id);
       setFormData({
         name: existingEntry.name,
         message: existingEntry.message,
@@ -228,22 +233,28 @@ export default function MessageInput({
     } else {
       setUserEntryId(null);
       setFormData({
-        name: session.user.name || "",
+        // Use session name if available, otherwise empty string
+        name: session?.user?.name || "",
         message: "",
         selectedColor:
           colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
       });
       setIsEditing(true);
     }
-  }, [session, entries]);
+    // Depend on username (derived from session) and entries
+  }, [username, entries, session]); // Added session to dependencies
 
-  if (!session?.user) return null;
+  // If no username could be derived from the session, render nothing
+  if (!username) {
+    console.log("MessageInput: No user ID or email found in session.");
+    return null;
+  }
 
-  // Preview entry without username
+  // Preview entry includes username
   const previewEntry: BalloonEntry = {
     id: userEntryId || "preview",
     name: formData.name || "Your Name",
-    username: session.user.id || "", // Add userId if needed by Balloon component
+    username: username, // Use the determined username
     message: formData.message || "Your message will appear here",
     color: formData.selectedColor,
     timestamp: Date.now().toString(),
@@ -268,16 +279,12 @@ export default function MessageInput({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { name, message, selectedColor } = formData;
-    let userId = session.user?.id; // Still need user ID for association
-    if (!userId) {
-      hashEmail(session.user!.email!).then((hashedEmail) => {
-        userId = hashedEmail;
-      });
-    }
 
-    // Validation without username
-    if (!name.trim() || !message.trim() || !userId) {
-      console.warn("Form validation failed: Name, message, and user required");
+    // Validation - uses the already determined username
+    if (!name.trim() || !message.trim() || !username) {
+      console.warn(
+        "Form validation failed: Name, message, and derived username required",
+      );
       return;
     }
 
@@ -290,7 +297,7 @@ export default function MessageInput({
       const optimisticUpdatedEntry: BalloonEntry = {
         id: userEntryId,
         name: trimmedName,
-        username: userId, // Include userId if needed
+        username: username, // Use determined username
         message: trimmedMessage,
         color: selectedColor,
         timestamp: timestamp,
@@ -310,7 +317,7 @@ export default function MessageInput({
 
       try {
         await EditGuestbookEntry(
-          userEntryId, // Pass the entry ID to edit
+          userEntryId,
           trimmedName,
           trimmedMessage,
           selectedColor,
@@ -319,7 +326,18 @@ export default function MessageInput({
       } catch (error) {
         console.error("Failed to update guestbook entry:", error);
         alert("Failed to update your message. Please try again.");
-        // Consider reverting optimistic update here
+        // Revert logic
+        setEntries((prevEntries) => {
+          const originalEntry = entries.find((e) => e.id === userEntryId);
+          return prevEntries
+            .map((entry) => (entry.id === userEntryId ? originalEntry || entry : entry))
+            .sort(
+              (a, b) =>
+                new Date(b.timestamp).getTime() -
+                new Date(a.timestamp).getTime(),
+            );
+        });
+        setIsEditing(true);
       }
     } else {
       // --- ADD new entry ---
@@ -327,7 +345,7 @@ export default function MessageInput({
       const optimisticNewEntry: BalloonEntry = {
         id: tempId,
         name: trimmedName,
-        username: userId, // Include userId if needed
+        username: username, // Use determined username
         message: trimmedMessage,
         color: selectedColor,
         timestamp: timestamp,
@@ -342,24 +360,22 @@ export default function MessageInput({
       setIsEditing(false);
 
       try {
-        // Call server action and expect a number (the new ID)
+        // Backend uses session to associate user
         const addedEntryIdNum = await AddGuestbookEntry(
           trimmedName,
           trimmedMessage,
           selectedColor,
         );
 
-        // Check if a valid ID number was returned
         if (typeof addedEntryIdNum === "number" && addedEntryIdNum > 0) {
           const addedEntryIdStr = addedEntryIdNum.toString();
-          setUserEntryId(addedEntryIdStr); // Update state with the real ID (as string)
+          setUserEntryId(addedEntryIdStr);
 
-          // Update the temporary entry in the list with the real ID
           setEntries((prevEntries) =>
             prevEntries
               .map((entry) =>
                 entry.id === tempId
-                  ? { ...entry, id: addedEntryIdStr } // Update ID
+                  ? { ...entry, id: addedEntryIdStr }
                   : entry,
               )
               .sort(
@@ -372,19 +388,24 @@ export default function MessageInput({
             `Guestbook entry added successfully with ID: ${addedEntryIdStr}.`,
           );
         } else {
-          // Handle cases where the ID might not be returned as expected
-          setUserEntryId(tempId); // Fallback: keep temp ID
+          setUserEntryId(tempId);
           console.warn(
             "Guestbook entry added, but couldn't update with real ID from server.",
           );
         }
       } catch (error) {
         console.error("Failed to add guestbook entry:", error);
+        alert("Failed to add your message. Please try again.");
         setEntries((prevEntries) =>
-          prevEntries.filter((entry) => entry.id !== tempId),
+          prevEntries
+            .filter((entry) => entry.id !== tempId)
+            .sort(
+              (a, b) =>
+                new Date(b.timestamp).getTime() -
+                new Date(a.timestamp).getTime(),
+            ),
         );
         setIsEditing(true);
-        alert("Failed to add your message. Please try again.");
       }
     }
   };

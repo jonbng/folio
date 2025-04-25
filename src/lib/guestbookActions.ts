@@ -2,28 +2,12 @@
 
 import { Redis } from "@upstash/redis";
 import { auth } from "./auth";
+import { hashEmail } from "./utils";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
-
-export async function hashEmail(email: string) {
-  // Encode the email string as UTF-8
-  const encoder = new TextEncoder();
-  const data = encoder.encode(email);
-
-  // Hash the data using SHA-256
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-
-  // Convert the ArrayBuffer to a hexadecimal string
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hashHex;
-}
 
 export async function GetAllGuestbookEntries(): Promise<
   Array<{
@@ -78,7 +62,7 @@ export async function AddGuestbookEntry(
   console.log(session);
 
   if (!userId) {
-    const hashedEmail = await hashEmail(session!.user!.email!);
+    const hashedEmail = hashEmail(session!.user!.email!);
     userId = hashedEmail;
   }
 
@@ -116,7 +100,7 @@ export async function EditGuestbookEntry(
   let userId = session!.user!.id;
 
   if (!userId) {
-    const hashedEmail = await hashEmail(session!.user!.email!);
+    const hashedEmail = hashEmail(session!.user!.email!);
     userId = hashedEmail;
   }
 
