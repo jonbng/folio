@@ -3,6 +3,7 @@ import "./globals.css";
 import { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import FaviconLoader from "@/components/FaviconLoader";
 
 export const metadata: Metadata = {
   title: "Jonathan Bangert - Folio",
@@ -62,43 +63,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
-    other: [
-      {
-        rel: "shortcut icon",
-        url: "/favicon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-      },
-      {
-        rel: "icon",
-        url: "/favicon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-      },
-      {
-        rel: "apple-touch-icon",
-        url: "/favicon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-      },
-      {
-        rel: "icon",
-        url: "/favicon.png",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        rel: "icon",
-        url: "/favicon.ico",
-        sizes: "128x128",
-        type: "image/x-icon",
-      },
-    ],
-  },
 };
 
 export const viewport: Viewport = {
@@ -114,6 +78,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`$antialiased`}>
+        <FaviconLoader />
         {children}
         <Analytics />
         <SpeedInsights />
