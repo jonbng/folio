@@ -206,7 +206,7 @@ function HomeContent() {
                     rel="noopener noreferrer"
                     className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
                   >
-                    <XIcon size={24} />
+                    <XIcon size={23} className="opacity-80" />
                     <span className="sr-only">X</span>
                   </Link>
                   <Link
