@@ -65,7 +65,7 @@ function BalloonGuestbook() {
 
         // Load existing entry if the user has already signed the guestbook
         const existingEntry = sortedEntries.find(
-          (entry) => entry.username === session?.user?.email,
+          (entry) => entry.username === session?.user?.id,
         );
         if (existingEntry) {
           setUserEntryId(existingEntry.id);
@@ -86,7 +86,7 @@ function BalloonGuestbook() {
       setFormData((prev) => ({
         ...prev,
         name: session.user?.name || "",
-        username: session.user?.email || "",
+        username: session.user?.id || "",
         selectedColor:
           colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
       }));
@@ -143,7 +143,6 @@ function BalloonGuestbook() {
           userEntryId,
           name.trim(),
           message.trim(),
-          username.trim(),
           selectedColor,
         );
         console.log("Guestbook entry updated successfully.");
@@ -175,7 +174,6 @@ function BalloonGuestbook() {
         await AddGuestbookEntry(
           newEntry.name,
           newEntry.message,
-          newEntry.username,
           newEntry.color,
         );
         console.log("Guestbook entry added successfully.");

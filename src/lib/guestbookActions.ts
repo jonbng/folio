@@ -8,6 +8,23 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
+export async function hashEmail(email: string) {
+  // Encode the email string as UTF-8
+  const encoder = new TextEncoder();
+  const data = encoder.encode(email);
+
+  // Hash the data using SHA-256
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Convert the ArrayBuffer to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hashHex;
+}
+
 export async function GetAllGuestbookEntries(): Promise<
   Array<{
     id: string;
@@ -51,22 +68,21 @@ export async function GetAllGuestbookEntries(): Promise<
 export async function AddGuestbookEntry(
   name: string,
   message: string,
-  username: string,
   color: string,
 ) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized: No session found.");
-  // Ensure the user is authorized to edit this entry by checking email
-  const userEmail = session!.user!.email;
+  // Ensure the user is authorized to edit this entry by checking id
+  let userId = session!.user!.id;
 
-  // Check if the username matches the session email
-  if (username !== userEmail) {
-    throw new Error(
-      `Unauthorized: You do not have permission to add an entry with username ${username}.`,
-    );
+  console.log(session);
+
+  if (!userId) {
+    const hashedEmail = await hashEmail(session!.user!.email!);
+    userId = hashedEmail;
   }
 
-  const added = await redis.sadd("guestbook:uniqueUsernames", username);
+  const added = await redis.sadd("guestbook:uniqueUsernames", userId);
   if (added === 0) {
     throw new Error("Duplicate entry: Username already exists.");
   }
@@ -76,7 +92,7 @@ export async function AddGuestbookEntry(
   await redis.hset(`guestbook:entry:${entryId}`, {
     name,
     message,
-    username,
+    userId,
     color,
     timestamp,
   });
@@ -91,17 +107,22 @@ export async function EditGuestbookEntry(
   id: string,
   name: string,
   message: string,
-  username: string,
   color: string,
 ) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized: No session found.");
 
-  // Ensure the user is authorized to edit this entry by checking email
-  const userEmail = session!.user!.email;
+  // Ensure the user is authorized to edit this entry by checking id
+  let userId = session!.user!.id;
+
+  if (!userId) {
+    const hashedEmail = await hashEmail(session!.user!.email!);
+    userId = hashedEmail;
+  }
+
   const entry = await redis.hgetall(`guestbook:entry:${id}`);
   if (!entry) throw new Error(`Guestbook entry with id ${id} does not exist.`);
-  if (entry.username !== userEmail) {
+  if (entry.username !== userId) {
     throw new Error(
       `Unauthorized: You do not have permission to edit this entry.`,
     );
@@ -110,7 +131,6 @@ export async function EditGuestbookEntry(
   await redis.hset(`guestbook:entry:${id}`, {
     name,
     message,
-    username,
     color,
   });
   return true;
