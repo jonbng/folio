@@ -70,7 +70,7 @@ export default function PressKit() {
                     download
                     className="text-blue-600 hover:underline"
                   >
-                    Download
+                    Download Profile Picture
                   </a>
                 </Button>
               </div>
@@ -87,7 +87,7 @@ export default function PressKit() {
                     download
                     className="text-blue-600 hover:underline"
                   >
-                    Download
+                    Download Team Picture
                   </a>
                 </Button>
               </div>
