@@ -3,6 +3,12 @@ import { ArrowLeft } from "lucide-react";
 import { Gallery } from "@/components/gallery";
 import { getSampleImages } from "@/lib/get-images";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Photography | Jonathan Bangert",
+  description: "My photography portfolio.",
+};
 
 export default async function Home() {
   const images = await getSampleImages();

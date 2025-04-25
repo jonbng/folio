@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
 
 const posts = [
   {
@@ -24,6 +25,11 @@ const posts = [
     date: "April 10, 2023",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Blog | Jonathan Bangert",
+  description: "My thoughts on software development, education, and technology.",
+};
 
 export default function BlogPage() {
   return (

@@ -2,6 +2,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Press Kit | Jonathan Bangert",
+  description: "Press kit for Jonathan Bangert.",
+};
 
 export default function PressKit() {
   return (

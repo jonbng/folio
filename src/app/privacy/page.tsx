@@ -1,5 +1,12 @@
 // Example usage: Place this in pages/privacy.jsx or import into another page
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Jonathan Bangert",
+  description: "Privacy policy for Jonathan Bangert.",
+};
+
 export default function PrivacyPolicy() {
   const contactEmail = "privacy@jonathanb.dk";
   const contactLink = `mailto:${contactEmail}`;
