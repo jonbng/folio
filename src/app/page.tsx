@@ -19,9 +19,9 @@ import { Toaster } from "@/components/ui/sonner";
 import GuestbookFull from "@/components/guestbookFull";
 import GuestbookPreview from "@/components/guestbookPreview";
 import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
-import { BalloonEntry } from "@/components/balloon";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
+import { GuestbookEntry } from "@/types/guestbook";
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -43,7 +43,7 @@ function HomeContent() {
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<Date | null>(null);
   const [isGuestbookExpanded, setIsGuestbookExpanded] = useState(false);
-  const [entries, setEntries] = useState<BalloonEntry[]>([]);
+  const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 

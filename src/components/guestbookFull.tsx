@@ -1,20 +1,21 @@
 "use client";
 
 import { motion } from "motion/react";
-import Balloon, { BalloonEntry } from "./balloon";
+import Balloon from "./balloon";
 import { Button } from "./ui/button";
 import { XIcon } from "lucide-react";
 import MessageInput from "./message-input";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useState, useEffect } from "react";
+import { GuestbookEntry } from "@/types/guestbook";
 
 export default function GuestbookFull({
   entries,
   setEntries,
   onCollapse,
 }: {
-  entries: BalloonEntry[];
-  setEntries: React.Dispatch<React.SetStateAction<BalloonEntry[]>>;
+  entries: GuestbookEntry[];
+  setEntries: React.Dispatch<React.SetStateAction<GuestbookEntry[]>>;
   onCollapse: () => void;
 }) {
   const isMobile = useMediaQuery("(max-width: 512px)");

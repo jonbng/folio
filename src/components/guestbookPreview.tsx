@@ -1,15 +1,16 @@
 "use client";
 import { motion } from "motion/react";
-import Balloon, { BalloonEntry } from "./balloon";
+import Balloon from "./balloon";
 import { Button } from "./ui/button";
 import { Maximize } from "lucide-react";
+import { GuestbookEntry } from "@/types/guestbook";
 
 export default function GuestbookPreview({
   entries,
   onExpand,
   isLoading,
 }: {
-  entries: BalloonEntry[];
+  entries: GuestbookEntry[];
   onExpand: () => void;
   isLoading?: boolean;
 }) {
