@@ -90,7 +90,6 @@ export default function GuestbookPreview({
             }
           }
           .animate-marquee {
-            will-change: transform;
             animation: marquee 30s linear infinite;
           }
           @media (prefers-reduced-motion: reduce) {
