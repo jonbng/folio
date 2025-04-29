@@ -2,15 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-
-export interface BalloonEntry {
-  id: string;
-  name: string;
-  username: string;
-  message: string;
-  color: string;
-  timestamp: string;
-}
+import { GuestbookEntry } from "@/types/guestbook";
 
 const defaultDuration = 4.5;
 const defaultHeight = 27.5;
@@ -23,7 +15,7 @@ export default function Balloon({
   index,
   layoutMode = "desktop",
 }: {
-  entry: BalloonEntry;
+  entry: GuestbookEntry;
   index: number;
   layoutMode?: "desktop" | "mobile" | "inline" | "static";
 }) {
@@ -107,15 +99,11 @@ export default function Balloon({
       }
 
       try {
-        const timestampInMs = Number(entry.timestamp);
-        if (!isNaN(timestampInMs)) {
-          setFormattedDate(new Date(timestampInMs).toLocaleString());
-        } else {
-          setFormattedDate("Invalid Date");
-        }
+        const date = new Date(entry.timestamp);
+        setFormattedDate(date.toLocaleString());
       } catch (error) {
         console.error("Error formatting date:", error);
-        setFormattedDate("Invalid Date");
+        setFormattedDate("Just now");
       }
 
       let calculatedStyle: React.CSSProperties = { opacity: 1 };
@@ -306,7 +294,6 @@ export default function Balloon({
               </div>
               <div className="flex items-baseline gap-2 mb-2">
                 <div className="font-bold text-gray-800">{entry.name}</div>
-                <div className="text-xs text-gray-400">{entry.username}</div>
               </div>
               <div className="text-gray-600">{entry.message}</div>
               <div

@@ -1,16 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from "react";
-import { Check, ChevronDown, Edit2 } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Balloon, { type BalloonEntry, getBalloonColor } from "./balloon";
+import Balloon, { getBalloonColor } from "./balloon";
 import { Button } from "@/components/ui/button";
-import {
-  AddGuestbookEntry,
-  EditGuestbookEntry,
-} from "@/lib/guestbookActions";
-import { Session } from "next-auth";
-import { hashEmail } from "@/lib/utils";
+import { AddGuestbookEntry } from "@/lib/guestbookActions";
+import { GuestbookEntry } from "@/types/guestbook";
 
 const colorOptions = [
   { name: "Blue", value: "blue" },
@@ -25,12 +21,12 @@ type FormData = {
   name: string;
   message: string;
   selectedColor: string;
+  notABot?: string; // Honeypot field
 };
 
 interface MessageInputProps {
-  entries: BalloonEntry[];
-  setEntries: React.Dispatch<React.SetStateAction<BalloonEntry[]>>;
-  session: Session | null;
+  setEntries: React.Dispatch<React.SetStateAction<GuestbookEntry[]>>;
+  onSubmit?: () => void;
 }
 
 // Color picker component (remains the same)
@@ -114,7 +110,7 @@ const ColorPicker = ({
 };
 
 // Preview balloon component (remains the same)
-const BalloonPreview = ({ entry }: { entry: BalloonEntry }) => {
+const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -127,7 +123,7 @@ const BalloonPreview = ({ entry }: { entry: BalloonEntry }) => {
   );
 };
 
-// Message form component (remains the same)
+// Message form component
 const MessageForm = ({
   formData,
   onInputChange,
@@ -164,6 +160,33 @@ const MessageForm = ({
           />
         </div>
 
+        {/* Honeypot field - hidden from real users */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            padding: "0",
+            margin: "-1px",
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: "0",
+          }}
+        >
+          <label htmlFor="notABot">Leave this field empty</label>
+          <input
+            type="text"
+            id="notABot"
+            name="notABot"
+            tabIndex={-1}
+            autoComplete="off"
+            value={formData.notABot}
+            onChange={onInputChange}
+          />
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-500 mb-1">
             Balloon Color
@@ -178,86 +201,29 @@ const MessageForm = ({
   );
 };
 
-// Helper function to get username (ID or hashed email)
-const getUsernameFromSession = (session: Session | null): string | null => {
-  if (!session?.user) {
-    return null;
-  }
-  if (session.user.id) {
-    return session.user.id;
-  }
-  if (session.user.email) {
-    // Assuming hashEmail is synchronous. If it's async, this needs adjustment.
-    return hashEmail(session.user.email);
-  }
-  return null; // No usable identifier
-};
-
 // Main MessageInput Component
 export default function MessageInput({
-  entries,
   setEntries,
-  session,
+  onSubmit,
 }: MessageInputProps) {
-  const [userEntryId, setUserEntryId] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
     message: "",
-    selectedColor: "blue",
+    selectedColor:
+      colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+    notABot: "", // Initialize honeypot field as empty
   });
 
-  // Determine username based on session id or hashed email
-  const username = getUsernameFromSession(session);
-
-  // Effect to initialize form data based on session and existing entries
-  useEffect(() => {
-    // If no username could be determined, do nothing
-    if (!username) return;
-
-    // Find the user's existing entry using their determined username
-    const existingEntry = entries.find(
-      (entry) => entry.username === username,
-    );
-
-    if (existingEntry) {
-      setUserEntryId(existingEntry.id);
-      setFormData({
-        name: existingEntry.name,
-        message: existingEntry.message,
-        selectedColor: existingEntry.color,
-      });
-      setIsEditing(false);
-    } else {
-      setUserEntryId(null);
-      setFormData({
-        // Use session name if available, otherwise empty string
-        name: session?.user?.name || "",
-        message: "",
-        selectedColor:
-          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
-      });
-      setIsEditing(true);
-    }
-    // Depend on username (derived from session) and entries
-  }, [username, entries, session]); // Added session to dependencies
-
-  // If no username could be derived from the session, render nothing
-  if (!username) {
-    console.log("MessageInput: No user ID or email found in session.");
-    return null;
-  }
-
-  // Preview entry includes username
-  const previewEntry: BalloonEntry = {
-    id: userEntryId || "preview",
+  // Preview entry
+  const previewEntry: GuestbookEntry = {
+    id: "preview",
     name: formData.name || "Your Name",
-    username: username, // Use the determined username
     message: formData.message || "Your message will appear here",
     color: formData.selectedColor,
-    timestamp: Date.now().toString(),
+    timestamp: new Date().toISOString(),
   };
 
   const handleStartEditing = () => {
@@ -278,13 +244,26 @@ export default function MessageInput({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { name, message, selectedColor } = formData;
+    const { name, message, selectedColor, notABot } = formData;
 
-    // Validation - uses the already determined username
-    if (!name.trim() || !message.trim() || !username) {
-      console.warn(
-        "Form validation failed: Name, message, and derived username required",
-      );
+    // Bot detection - if honeypot field is filled, silently reject
+    if (notABot) {
+      console.log("Bot submission detected and prevented");
+      // Pretend success but don't actually submit
+      setIsEditing(false);
+      setFormData({
+        name: "",
+        message: "",
+        selectedColor:
+          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+        notABot: "",
+      });
+      return;
+    }
+
+    // Validation
+    if (!name.trim() || !message.trim()) {
+      console.warn("Form validation failed: Name and message required");
       return;
     }
 
@@ -292,121 +271,68 @@ export default function MessageInput({
     const trimmedName = name.trim();
     const trimmedMessage = message.trim();
 
-    if (userEntryId) {
-      // --- EDIT existing entry ---
-      const optimisticUpdatedEntry: BalloonEntry = {
-        id: userEntryId,
-        name: trimmedName,
-        username: username, // Use determined username
-        message: trimmedMessage,
-        color: selectedColor,
-        timestamp: timestamp,
-      };
+    // --- ADD new entry ---
+    const tempId = `temp-${Date.now()}-${Math.random()}`;
+    const optimisticNewEntry: GuestbookEntry = {
+      id: tempId,
+      name: trimmedName,
+      message: trimmedMessage,
+      color: selectedColor,
+      timestamp: timestamp,
+    };
+
+    setEntries((prevEntries) =>
+      [...prevEntries, optimisticNewEntry].sort(
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+      ),
+    );
+    setIsEditing(false);
+
+    try {
+      const addedEntryId = await AddGuestbookEntry(
+        trimmedName,
+        trimmedMessage,
+        selectedColor,
+      );
 
       setEntries((prevEntries) =>
         prevEntries
           .map((entry) =>
-            entry.id === userEntryId ? optimisticUpdatedEntry : entry,
+            entry.id === tempId ? { ...entry, id: addedEntryId } : entry,
           )
           .sort(
             (a, b) =>
               new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
           ),
       );
-      setIsEditing(false);
-
-      try {
-        await EditGuestbookEntry(
-          userEntryId,
-          trimmedName,
-          trimmedMessage,
-          selectedColor,
-        );
-        console.log("Guestbook entry updated successfully.");
-      } catch (error) {
-        console.error("Failed to update guestbook entry:", error);
-        alert("Failed to update your message. Please try again.");
-        // Revert logic
-        setEntries((prevEntries) => {
-          const originalEntry = entries.find((e) => e.id === userEntryId);
-          return prevEntries
-            .map((entry) => (entry.id === userEntryId ? originalEntry || entry : entry))
-            .sort(
-              (a, b) =>
-                new Date(b.timestamp).getTime() -
-                new Date(a.timestamp).getTime(),
-            );
-        });
-        setIsEditing(true);
-      }
-    } else {
-      // --- ADD new entry ---
-      const tempId = `temp-${Date.now()}-${Math.random()}`;
-      const optimisticNewEntry: BalloonEntry = {
-        id: tempId,
-        name: trimmedName,
-        username: username, // Use determined username
-        message: trimmedMessage,
-        color: selectedColor,
-        timestamp: timestamp,
-      };
-
-      setEntries((prevEntries) =>
-        [...prevEntries, optimisticNewEntry].sort(
-          (a, b) =>
-            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-        ),
+      console.log(
+        `Guestbook entry added successfully with ID: ${addedEntryId}.`,
       );
-      setIsEditing(false);
 
-      try {
-        // Backend uses session to associate user
-        const addedEntryIdNum = await AddGuestbookEntry(
-          trimmedName,
-          trimmedMessage,
-          selectedColor,
-        );
+      // Reset form
+      setFormData({
+        name: "",
+        message: "",
+        selectedColor:
+          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+        notABot: "",
+      });
 
-        if (typeof addedEntryIdNum === "number" && addedEntryIdNum > 0) {
-          const addedEntryIdStr = addedEntryIdNum.toString();
-          setUserEntryId(addedEntryIdStr);
-
-          setEntries((prevEntries) =>
-            prevEntries
-              .map((entry) =>
-                entry.id === tempId
-                  ? { ...entry, id: addedEntryIdStr }
-                  : entry,
-              )
-              .sort(
-                (a, b) =>
-                  new Date(b.timestamp).getTime() -
-                  new Date(a.timestamp).getTime(),
-              ),
-          );
-          console.log(
-            `Guestbook entry added successfully with ID: ${addedEntryIdStr}.`,
-          );
-        } else {
-          setUserEntryId(tempId);
-          console.warn(
-            "Guestbook entry added, but couldn't update with real ID from server.",
-          );
-        }
-      } catch (error) {
-        console.error("Failed to add guestbook entry:", error);
-        alert("Failed to add your message. Please try again.");
-        setEntries((prevEntries) =>
-          prevEntries
-            .filter((entry) => entry.id !== tempId)
-            .sort(
-              (a, b) =>
-                new Date(b.timestamp).getTime() -
-                new Date(a.timestamp).getTime(),
-            ),
-        );
-        setIsEditing(true);
-      }
+      // Call onSubmit callback if provided
+      onSubmit?.();
+    } catch (error) {
+      console.error("Failed to add guestbook entry:", error);
+      alert("Failed to add your message. Please try again.");
+      setEntries((prevEntries) =>
+        prevEntries
+          .filter((entry) => entry.id !== tempId)
+          .sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          ),
+      );
+      setIsEditing(true);
     }
   };
 
@@ -430,41 +356,25 @@ export default function MessageInput({
               type="text"
               value={formData.message}
               onChange={handleInputChange}
-              onFocus={
-                !isEditing && userEntryId ? handleStartEditing : undefined
-              }
-              placeholder={
-                userEntryId ? "Edit your message..." : "Enter a message..."
-              }
+              onFocus={() => !isEditing && handleStartEditing()}
+              placeholder="Enter a message..."
               className="flex-1 px-4 py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
               required
             />
 
-            {isEditing ? (
-              <Button
-                type="submit"
-                variant="ghost"
-                size="icon"
-                disabled={!formData.message.trim() || !formData.name.trim()}
-                className={`transition-colors ${
-                  formData.message.trim() && formData.name.trim()
-                    ? "text-green-500 hover:text-green-700 hover:bg-green-100"
-                    : "text-gray-300 cursor-not-allowed"
-                }`}
-              >
-                <Check className="h-5 w-5" />
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={handleStartEditing}
-                className="text-gray-500 hover:text-gray-700 hover:bg-gray-100"
-              >
-                <Edit2 className="h-5 w-5" />
-              </Button>
-            )}
+            <Button
+              type="submit"
+              variant="ghost"
+              size="icon"
+              disabled={!formData.message.trim() || !formData.name.trim()}
+              className={`transition-colors ${
+                formData.message.trim() && formData.name.trim()
+                  ? "text-green-500 hover:text-green-700 hover:bg-green-100"
+                  : "text-gray-300 cursor-not-allowed"
+              }`}
+            >
+              <Check className="h-5 w-5" />
+            </Button>
           </div>
 
           <AnimatePresence>

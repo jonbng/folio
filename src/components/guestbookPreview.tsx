@@ -7,9 +7,11 @@ import { Maximize } from "lucide-react";
 export default function GuestbookPreview({
   entries,
   onExpand,
+  isLoading,
 }: {
   entries: BalloonEntry[];
   onExpand: () => void;
+  isLoading?: boolean;
 }) {
   return (
     <>
@@ -33,18 +35,30 @@ export default function GuestbookPreview({
           </div>
 
           <div className={`w-full relative`}>
-            <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
-              {[...Array(2)].flatMap((_, i) =>
-                entries.map((entry, index) => (
-                  <Balloon
-                    key={`entry-${i}-${entry.id}`}
-                    entry={entry}
-                    index={index + i * entries.length}
-                    layoutMode="inline"
-                  />
-                )),
-              )}
-            </div>
+            {isLoading ? (
+              <div className="flex justify-center items-center h-32">
+                <p className="text-zinc-500">Loading messages...</p>
+              </div>
+            ) : entries.length > 0 ? (
+              <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
+                {[...Array(2)].flatMap((_, i) =>
+                  entries.map((entry, index) => (
+                    <Balloon
+                      key={`entry-${i}-${entry.id}`}
+                      entry={entry}
+                      index={index + i * entries.length}
+                      layoutMode="inline"
+                    />
+                  )),
+                )}
+              </div>
+            ) : (
+              <div className="flex justify-center items-center h-32">
+                <p className="text-zinc-500">
+                  No messages yet. Be the first to sign!
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

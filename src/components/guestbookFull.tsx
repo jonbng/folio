@@ -5,8 +5,6 @@ import Balloon, { BalloonEntry } from "./balloon";
 import { Button } from "./ui/button";
 import { XIcon } from "lucide-react";
 import MessageInput from "./message-input";
-import { useSession } from "next-auth/react";
-import Login from "./login";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useState, useEffect } from "react";
 
@@ -19,10 +17,25 @@ export default function GuestbookFull({
   setEntries: React.Dispatch<React.SetStateAction<BalloonEntry[]>>;
   onCollapse: () => void;
 }) {
-  const { data: session } = useSession();
-
   const isMobile = useMediaQuery("(max-width: 512px)");
   const balloonLayoutMode = isMobile ? "mobile" : "desktop";
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage on component mount
+    const submitted = localStorage.getItem("guestbook_submitted");
+    setHasSubmitted(!!submitted);
+  }, []);
+
+  const handleSubmission = () => {
+    // Set localStorage flag when user submits
+    localStorage.setItem("guestbook_submitted", "true");
+    setHasSubmitted(true);
+  };
+
+  useEffect(() => {
+    console.log("entries", entries);
+  }, [entries]);
 
   const calculateContainerHeight = () => {
     if (balloonLayoutMode === "mobile") return undefined;
@@ -154,10 +167,12 @@ export default function GuestbookFull({
         transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
         className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-50 border-2 border-zinc-700 text-black p-2 sm:p-3 min-w-fit rounded-2xl shadow-lg z-[51] text-center flex flex-row items-center justify-center gap-4 px-6"
       >
-        {session ? (
-          <MessageInput entries={entries} setEntries={setEntries} session={session} />
+        {hasSubmitted ? (
+          <p className="text-zinc-700 py-2">
+            Thank you for your message! 🎈
+          </p>
         ) : (
-          <Login />
+          <MessageInput setEntries={setEntries} onSubmit={handleSubmission} />
         )}
       </motion.div>
     </>
