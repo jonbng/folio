@@ -64,7 +64,7 @@ export default function MessageInput({
   // Preview entry
   const previewEntry: GuestbookEntry = {
     id: "preview",
-    name: formData.name || "Your Name",
+    name: formData.name || "Name",
     message: formData.message || "Your message will appear here",
     color: formData.selectedColor,
     timestamp: new Date().toISOString(),
@@ -206,7 +206,7 @@ export default function MessageInput({
                       htmlFor="name"
                       className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide"
                     >
-                      Your Name
+                      Your Full Name
                     </label>
                     <input
                       id="name"
@@ -214,7 +214,7 @@ export default function MessageInput({
                       type="text"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Enter your name"
+                      placeholder="Enter your full name"
                       className="w-full px-4 py-2.5 border-2 border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500 transition-all duration-200 text-[15px] bg-white/50"
                       required
                     />

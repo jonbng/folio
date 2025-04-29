@@ -247,7 +247,7 @@ export default function Balloon({
           tabIndex={0}
         >
           <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
-            {entry.name}
+            {entry.name.split(" ")[0]}
           </span>
         </motion.div>
 
