@@ -44,7 +44,7 @@ export default function GuestbookPreview({
               </div>
             ) : entries.length > 0 ? (
               <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
-                {[...Array(2)].flatMap((_, i) =>
+                {[...Array(1)].flatMap((_, i) =>
                   entries.map((entry, index) => (
                     <Balloon
                       key={`entry-${i}-${entry.id}`}
