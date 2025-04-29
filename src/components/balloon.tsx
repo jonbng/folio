@@ -228,7 +228,7 @@ export default function Balloon({
       <motion.div
         variants={floatVariants}
         animate={isMounted && layoutMode !== "static" ? "float" : ""}
-        style={{ willChange: "transform", width: "fit-content" }}
+        style={{ width: "fit-content" }}
       >
         <motion.div
           className={`w-24 h-24 ${layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""} rounded-full flex items-center justify-center relative cursor-pointer`}
