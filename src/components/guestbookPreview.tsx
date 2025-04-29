@@ -2,16 +2,18 @@
 import { motion } from "motion/react";
 import Balloon from "./balloon";
 import { Button } from "./ui/button";
-import { Maximize } from "lucide-react";
+import { Maximize, Send } from "lucide-react";
 import { GuestbookEntry } from "@/types/guestbook";
 
 export default function GuestbookPreview({
   entries,
   onExpand,
+  onMessage,
   isLoading,
 }: {
   entries: GuestbookEntry[];
   onExpand: () => void;
+  onMessage: () => void;
   isLoading?: boolean;
 }) {
   return (
@@ -71,6 +73,10 @@ export default function GuestbookPreview({
           >
             <Maximize className="h-4 w-4" />
             <span>Expand Guestbook</span>
+          </Button>
+          <Button onClick={onMessage} variant="actualGhost" className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed z-50">
+            <Send className="h-4 w-4" />
+            <span>Leave a Message</span>
           </Button>
         </div>
 

@@ -46,6 +46,12 @@ function HomeContent() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const [inputOpen, setInputOpen] = useState(false);
+  
+  function handleMessage() {
+    setIsGuestbookExpanded(true);
+    setInputOpen(true);
+  }
 
   useEffect(() => {
     setIsClient(true);
@@ -269,6 +275,7 @@ function HomeContent() {
                   key="guestbook-preview"
                   entries={entries}
                   onExpand={() => setIsGuestbookExpanded(true)}
+                  onMessage={handleMessage}
                   isLoading={isLoading}
                 />
               )}
@@ -327,6 +334,7 @@ function HomeContent() {
             {isGuestbookExpanded && (
               <GuestbookFull
                 key="guestbook-full"
+                inputOpen={inputOpen}
                 entries={entries}
                 setEntries={setEntries}
                 onCollapse={() => setIsGuestbookExpanded(false)}

@@ -13,10 +13,12 @@ export default function GuestbookFull({
   entries,
   setEntries,
   onCollapse,
+  inputOpen,
 }: {
   entries: GuestbookEntry[];
   setEntries: React.Dispatch<React.SetStateAction<GuestbookEntry[]>>;
   onCollapse: () => void;
+  inputOpen: boolean;
 }) {
   const isMobile = useMediaQuery("(max-width: 512px)");
   const balloonLayoutMode = isMobile ? "mobile" : "desktop";
@@ -173,7 +175,7 @@ export default function GuestbookFull({
             Thank you for your message! 🎈
           </p>
         ) : (
-          <MessageInput setEntries={setEntries} onSubmit={handleSubmission} />
+          <MessageInput setEntries={setEntries} onSubmit={handleSubmission} inputOpen={inputOpen} />
         )}
       </motion.div>
     </>

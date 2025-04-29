@@ -27,6 +27,7 @@ type FormData = {
 interface MessageInputProps {
   setEntries: React.Dispatch<React.SetStateAction<GuestbookEntry[]>>;
   onSubmit?: () => void;
+  inputOpen: boolean;
 }
 
 // Preview balloon component (remains the same)
@@ -47,8 +48,9 @@ const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
 export default function MessageInput({
   setEntries,
   onSubmit,
+  inputOpen,
 }: MessageInputProps) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(inputOpen);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<FormData>({
