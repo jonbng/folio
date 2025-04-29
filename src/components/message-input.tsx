@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect, FormEvent, ChangeEvent } from "react";
-import { Check, ChevronDown } from "lucide-react";
+import { useState, useRef, FormEvent, ChangeEvent } from "react";
+import { Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Balloon, { getBalloonColor } from "./balloon";
 import { Button } from "@/components/ui/button";
@@ -21,93 +21,13 @@ type FormData = {
   name: string;
   message: string;
   selectedColor: string;
-  notABot?: string; // Honeypot field
+  notABot?: string;
 };
 
 interface MessageInputProps {
   setEntries: React.Dispatch<React.SetStateAction<GuestbookEntry[]>>;
   onSubmit?: () => void;
 }
-
-// Color picker component (remains the same)
-const ColorPicker = ({
-  selectedColor,
-  onSelectColor,
-}: {
-  selectedColor: string;
-  onSelectColor: (color: string) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [colors, setColors] = useState(colorOptions);
-  const pickerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setColors([...colorOptions].sort(() => Math.random() - 0.5));
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        pickerRef.current &&
-        !pickerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  return (
-    <div className="relative" ref={pickerRef}>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className="w-5 h-5 rounded-full"
-            style={{ backgroundColor: getBalloonColor(selectedColor).bg }}
-          ></div>
-          <span className="capitalize">{selectedColor}</span>
-        </div>
-        <ChevronDown className="h-4 w-4 text-gray-500" />
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg"
-          >
-            <div className="p-2 grid grid-cols-3 gap-2">
-              {colors.map((color) => (
-                <button
-                  key={color.value}
-                  type="button"
-                  onClick={() => {
-                    onSelectColor(color.value);
-                    setIsOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100"
-                >
-                  <div
-                    className="w-5 h-5 rounded-full"
-                    style={{ backgroundColor: getBalloonColor(color.value).bg }}
-                  ></div>
-                  <span>{color.name}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 // Preview balloon component (remains the same)
 const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
@@ -116,87 +36,9 @@ const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
       initial={{ opacity: 0, scale: 0.8, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
-      className="w-32 h-32 flex-shrink-0"
+      className="w-32 h-32 pt-5 pl-12 flex-shrink-0"
     >
       <Balloon entry={entry} index={0} layoutMode="static" />
-    </motion.div>
-  );
-};
-
-// Message form component
-const MessageForm = ({
-  formData,
-  onInputChange,
-  onColorSelect,
-}: {
-  formData: FormData;
-  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onColorSelect: (color: string) => void;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      className="px-6 pb-4"
-    >
-      <div className="flex flex-col gap-4">
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-500 mb-1"
-          >
-            Your Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={onInputChange}
-            placeholder="Enter your name"
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-
-        {/* Honeypot field - hidden from real users */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            width: "1px",
-            height: "1px",
-            padding: "0",
-            margin: "-1px",
-            overflow: "hidden",
-            clip: "rect(0, 0, 0, 0)",
-            whiteSpace: "nowrap",
-            border: "0",
-          }}
-        >
-          <label htmlFor="notABot">Leave this field empty</label>
-          <input
-            type="text"
-            id="notABot"
-            name="notABot"
-            tabIndex={-1}
-            autoComplete="off"
-            value={formData.notABot}
-            onChange={onInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-500 mb-1">
-            Balloon Color
-          </label>
-          <ColorPicker
-            selectedColor={formData.selectedColor}
-            onSelectColor={onColorSelect}
-          />
-        </div>
-      </div>
     </motion.div>
   );
 };
@@ -337,7 +179,7 @@ export default function MessageInput({
   };
 
   return (
-    <div className="flex items-start gap-6">
+    <div className="flex items-start gap-8">
       <AnimatePresence>
         {isEditing && <BalloonPreview entry={previewEntry} />}
       </AnimatePresence>
@@ -345,45 +187,136 @@ export default function MessageInput({
       <motion.div
         layout
         transition={{ duration: 0.2 }}
-        className="flex-1 bg-white rounded-lg shadow-sm border overflow-hidden"
+        className="flex-1 overflow-hidden min-w-[350px]"
       >
         <form onSubmit={handleSubmit} className="h-full">
-          <div className="flex items-center p-2 relative">
-            <input
-              ref={inputRef}
-              id="message"
-              name="message"
-              type="text"
-              value={formData.message}
-              onChange={handleInputChange}
-              onFocus={() => !isEditing && handleStartEditing()}
-              placeholder="Enter a message..."
-              className="flex-1 px-4 py-2 bg-transparent outline-none text-gray-800 placeholder-gray-400"
-              required
-            />
+          <div className="p-4 flex flex-col gap-2 pb-2">
+            <AnimatePresence>
+              {isEditing && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide"
+                    >
+                      Your Name
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter your name"
+                      className="w-full px-4 py-2.5 border-2 border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500 transition-all duration-200 text-[15px] bg-white/50"
+                      required
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <Button
-              type="submit"
-              variant="ghost"
-              size="icon"
-              disabled={!formData.message.trim() || !formData.name.trim()}
-              className={`transition-colors ${
-                formData.message.trim() && formData.name.trim()
-                  ? "text-green-500 hover:text-green-700 hover:bg-green-100"
-                  : "text-gray-300 cursor-not-allowed"
-              }`}
-            >
-              <Check className="h-5 w-5" />
-            </Button>
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide"
+              >
+                Your Message
+              </label>
+              <input
+                ref={inputRef}
+                id="message"
+                name="message"
+                type="text"
+                value={formData.message}
+                onChange={handleInputChange}
+                onFocus={() => !isEditing && handleStartEditing()}
+                placeholder="Enter a message..."
+                className="flex-1 w-full px-4 py-2.5 border-2 border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500 transition-all duration-200 text-[15px] bg-white/50"
+                required
+              />
+            </div>
           </div>
-
           <AnimatePresence>
             {isEditing && (
-              <MessageForm
-                formData={formData}
-                onInputChange={handleInputChange}
-                onColorSelect={handleColorSelect}
-              />
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="px-4 pb-4 flex flex-col justify-between"
+              >
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    width: "1px",
+                    height: "1px",
+                    padding: "0",
+                    margin: "-1px",
+                    overflow: "hidden",
+                    clip: "rect(0, 0, 0, 0)",
+                    whiteSpace: "nowrap",
+                    border: "0",
+                  }}
+                >
+                  <label htmlFor="notABot">Leave this field empty</label>
+                  <input
+                    type="text"
+                    id="notABot"
+                    name="notABot"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.notABot}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <label className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide">
+                  Balloon Color
+                </label>
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {colorOptions.map((color) => (
+                      <button
+                        key={color.value}
+                        type="button"
+                        onClick={() => handleColorSelect(color.value)}
+                        className={`w-8 h-8 rounded-full border-2 cursor-pointer ${
+                          formData.selectedColor === color.value
+                            ? "border-gray-800"
+                            : "border-transparent"
+                        }`}
+                        style={{
+                          backgroundColor: getBalloonColor(color.value).bg,
+                          boxShadow:
+                            formData.selectedColor === color.value
+                              ? "0 0 0 2px rgba(0,0,0,0.1)"
+                              : "none",
+                        }}
+                        aria-label={`Select ${color.name} color`}
+                      />
+                    ))}
+                  </div>
+                  <Button
+                    type="submit"
+                    variant="ghost"
+                    size="icon"
+                    disabled={!formData.message.trim() || !formData.name.trim()}
+                    className={`transition-all duration-200 rounded-lg text-zinc-300 ${
+                      formData.message.trim() && formData.name.trim()
+                        ? "bg-zinc-700 hover:bg-zinc-800 hover:text-white"
+                        : "cursor-not-allowed bg-zinc-700"
+                    }`}
+                  >
+                    <Send className="h-5 w-5" />
+                  </Button>
+                </div>
+              </motion.div>
             )}
           </AnimatePresence>
         </form>
