@@ -47,7 +47,7 @@ function HomeContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
-  
+
   function handleMessage() {
     setIsGuestbookExpanded(true);
     setInputOpen(true);
@@ -244,10 +244,10 @@ function HomeContent() {
                     I&apos;ve been passionate about technology and design since
                     I got my first computer at age 6. I started coding at 10,
                     hacked my school PC at 12 for admin access because I
-                    didn&apos;t have my own, and haven&apos;t looked back since.
-                    Since then, I&apos;ve developed a strong passion for
-                    creating helpful products and design, contributing to
-                    countless of projects over the years.
+                    didn&apos;t have my own, and haven&apos;t looked back. Over
+                    the years, I&apos;ve developed a strong passion for creating
+                    helpful products and design, contributing to countless
+                    projects along the way.
                   </p>
                 </div>
               </div>
