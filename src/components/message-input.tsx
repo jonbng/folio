@@ -37,7 +37,7 @@ const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
       initial={{ opacity: 0, scale: 0.8, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 20 }}
-      className="w-32 h-32 pt-5 pl-12 flex-shrink-0"
+      className="w-32 h-32 pt-5 pl-12 flex-shrink-0 hidden md:block"
     >
       <Balloon entry={entry} index={0} layoutMode="static" />
     </motion.div>
