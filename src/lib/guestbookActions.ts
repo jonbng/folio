@@ -37,7 +37,7 @@ export async function GetAllGuestbookEntries(): Promise<Array<GuestbookEntry>> {
   const sortedEntries = entries.sort(
     (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
   );
-  return sortedEntries;
+  return sortedEntries.reverse();
 }
 
 export async function AddGuestbookEntry(
