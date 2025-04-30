@@ -69,7 +69,7 @@ export default function GuestbookPreview({
           <Button
             onClick={onExpand}
             variant="actualGhost"
-            className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed z-50"
+            className="items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed z-50 hidden sm:flex"
           >
             <Maximize className="h-4 w-4" />
             <span>Expand Guestbook</span>
