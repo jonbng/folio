@@ -20,14 +20,18 @@ export default function Balloon({
   layoutMode?: "desktop" | "mobile" | "inline" | "static";
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-
   const [dynamicStyle, setDynamicStyle] = useState({});
   const [zIndex, setZIndex] = useState(0);
-  const [floatParams, setFloatParams] = useState({
+  const [floatParams, setFloatParams] = useState<{
+    duration: number;
+    height: number;
+    delay: number;
+    offset: string;
+  }>({
     duration: defaultDuration,
     height: defaultHeight,
     delay: 0,
+    offset: "0s",
   });
   const [curveParams, setCurveParams] = useState({
     x1: 0,
@@ -36,20 +40,6 @@ export default function Balloon({
     y2: defaultCurveY2,
   });
   const [formattedDate, setFormattedDate] = useState("");
-
-  const floatVariants = {
-    float: {
-      y: [-floatParams.height, 0, -floatParams.height],
-      transition: {
-        y: {
-          duration: floatParams.duration,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-          delay: floatParams.delay,
-        },
-      },
-    },
-  };
 
   // Static parameters for static layout mode
   const staticParams = {
@@ -68,7 +58,8 @@ export default function Balloon({
         setFloatParams({
           duration: staticParams.duration,
           height: staticParams.height,
-          delay: staticParams.delay,
+          delay: 0,
+          offset: "0s",
         });
         setCurveParams({
           x1: staticParams.curveX1,
@@ -79,11 +70,12 @@ export default function Balloon({
       } else {
         const randomDuration = 3 + Math.random() * 3;
         const randomHeight = 15 + Math.random() * 25;
-        const randomDelay = Math.random() * 2;
+        const randomOffset = `${Math.random() * -100}%`; // Random offset between -100% and 0%
         setFloatParams({
           duration: randomDuration,
           height: randomHeight,
-          delay: randomDelay,
+          delay: 0,
+          offset: randomOffset,
         });
 
         const randomCurveX1 = Math.random() * 30 - 15;
@@ -179,7 +171,6 @@ export default function Balloon({
       }
 
       setDynamicStyle(calculatedStyle);
-      setIsMounted(true);
     };
 
     // Initial calculation
@@ -217,94 +208,114 @@ export default function Balloon({
   };
 
   return (
-    <div
-      className={getOuterDivClassName()}
-      style={
-        isMounted
-          ? { ...dynamicStyle, zIndex: zIndex }
-          : { opacity: 0, zIndex: 0 }
-      }
-    >
-      <motion.div
-        variants={floatVariants}
-        animate={isMounted && layoutMode !== "static" ? "float" : ""}
-        style={{ willChange: "transform", width: "fit-content" }}
+    <>
+      <style>
+        {`
+          @keyframes float-${index} {
+            0%, 100% {
+              transform: translateY(-${floatParams.height}px);
+            }
+            50% {
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
+      <div
+        className={getOuterDivClassName()}
+        style={{ ...dynamicStyle, zIndex: zIndex }}
       >
-        <motion.div
-          className={`w-24 h-24 ${layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""} rounded-full flex items-center justify-center relative cursor-pointer`}
+        <div
           style={{
-            background: color.bg,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            width: "fit-content",
+            animation:
+              layoutMode !== "static"
+                ? `float-${index} ${floatParams.duration}s ease-in-out infinite`
+                : "none",
+            animationDelay:
+              layoutMode !== "static" ? floatParams.offset : undefined,
           }}
-          onHoverStart={() => setShowTooltip(true)}
-          onHoverEnd={() => setShowTooltip(false)}
-          whileHover={{ scale: 1.1 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          whileTap={{ scale: 1 }}
-          onFocus={() => setShowTooltip(true)}
-          onBlur={() => setShowTooltip(false)}
-          role="button"
-          tabIndex={0}
         >
-          <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
-            {entry.name.split(" ")[0]}
-          </span>
-        </motion.div>
-
-        <div className="relative h-4 w-8 mx-auto" style={{ marginTop: "-2px" }}>
-          <div
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0 h-0"
+          <motion.div
+            className={`w-24 h-24 ${
+              layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""
+            } rounded-full flex items-center justify-center relative cursor-pointer`}
             style={{
-              borderLeft: "6px solid transparent",
-              borderRight: "6px solid transparent",
-              borderBottom: `10px solid ${color.knot}`,
-              filter: "brightness(0.9)",
+              background: color.bg,
             }}
-          ></div>
-        </div>
-
-        <div className="h-24 relative">
-          <svg
-            width="30"
-            height="100"
-            viewBox="0 0 30 100"
-            fill="none"
-            className="absolute left-1/2 -translate-x-1/2"
+            onHoverStart={() => setShowTooltip(true)}
+            onHoverEnd={() => setShowTooltip(false)}
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            whileTap={{ scale: 1 }}
+            onFocus={() => setShowTooltip(true)}
+            onBlur={() => setShowTooltip(false)}
+            role="button"
+            tabIndex={0}
           >
-            <path d={svgPathD} stroke="black" strokeWidth="1" fill="none" />
-          </svg>
-        </div>
+            <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
+              {entry.name.split(" ")[0]}
+            </span>
+          </motion.div>
 
-        <AnimatePresence>
-          {showTooltip && (
-            <motion.div
-              className={`absolute bottom-full mb-2 w-64 ${layoutMode === "mobile" ? "sm:w-72" : ""} bg-white rounded-lg shadow-lg p-4 z-50`}
-              initial={{ opacity: 0, y: 10, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.9 }}
-              transition={{ duration: 0.2 }}
+          <div
+            className="relative h-4 w-8 mx-auto"
+            style={{ marginTop: "-2px" }}
+          >
+            <div
+              className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0 h-0"
               style={{
-                right: "50%",
-                translateX: "50%",
-                transformOrigin: "bottom center",
+                borderLeft: "6px solid transparent",
+                borderRight: "6px solid transparent",
+                borderBottom: `10px solid ${color.knot}`,
+                filter: "brightness(0.9)",
               }}
+            ></div>
+          </div>
+
+          <div className="h-24 relative">
+            <svg
+              width="30"
+              height="100"
+              viewBox="0 0 30 100"
+              fill="none"
+              className="absolute left-1/2 -translate-x-1/2"
             >
-              <div className="flex items-baseline justify-between mb-1">
-                <div className="text-sm text-gray-500">{formattedDate}</div>
-              </div>
-              <div className="flex items-baseline gap-2 mb-2">
-                <div className="font-bold text-gray-800">{entry.name}</div>
-              </div>
-              <div className="text-gray-600">{entry.message}</div>
-              <div
-                className="absolute w-4 h-4 bg-white transform rotate-45 left-1/2 -bottom-2 -ml-2"
-                style={{ boxShadow: "2px 2px 5px rgba(0,0,0,0.1)" }}
-              ></div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-    </div>
+              <path d={svgPathD} stroke="black" strokeWidth="1" fill="none" />
+            </svg>
+          </div>
+
+          <AnimatePresence>
+            {showTooltip && (
+              <motion.div
+                className={`absolute bottom-full mb-2 w-64 ${layoutMode === "mobile" ? "sm:w-72" : ""} bg-white rounded-lg shadow-lg p-4 z-50`}
+                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  right: "50%",
+                  translateX: "50%",
+                  transformOrigin: "bottom center",
+                }}
+              >
+                <div className="flex items-baseline justify-between mb-1">
+                  <div className="text-sm text-gray-500">{formattedDate}</div>
+                </div>
+                <div className="flex items-baseline gap-2 mb-2">
+                  <div className="font-bold text-gray-800">{entry.name}</div>
+                </div>
+                <div className="text-gray-600">{entry.message}</div>
+                <div
+                  className="absolute w-4 h-4 bg-white transform rotate-45 left-1/2 -bottom-2 -ml-2"
+                  // style={{ boxShadow: "2px 2px 5px rgba(0,0,0,0.1)" }}
+                ></div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </>
   );
 }
 
