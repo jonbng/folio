@@ -164,20 +164,28 @@ export default function GuestbookFull({
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-50 border-2 border-zinc-700 text-black min-w-fit rounded-2xl shadow-lg z-[51] text-center flex flex-row items-center justify-center gap-4"
-      >
-        {hasSubmitted ? (
-          <p className="text-zinc-700 p-4">
-            Thank you for your message! 🎈
-          </p>
-        ) : (
-          <MessageInput setEntries={setEntries} onSubmit={handleSubmission} inputOpen={inputOpen} />
-        )}
-      </motion.div>
+      <div className="fixed sm:fixed inset-x-0 bottom-0 z-[51] p-4 bg-gradient-to-t from-white to-transparent pointer-events-none">
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
+          className="flex justify-center items-center pointer-events-auto mx-auto max-w-3xl"
+        >
+          <div className="bg-zinc-50 border-2 border-zinc-700 text-black rounded-2xl shadow-lg w-full sm:w-auto">
+            {hasSubmitted ? (
+              <p className="text-zinc-700 p-4">
+                Thank you for your message! 🎈
+              </p>
+            ) : (
+              <MessageInput
+                setEntries={setEntries}
+                onSubmit={handleSubmission}
+                inputOpen={inputOpen}
+              />
+            )}
+          </div>
+        </motion.div>
+      </div>
     </>
   );
 }

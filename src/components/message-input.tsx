@@ -189,7 +189,7 @@ export default function MessageInput({
       <motion.div
         layout
         transition={{ duration: 0.2 }}
-        className="flex-1 overflow-hidden min-w-[350px]"
+        className="flex-1 overflow-hidden sm:min-w-[350px]"
       >
         <form onSubmit={handleSubmit} className="h-full">
           <div className="p-4 flex flex-col gap-2 pb-2">
@@ -309,7 +309,7 @@ export default function MessageInput({
                     variant="ghost"
                     size="icon"
                     disabled={!formData.message.trim() || !formData.name.trim()}
-                    className={`transition-all duration-200 rounded-lg text-zinc-300 ${
+                    className={`transition-all duration-200 rounded-lg text-zinc-300 min-w-[40px] min-h-[40px] flex-shrink-0 ${
                       formData.message.trim() && formData.name.trim()
                         ? "bg-zinc-700 hover:bg-zinc-800 hover:text-white"
                         : "cursor-not-allowed bg-zinc-700"
