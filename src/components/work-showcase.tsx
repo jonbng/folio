@@ -74,9 +74,9 @@ const works = [
   {
     id: 2,
     title: "Flimmer",
-    tag: "For fun 😎",
+    tag: "Work",
     link: "https://flimmer.app",
-    tagColor: "bg-yellow-100 text-yellow-800",
+    tagColor: "bg-blue-100 text-blue-800",
     description:
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
