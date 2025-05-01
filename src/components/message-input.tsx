@@ -7,6 +7,7 @@ import Balloon, { getBalloonColor } from "./balloon";
 import { Button } from "@/components/ui/button";
 import { AddGuestbookEntry } from "@/lib/guestbookActions";
 import { GuestbookEntry } from "@/types/guestbook";
+import { toast } from "sonner";
 
 const colorOptions = [
   { name: "Blue", value: "blue" },
@@ -131,6 +132,7 @@ export default function MessageInput({
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
       ),
     );
+    toast.success("Message sent successfully");
     setIsEditing(false);
 
     try {
