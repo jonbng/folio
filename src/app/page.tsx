@@ -124,16 +124,31 @@ function HomeContent() {
     }
   }, [searchParams]);
 
+  // Prevent scrolling when guestbook is expanded
+  useEffect(() => {
+    if (isGuestbookExpanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isGuestbookExpanded]);
+
   return (
     <>
       <Toaster />
       <div className="relative min-h-screen bg-white">
         <motion.main
           animate={{
-            scale: isWorkOpen ? 0.93 : 1,
-            filter: isWorkOpen
-              ? "blur(3px) brightness(0.8)"
-              : "blur(0px) brightness(1)",
+            scale: isWorkOpen || isGuestbookExpanded ? 0.93 : 1,
+            filter:
+              isWorkOpen || isGuestbookExpanded
+                ? "blur(3px) brightness(0.8)"
+                : "blur(0px) brightness(1)",
+            pointerEvents: isGuestbookExpanded ? "none" : "auto",
+            userSelect: isGuestbookExpanded ? "none" : "auto",
           }}
           transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
           style={{ transformOrigin: "center" }}

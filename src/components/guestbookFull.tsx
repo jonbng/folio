@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { XIcon } from "lucide-react";
 import MessageInput from "./message-input";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GuestbookEntry } from "@/types/guestbook";
 
 export default function GuestbookFull({
@@ -23,6 +23,35 @@ export default function GuestbookFull({
   const isMobile = useMediaQuery("(max-width: 512px)");
   const balloonLayoutMode = isMobile ? "mobile" : "desktop";
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    // Store the previously focused element
+    previousFocusRef.current = document.activeElement as HTMLElement;
+
+    // Focus the modal when it opens
+    if (modalRef.current) {
+      modalRef.current.focus();
+    }
+
+    // Handle keyboard navigation
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onCollapse();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Restore focus when component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus();
+      }
+    };
+  }, [onCollapse]);
 
   useEffect(() => {
     // Check localStorage on component mount
@@ -92,8 +121,12 @@ export default function GuestbookFull({
             onCollapse();
           }
         }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="guestbook-title"
       >
         <motion.div
+          ref={modalRef}
           layoutId="guestbook-container"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -101,6 +134,7 @@ export default function GuestbookFull({
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-50 flex flex-col min-h-[96.85vh] sm:min-h-[95.25vh] md:min-h-[93.7vh]"
           onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
+          tabIndex={-1}
         >
           <div className="absolute top-4 right-4 z-[51]">
             <motion.div
@@ -114,9 +148,9 @@ export default function GuestbookFull({
                 size="icon"
                 className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110"
                 onClick={onCollapse}
+                aria-label="Close guestbook"
               >
                 <XIcon className="h-6 w-6 text-zinc-100" strokeWidth={2} />
-                <span className="sr-only">Close</span>
               </Button>
             </motion.div>
           </div>
@@ -126,7 +160,10 @@ export default function GuestbookFull({
                 ${balloonLayoutMode === "mobile" ? "mb-14" : "mb-4"}
             `}
           >
-            <h2 className="text-md font-semibold text-zinc-700 tracking-widest uppercase">
+            <h2
+              id="guestbook-title"
+              className="text-md font-semibold text-zinc-700 tracking-widest uppercase"
+            >
               Guestbook!
             </h2>
             <p className="text-md text-zinc-500 hidden sm:block">
