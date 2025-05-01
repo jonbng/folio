@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import { Maximize, Send } from "lucide-react";
 import { GuestbookEntry } from "@/types/guestbook";
 
+const PROMOTED_ENTRIES = [2,5,7,8,9,10,11,12,13,14,15,16,17,18,20];
+
 export default function GuestbookPreview({
   entries,
   onExpand,
@@ -16,6 +18,8 @@ export default function GuestbookPreview({
   onMessage: () => void;
   isLoading?: boolean;
 }) {
+
+  const promotedEntries = entries.filter((entry) => PROMOTED_ENTRIES.includes(Number(entry.id)));
   return (
     <>
       <div id="guestbook" className="relative bottom-80 invisible" />
@@ -42,14 +46,14 @@ export default function GuestbookPreview({
               <div className="flex justify-center items-center h-32">
                 <p className="text-zinc-500">Loading messages...</p>
               </div>
-            ) : entries.length > 0 ? (
+            ) : promotedEntries.length > 0 ? (
               <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
                 {[...Array(1)].flatMap((_, i) =>
-                  entries.map((entry, index) => (
+                  promotedEntries.map((entry, index) => (
                     <Balloon
                       key={`entry-${i}-${entry.id}`}
                       entry={entry}
-                      index={index + i * entries.length}
+                      index={index + i * promotedEntries.length}
                       layoutMode="inline"
                     />
                   )),
