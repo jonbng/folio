@@ -103,7 +103,7 @@ export default function PressAndRecognitionShowcase() {
     <section className="space-y-8">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-medium text-zinc-500 tracking-widest uppercase">
-          Press & Recognition
+          Recognition
         </h2>
         <Button variant="link" asChild className="p-0 h-auto font-semibold">
           <Link href="/press-kit" className="flex items-center gap-1">

@@ -221,11 +221,11 @@ function HomeContent() {
                     Hey, I&apos;m Jonathan! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    I&apos;m a 17-year-old software engineer, builder, and
-                    problem solver. I co-founded <strong>Akademia </strong>
-                    and currently work as a SWE @ <strong>Flimmer</strong>. I
-                    care deeply about making technology beautiful, intuitive,
-                    and genuinely useful.
+                    I&apos;m a 17-year-old software engineer who cares about
+                    building high-quality, thoughtful software. I co-founded
+                    <strong>Akademia</strong> and currently work as a SWE @
+                    <strong>Flimmer</strong>. I focus on making technology that
+                    is beautiful, intuitive, and genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
@@ -256,12 +256,11 @@ function HomeContent() {
                 <div className="space-y-4">
                   <p className="text-xl text-zinc-600 leading-relaxed">
                     I&apos;ve been passionate about technology and design since
-                    I got my first computer at age 6. I started coding at 10,
-                    hacked my school PC at 12 for admin access because I
-                    didn&apos;t have my own, and haven&apos;t looked back. Over
-                    the years, I&apos;ve developed a strong passion for creating
-                    helpful products and design, contributing to countless
-                    projects along the way.
+                    I started coding at 10, hacked my school PC at 12 for admin
+                    access because I didn&apos;t have my own, and haven&apos;t
+                    looked back. Over the years, I&apos;ve developed a strong
+                    focus on building useful, well-designed products and have
+                    contributed to countless projects along the way.
                   </p>
                 </div>
               </div>
