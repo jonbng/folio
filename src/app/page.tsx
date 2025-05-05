@@ -222,7 +222,7 @@ function HomeContent() {
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
                     I&apos;m a 17-year-old software engineer, builder, and
-                    problem solver. I co-founded <strong>Akademia</strong>
+                    problem solver. I co-founded <strong>Akademia </strong>
                     and currently work as a SWE @ <strong>Flimmer</strong>. I
                     care deeply about making technology beautiful, intuitive,
                     and genuinely useful.
