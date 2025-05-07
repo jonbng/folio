@@ -223,9 +223,10 @@ function HomeContent() {
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
                     I&apos;m a 17-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
-                    <strong>Akademia</strong> and currently work as a SWE @
-                    <strong>Flimmer</strong>. I focus on making technology that
-                    is beautiful, intuitive, and genuinely useful.
+                    <strong>Akademia</strong>.
+                    {/* and currently work as a SWE @<strong>Flimmer</strong> */}
+                    I focus on making technology that is beautiful, intuitive,
+                    and genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
