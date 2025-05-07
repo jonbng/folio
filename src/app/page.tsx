@@ -270,7 +270,7 @@ function HomeContent() {
             <div className="flex items-center gap-2 mb-14 text-zinc-600">
               <Book className="w-5 h-5" />
               <span>
-                Currently reading: &quot;Outliers&quot; by Malcolm Gladwell
+                Currently reading: &quot;Hackers & Painters&quot; by Paul Graham
               </span>
             </div>
 
