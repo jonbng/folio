@@ -42,7 +42,7 @@ export default function PressKit() {
               </a>
               , a reimagined platform for schools, but he&apos;s always
               experimenting with new ideas. He shares his thoughts on{" "}
-              <a href="https://x.com/jonba_" className="underlroine font-bold">
+              <a href="https://x.com/jonba_" className="underline font-bold">
                 X
               </a>
               , and if you want to chat, you can reach him at{" "}
