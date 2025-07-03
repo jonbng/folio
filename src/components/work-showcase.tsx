@@ -249,7 +249,7 @@ const works = [
       {
         name: "Elliott Friedrich",
         role: "Developer",
-        avatar: "elliott.jpg",
+        avatar: "/elliott.jpg",
         link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
       },
       {
@@ -321,7 +321,7 @@ const works = [
       {
         name: "Elliott Friedrich",
         role: "Designer & Developer",
-        avatar: "elliott.jpg",
+        avatar: "/elliott.jpg",
         link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
       },
       {
