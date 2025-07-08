@@ -12,7 +12,6 @@ import { useState, useEffect, Suspense } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
-import ExchangeYearBadge from "@/components/exchange-year-badge";
 import CTAButton from "@/components/cta-button";
 import XIcon from "@/components/XIcon";
 import { Toaster } from "@/components/ui/sonner";
@@ -88,11 +87,11 @@ function HomeContent() {
     fetchEntries();
   }, [isGuestbookExpanded]);
 
-  // Format time for Denver
-  const denverTime =
+  // Format time for Copenhagen
+  const copenhagenTime =
     mounted && time
       ? time.toLocaleTimeString("en-US", {
-          timeZone: "America/Denver",
+          timeZone: "Europe/Copenhagen",
           hour: "numeric",
           minute: "2-digit",
           hour12: true,
@@ -166,10 +165,9 @@ function HomeContent() {
                 <div className="hidden sm:flex items-center gap-3">
                   <div className="flex items-center gap-2 text-zinc-500">
                     <Clock className="w-4 h-4" />
-                    <span>Denver</span>
-                    <span>{denverTime}</span>
+                    <span>Copenhagen</span>
+                    <span>{copenhagenTime}</span>
                   </div>
-                  <ExchangeYearBadge />
                 </div>
               </div>
               <nav className="flex gap-4 items-center">
@@ -270,7 +268,7 @@ function HomeContent() {
             <div className="flex items-center gap-2 mb-14 text-zinc-600">
               <Book className="w-5 h-5" />
               <span>
-                Currently reading: &quot;Hackers & Painters&quot; by Paul Graham
+                Currently reading: &quot;The Creative Act&quot; by Rick Rubin
               </span>
             </div>
 
