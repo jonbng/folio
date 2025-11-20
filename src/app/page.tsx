@@ -203,6 +203,15 @@ function HomeContent() {
                 </Link>
               </nav>
             </header>
+            <p className="absolute left-[-99999px]">
+              Hey! I&apos;m Jonathan Bangert, im an innovate software engineer
+              whos really passionate and curious about the world and technology.
+              I love working on projects that are actually used by people and
+              make a difference. I love using ai to help creativity and
+              experimenting with things. I have worked with AI for several years
+              now feel very fluent in AI/ML. I tought programming to students,
+              won several game jams and contributed to open source projects.
+            </p>
 
             <section className="mb-6 sm:mt-12">
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-4">
