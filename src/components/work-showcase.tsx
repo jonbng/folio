@@ -70,7 +70,7 @@ const works = [
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
     shortDescription: "Reimagining the Danish school systems software.",
     image: "/akademia.webp",
-    year: "2023 — Present",
+    year: "2023 — 2024",
     detailedDescription:
       "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused. This project won 1st place in the Junior Technology category at Unge Forskere, and we got to present it at Shark Tank Junior where we got a mentor.",
     technologies: [
