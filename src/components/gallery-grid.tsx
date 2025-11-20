@@ -57,6 +57,8 @@ export function GalleryGrid({
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               priority={index < 4}
+              placeholder={image.blurDataUrl ? "blur" : "empty"}
+              blurDataURL={image.blurDataUrl}
             />
           </Link>
         </motion.div>

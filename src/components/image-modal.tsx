@@ -211,7 +211,8 @@ export function ImageModal({
                 fill
                 priority
                 sizes="(max-width: 1280px) 100vw, 1280px"
-                // onLoadingComplete={() => setIsLoaded(true)}
+                placeholder={currentPhoto.blurDataUrl ? "blur" : "empty"}
+                blurDataURL={currentPhoto.blurDataUrl}
               />
             </motion.div>
           </AnimatePresence>

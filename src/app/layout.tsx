@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         alt: "Jonathan Bangert - Folio",
         width: 1200,
         height: 630,
-        type: "image/png",
+        type: "image/webp",
       },
     ],
   },
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
         alt: "Jonathan Bangert - Folio",
         width: 1200,
         height: 630,
-        type: "image/png",
+        type: "image/webp",
       },
     ],
   },
@@ -81,7 +81,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`$antialiased`}>
+      <body className="antialiased">
         <FaviconLoader />
         {children}
         <Analytics />
