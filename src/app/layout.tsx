@@ -6,7 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import FaviconLoader from "@/components/FaviconLoader";
 
 export const metadata: Metadata = {
-  title: "Jonathan Bangert - Folio",
+  title: "Jonathan Bangert",
   description: "My place on the internet! Welcome.",
   authors: [{ name: "Jonathan Bangert" }],
   category: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jonathan Bangert - Folio",
+    title: "Jonathan Bangert",
     description: "My place on the internet! Welcome.",
     creatorId: "@jonba_",
     siteId: "@jonba_",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/og.webp",
-        alt: "Jonathan Bangert - Folio",
+        alt: "Jonathan Bangert",
         width: 1200,
         height: 630,
         type: "image/webp",
@@ -45,18 +45,18 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Jonathan Bangert - Folio",
+    title: "Jonathan Bangert",
     description: "My place on the internet! Welcome.",
     type: "website",
     countryName: "United States",
     locale: "en-US",
-    siteName: "Jonathan Bangert - Folio",
+    siteName: "Jonathan Bangert",
     url: "https://jonathanb.dk",
     emails: ["contact@jonathanb.dk"],
     images: [
       {
         url: "/og.webp",
-        alt: "Jonathan Bangert - Folio",
+        alt: "Jonathan Bangert",
         width: 1200,
         height: 630,
         type: "image/webp",
