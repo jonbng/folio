@@ -6,6 +6,61 @@ import { Button } from "./ui/button";
 
 const works = [
   {
+    id: 0,
+    title: "Burst",
+    tag: "Lead Software Engineer",
+    link: "https://burstcreators.com/",
+    tagColor: "bg-green-100 text-green-800",
+    description:
+      "Connecting brands with creators. Creators get paid for views.",
+    shortDescription: "Connecting brands with creators.",
+    image: "/burst-transparent.webp",
+    year: "2025 — Present",
+    detailedDescription:
+      "At Burst we connect brands to creators. Brands choose what message or product they want promoted, the creators join a campaign and get paid for the views their videos get. I joined Burst in summer 2025, working full time as their lead software engineer.",
+    technologies: [
+      "Next.js",
+      "Expo",
+      "Upstash Redis",
+      "Upstash QStash",
+      "Prisma",
+      "Vercel",
+      "Resend",
+      "Express.js",
+      "OpenAI SDK",
+      "Stripe",
+      "Claude Code",
+      "Tailwind CSS",
+      "Supabase",
+      "ShadCN UI",
+    ],
+    team: [
+      {
+        name: "Hauge From",
+        role: "Founder",
+        avatar: "/hauge.jpg",
+        link: "https://www.linkedin.com/in/hauge-from-95b62a132/",
+      },
+      {
+        name: "Louis Carter",
+        role: "Founder",
+        avatar: "/louis.jpg",
+        link: "https://www.linkedin.com/in/louis-s-carter/",
+      },
+      {
+        name: "Jonathan Bangert",
+        role: "Lead Software Engineer",
+        avatar: "/pfp.jpg",
+      },
+      {
+        name: "Elliott Friedrich",
+        role: "Lead Software Engineer",
+        avatar: "/elliott.jpg",
+        link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
+      },
+    ],
+  },
+  {
     id: 1,
     title: "Akademia",
     tag: "Founder",
@@ -81,7 +136,7 @@ const works = [
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
     image: "/flimmer.svg",
-    year: "2024 — Present",
+    year: "2024 — 2025",
     detailedDescription:
       "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning. Specifically I am helping with the mobile app, working with both the frontend and backend maintaining and creating new features for the app.",
     technologies: [

@@ -198,7 +198,7 @@ function HomeContent() {
             </header>
 
             <section className="mb-6 sm:mt-12">
-              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-5">
+              <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-4">
                 <div className="flex-1">
                   <h2 className="text-4xl font-normal tracking-tight mb-8">
                     Hey, I&apos;m Jonathan! <span className="wave">👋</span>
@@ -206,7 +206,7 @@ function HomeContent() {
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
                     I&apos;m a 17-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
-                    <strong> Akademia</strong>. and currently work as a lead SWE
+                    <strong> Akademia</strong> and currently work as a lead SWE
                     @<strong>Burst</strong>. I focus on making technology that is
                     beautiful, intuitive, and genuinely useful.
                   </p>
@@ -242,8 +242,7 @@ function HomeContent() {
                     I started coding at 10, hacked my school PC at 12 for admin
                     access because I didn&apos;t have my own, and haven&apos;t
                     looked back. Over the years, I&apos;ve developed a strong
-                    focus on building useful, well-designed products and have
-                    contributed to countless projects along the way.
+                    focus on building useful, well-designed products.
                   </p>
                 </div>
               </div>
