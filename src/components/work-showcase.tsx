@@ -214,7 +214,7 @@ const works = [
     shortDescription: "A monospaced font designed with precision.",
     image: "/tars-mono.webp",
     cover: "cover",
-    year: "January — February 2025",
+    year: "2025",
     detailedDescription:
       "Tars Mono is a clean, monospaced font designed for titles and coding. Created during my Graphics Design course, it features three styles: sharp, rounded, and smooth. Built in Figma, Adobe Illustrator, and showcased through a Next.js site.",
     technologies: [
