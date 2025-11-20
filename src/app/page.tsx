@@ -222,7 +222,7 @@ function HomeContent() {
                     I&apos;m a 17-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
                     <strong> Akademia</strong>.
-                    {/* and currently work as a SWE @<strong>Flimmer</strong> */}
+                    and currently work as a lead SWE @<strong>Burst</strong>
                     I focus on making technology that is beautiful, intuitive,
                     and genuinely useful.
                   </p>
