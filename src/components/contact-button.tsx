@@ -48,20 +48,23 @@ const shuffleArray = (array: string[]) => {
 };
 
 const useChangingCursor = () => {
-  // Initialize with a function to avoid hydration issues
-  const [scrambledCursors] = useState(() => shuffleArray(cursors));
-  const [cursorIndex, setCursorIndex] = useState(0);
+  // Start with a consistent cursor for SSR to avoid hydration mismatch
+  const [cursor, setCursor] = useState("pointer");
 
   useEffect(() => {
-    // Set up the interval for changing cursor every 250ms
+    // Only run on client after mount to avoid hydration issues
+    const scrambledCursors = shuffleArray(cursors);
+    let index = 0;
+
     const interval = setInterval(() => {
-      setCursorIndex((prevIndex) => (prevIndex + 1) % scrambledCursors.length);
+      index = (index + 1) % scrambledCursors.length;
+      setCursor(scrambledCursors[index]);
     }, 250);
 
     return () => clearInterval(interval);
-  }, [scrambledCursors.length]);
+  }, []);
 
-  return scrambledCursors[cursorIndex];
+  return cursor;
 };
 
 export const ContactButton: React.FC = () => {
