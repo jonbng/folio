@@ -142,7 +142,7 @@ const works = [
     image: "/flimmer.svg",
     year: "2024 — 2025",
     detailedDescription:
-      "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning. Specifically I am helping with the mobile app, working with both the frontend and backend maintaining and creating new features for the app.",
+      "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning. Specifically I was helping with the mobile app, working with both the frontend and backend maintaining and creating new features for the app.",
     technologies: [
       "React Native",
       "Expo",
