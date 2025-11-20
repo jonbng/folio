@@ -146,7 +146,14 @@ function HomeContent() {
               }
             >
               <div className="flex flex-row items-center gap-4">
-                <h1 className="text-lg font-semibold">Jonathan Bangert</h1>
+                <h1
+                  className="text-lg font-semibold cursor-pointer hover:text-zinc-600 transition-colors"
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                >
+                  Jonathan Bangert
+                </h1>
                 <div className="hidden sm:flex items-center gap-3">
                   <div className="flex items-center gap-2 text-zinc-500">
                     <Clock className="w-4 h-4" />
@@ -207,8 +214,8 @@ function HomeContent() {
                     I&apos;m a 17-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
                     <strong> Akademia</strong> and currently work as a lead SWE
-                    @<strong>Burst</strong>. I focus on making technology that is
-                    beautiful, intuitive, and genuinely useful.
+                    @<strong>Burst</strong>. I focus on making technology that
+                    is beautiful, intuitive, and genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
