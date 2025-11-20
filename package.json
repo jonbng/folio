@@ -1,6 +1,7 @@
 {
   "name": "folio",
   "version": "0.1.1",
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
