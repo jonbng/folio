@@ -65,7 +65,6 @@ export default function GuestbookFull({
     setHasSubmitted(true);
   };
 
-
   const calculateContainerHeight = () => {
     if (balloonLayoutMode === "mobile") return undefined;
 
@@ -143,7 +142,7 @@ export default function GuestbookFull({
               <Button
                 variant="actualGhost"
                 size="icon"
-                className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110"
+                className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110 cursor-pointer"
                 onClick={onCollapse}
                 aria-label="Close guestbook"
               >
