@@ -6,21 +6,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
+import { WorkProject, TeamMember } from "@/lib/types";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
-  selectedWork: {
-    tag: string;
-    tagColor: string;
-    title: string;
-    description: string;
-    image?: string;
-    detailedDescription: string;
-    technologies: string[];
-    team: { name: string; avatar?: string; role: string; link?: string }[];
-    cover?: string;
-    link?: string;
-  } | null;
+  selectedWork: WorkProject | null;
   onClose: () => void;
 }
 
@@ -47,9 +37,10 @@ export default function ProjectSidebar({
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => setShowCloseButton(true), 500);
-      return () => clearTimeout(timer);
-    } else {
-      setShowCloseButton(false);
+      return () => {
+        clearTimeout(timer);
+        setShowCloseButton(false);
+      };
     }
   }, [isOpen]);
 
@@ -172,13 +163,7 @@ export default function ProjectSidebar({
                   <div className="space-y-6">
                     <h3 className="text-xl font-semibold">Team</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {selectedWork.team.map(
-                        (member: {
-                          name: string;
-                          avatar?: string;
-                          role: string;
-                          link?: string;
-                        }) => (
+                      {selectedWork.team.map((member: TeamMember) => (
                           <a
                             key={member.name}
                             href={member.link || "#"}

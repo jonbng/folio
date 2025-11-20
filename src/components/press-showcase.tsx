@@ -66,7 +66,7 @@ const awards: AwardItem[] = [
     organization: "Coding Pirates",
     date: "2021-01-01",
     image: "/codingpirates.webp",
-    link: "TODO",
+    link: "#",
     type: "award",
   },
   {

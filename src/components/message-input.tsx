@@ -46,6 +46,10 @@ const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
 };
 
 // Main MessageInput Component
+// Helper function to get random color
+const getRandomColor = () =>
+  colorOptions[Math.floor(Math.random() * colorOptions.length)].value;
+
 export default function MessageInput({
   setEntries,
   onSubmit,
@@ -54,13 +58,12 @@ export default function MessageInput({
   const [isEditing, setIsEditing] = useState(inputOpen);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormData>(() => ({
     name: "",
     message: "",
-    selectedColor:
-      colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+    selectedColor: getRandomColor(),
     notABot: "", // Initialize honeypot field as empty
-  });
+  }));
 
   // Preview entry
   const previewEntry: GuestbookEntry = {
@@ -93,14 +96,12 @@ export default function MessageInput({
 
     // Bot detection - if honeypot field is filled, silently reject
     if (notABot) {
-      console.log("Bot submission detected and prevented");
       // Pretend success but don't actually submit
       setIsEditing(false);
       setFormData({
         name: "",
         message: "",
-        selectedColor:
-          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+        selectedColor: getRandomColor(),
         notABot: "",
       });
       return;
@@ -108,7 +109,7 @@ export default function MessageInput({
 
     // Validation
     if (!name.trim() || !message.trim()) {
-      console.warn("Form validation failed: Name and message required");
+      toast.error("Name and message are required");
       return;
     }
 
@@ -152,16 +153,12 @@ export default function MessageInput({
               new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
           ),
       );
-      console.log(
-        `Guestbook entry added successfully with ID: ${addedEntryId}.`,
-      );
 
       // Reset form
       setFormData({
         name: "",
         message: "",
-        selectedColor:
-          colorOptions[Math.floor(Math.random() * colorOptions.length)].value,
+        selectedColor: getRandomColor(),
         notABot: "",
       });
 
@@ -169,7 +166,7 @@ export default function MessageInput({
       onSubmit?.();
     } catch (error) {
       console.error("Failed to add guestbook entry:", error);
-      alert("Failed to add your message. Please try again.");
+      toast.error("Failed to add your message. Please try again.");
       setEntries((prevEntries) =>
         prevEntries
           .filter((entry) => entry.id !== tempId)

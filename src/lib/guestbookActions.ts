@@ -3,6 +3,15 @@
 import { Redis } from "@upstash/redis";
 import { GuestbookEntry } from "@/types/guestbook";
 
+// Validate environment variables
+if (!process.env.UPSTASH_REDIS_REST_URL) {
+  throw new Error("UPSTASH_REDIS_REST_URL is not defined");
+}
+
+if (!process.env.UPSTASH_REDIS_REST_TOKEN) {
+  throw new Error("UPSTASH_REDIS_REST_TOKEN is not defined");
+}
+
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
@@ -62,20 +71,3 @@ export async function AddGuestbookEntry(
 
   return entryId.toString();
 }
-
-// export async function EditGuestbookEntry(
-//   id: string,
-//   name: string,
-//   message: string,
-//   color: string,
-// ) {
-//   const entry = await redis.hgetall(`guestbook:entry:${id}`);
-//   if (!entry) throw new Error(`Guestbook entry with id ${id} does not exist.`);
-
-//   await redis.hset(`guestbook:entry:${id}`, {
-//     name,
-//     message,
-//     color,
-//   });
-//   return true;
-// }

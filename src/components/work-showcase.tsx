@@ -353,7 +353,7 @@ export default function WorkShowcase({
   };
 
   const [isMobile, setIsMobile] = useState(false);
-  const [showedWork, setShowedWork] = useState(works);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -368,9 +368,8 @@ export default function WorkShowcase({
     };
   }, []);
 
-  useEffect(() => {
-    setShowedWork(isMobile ? works.slice(0, 4) : works.slice(0, 6));
-  }, [isMobile]);
+  // Derive showedWork from isMobile and showAll
+  const showedWork = showAll ? works : works.slice(0, isMobile ? 4 : 6);
 
   return (
     <section className="space-y-12">
@@ -427,7 +426,7 @@ export default function WorkShowcase({
           <Button
             variant="link"
             className="p-0 h-auto font-semibold w-full mt-4"
-            onClick={() => setShowedWork(works)}
+            onClick={() => setShowAll(true)}
           >
             <span className="animate-underline">Show more</span>
           </Button>
@@ -435,7 +434,7 @@ export default function WorkShowcase({
           <Button
             variant="link"
             className="p-0 h-auto font-semibold w-full mt-4"
-            onClick={() => setShowedWork(works.slice(0, isMobile ? 4 : 6))}
+            onClick={() => setShowAll(false)}
           >
             <span className="animate-underline">Show less</span>
           </Button>

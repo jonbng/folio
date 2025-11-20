@@ -65,9 +65,6 @@ export default function GuestbookFull({
     setHasSubmitted(true);
   };
 
-  useEffect(() => {
-    console.log("entries", entries);
-  }, [entries]);
 
   const calculateContainerHeight = () => {
     if (balloonLayoutMode === "mobile") return undefined;

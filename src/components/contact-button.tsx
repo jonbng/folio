@@ -48,31 +48,20 @@ const shuffleArray = (array: string[]) => {
 };
 
 const useChangingCursor = () => {
-  // mounted flag to delay randomized behavior until client-side
-  const [mounted, setMounted] = useState(false);
+  // Initialize with a function to avoid hydration issues
+  const [scrambledCursors] = useState(() => shuffleArray(cursors));
   const [cursorIndex, setCursorIndex] = useState(0);
-  const [scrambledCursors, setScrambledCursors] = useState<string[]>([
-    "default",
-  ]);
 
   useEffect(() => {
-    // set mounted flag to true once on client
-    setMounted(true);
-
-    // Only perform the randomization on client
-    const shuffled = shuffleArray(cursors);
-    setScrambledCursors(shuffled);
-
     // Set up the interval for changing cursor every 250ms
     const interval = setInterval(() => {
-      setCursorIndex((prevIndex) => (prevIndex + 1) % shuffled.length);
+      setCursorIndex((prevIndex) => (prevIndex + 1) % scrambledCursors.length);
     }, 250);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [scrambledCursors.length]);
 
-  // On the server (or before mounting), always return "default" to match SSR
-  return mounted ? scrambledCursors[cursorIndex] : "default";
+  return scrambledCursors[cursorIndex];
 };
 
 export const ContactButton: React.FC = () => {

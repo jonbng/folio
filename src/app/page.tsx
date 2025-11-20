@@ -5,7 +5,6 @@ import { Github, Mail, Linkedin, Clock, Book } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
-// import BlogPreview from "@/components/blog-preview";
 import BeyondCoding from "@/components/beyond-coding";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, useEffect, Suspense } from "react";
@@ -21,24 +20,12 @@ import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { GuestbookEntry } from "@/types/guestbook";
+import { WorkProject } from "@/lib/types";
 
 function HomeContent() {
   const searchParams = useSearchParams();
   const [isWorkOpen, setIsWorkOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState<{
-    id: number;
-    title: string;
-    tag: string;
-    tagColor: string;
-    description: string;
-    shortDescription: string;
-    image: string;
-    year: string;
-    detailedDescription: string;
-    technologies: string[];
-    team: { name: string; role: string; avatar?: string; link?: string }[];
-    cover?: string;
-  } | null>(null);
+  const [selectedWork, setSelectedWork] = useState<WorkProject | null>(null);
   const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<Date | null>(null);
   const [isGuestbookExpanded, setIsGuestbookExpanded] = useState(false);
@@ -71,13 +58,11 @@ function HomeContent() {
 
   // Load guestbook entries on mount
   useEffect(() => {
-    console.log("Fetching guestbook entries");
     async function fetchEntries() {
       try {
         setIsLoading(true);
         const fetchedEntries = await GetAllGuestbookEntries();
         setEntries(fetchedEntries);
-        console.log("Fetched guestbook entries:", fetchedEntries);
       } catch (error) {
         console.error("Failed to fetch guestbook entries:", error);
       } finally {
@@ -221,10 +206,9 @@ function HomeContent() {
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
                     I&apos;m a 17-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
-                    <strong> Akademia</strong>.
-                    and currently work as a lead SWE @<strong>Burst</strong>
-                    I focus on making technology that is beautiful, intuitive,
-                    and genuinely useful.
+                    <strong> Akademia</strong>. and currently work as a lead SWE
+                    @<strong>Burst</strong>I focus on making technology that is
+                    beautiful, intuitive, and genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton

@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function useLastViewedPhoto() {
-  const [lastViewedPhoto, setLastViewedPhoto] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Check if we have a last viewed photo in localStorage
-    const lastViewed = localStorage.getItem("lastViewedPhoto");
-    if (lastViewed) {
-      setLastViewedPhoto(lastViewed);
+  // Initialize state with localStorage value
+  const [lastViewedPhoto, setLastViewedPhoto] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("lastViewedPhoto");
     }
-  }, []);
+    return null;
+  });
 
   const setLastViewedPhotoWithStorage = (id: string) => {
     if (id) {
