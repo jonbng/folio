@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Home } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function Error({
   error,
@@ -11,42 +11,59 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const router = useRouter();
+  const [countdown, setCountdown] = useState(5);
+  const isProduction = process.env.NODE_ENV !== "development";
+
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
+  useEffect(() => {
+    if (!isProduction) return;
+
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          router.push("/");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isProduction, router]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-6">
-      <div className="max-w-md w-full text-center space-y-8">
-        <div className="flex justify-center">
-          <div className="text-7xl animate-bounce">😅</div>
-        </div>
-        <div className="space-y-3">
-          <h2 className="text-4xl font-semibold text-zinc-900">
-            Well, that&apos;s unexpected
-          </h2>
-          <p className="text-xl text-zinc-600 leading-relaxed">
-            Something broke. Let&apos;s give that another shot.
+      <div className="max-w-lg w-full text-center space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-4xl text-black">Error: 500</h1>
+          <p className="text-black/60">
+            Something went wrong. I&apos;ll take a look at it at some point :P
           </p>
+          {isProduction && (
+            <p className="text-sm text-black/40 mt-4">
+              Redirecting in {countdown} seconds...
+            </p>
+          )}
         </div>
-        <div className="flex justify-center">
-          <Button
-            asChild
-            className="bg-zinc-900 hover:bg-zinc-800 text-white inline-flex items-center gap-2"
-          >
-            <Link href="/">
-              <Home className="w-4 h-4" />
-              Go Home
-            </Link>
-          </Button>
-        </div>
+
+        <Link
+          href="/"
+          className="text-sm font-medium text-zinc-900 flex items-center justify-center gap-1 group mb-12"
+        >
+          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+          <span className="animate-underline">Back to home</span>
+        </Link>
+
         {process.env.NODE_ENV === "development" && error.message && (
           <details className="mt-8 text-left">
-            <summary className="text-sm text-zinc-500 cursor-pointer hover:text-zinc-700">
-              Technical Details
+            <summary className="text-sm text-black/60 cursor-pointer hover:text-black">
+              Error Details
             </summary>
-            <pre className="mt-2 text-xs text-zinc-600 bg-zinc-50 p-4 rounded-lg overflow-auto">
+            <pre className="mt-4 text-xs text-black/80 bg-black/5 p-4 rounded overflow-auto border border-black/10">
               {error.message}
             </pre>
           </details>
