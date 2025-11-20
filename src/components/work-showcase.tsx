@@ -7,10 +7,11 @@ import { Button } from "./ui/button";
 const works = [
   {
     id: 0,
+    order: 1,
     title: "Burst",
-    tag: "Lead Software Engineer",
+    tag: "Work",
     link: "https://burstcreators.com/",
-    tagColor: "bg-green-100 text-green-800",
+    tagColor: "bg-blue-100 text-blue-800",
     description:
       "Connecting brands with creators. Creators get paid for views.",
     shortDescription: "Connecting brands with creators.",
@@ -62,6 +63,7 @@ const works = [
   },
   {
     id: 1,
+    order: 3,
     title: "Akademia",
     tag: "Founder",
     link: "https://akademia.cc",
@@ -99,9 +101,10 @@ const works = [
   },
   {
     id: 6,
+    order: 6,
     cover: "cover",
     title: "AlfaBeta",
-    tag: "For fun 😎",
+    tag: "For Fun",
     link: "https://alfabeta.dk",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "The only link shortener you'll ever need.",
@@ -128,10 +131,11 @@ const works = [
   },
   {
     id: 2,
+    order: 4,
     title: "Flimmer",
-    tag: "For fun 😎",
+    tag: "Work",
     link: "https://flimmer.app",
-    tagColor: "bg-yellow-100 text-yellow-800",
+    tagColor: "bg-blue-100 text-blue-800",
     description:
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time to play time.",
@@ -200,9 +204,10 @@ const works = [
   },
   {
     id: 5,
+    order: 9,
     title: "Tars Mono",
     link: "https://tars.jonathanb.dk/",
-    tag: "For fun 😎",
+    tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
     description:
       "A monospaced typeface designed for titles and beyond. Featuring three distinct styles: sharp for precision, rounded for warmth, and smooth for elegance.",
@@ -231,6 +236,7 @@ const works = [
   },
   {
     id: 3,
+    order: 2,
     title: "Music Assistant",
     tag: "Contributor",
     tagColor: "bg-purple-100 text-purple-800",
@@ -238,7 +244,7 @@ const works = [
     description:
       "Music Assistant is a music library manager for your offline and online music sources which can easily stream your favourite music to a wide range of supported players and be combined with the power of Home Assistant!",
     shortDescription: "Open source music library manager.",
-    image: "/music-assistant.jpg",
+    image: "/musicassistant.png",
     cover: "cover",
     year: "Early 2023 — Present",
     detailedDescription:
@@ -276,6 +282,7 @@ const works = [
   },
   {
     id: 4,
+    order: 8,
     title: "Nørrebro Skakklub",
     tag: "Contract",
     link: "https://nbskak.dk",
@@ -317,9 +324,10 @@ const works = [
   },
   {
     id: 7,
+    order: 5,
     title: "ScanShop",
     link: "https://scanshop.arctix.dev/",
-    tag: "For fun 😎",
+    tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "Remove items from your shopping list by easily.",
     description:
@@ -348,9 +356,10 @@ const works = [
   },
   {
     id: 8,
+    order: 7,
     title: "GravityDrop",
     link: "https://nth1nk.itch.io/gravitydrop",
-    tag: "For fun 😎",
+    tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "A casual puzzle game about playing with gravity.",
     image: "/gravitydrop.webp",
@@ -402,6 +411,8 @@ export default function WorkShowcase({
   onOpenChange,
   onSelectWork,
 }: WorkShowcaseProps) {
+  const sortedWorks = [...works].sort((a, b) => a.order - b.order);
+
   const handleWorkClick = (work: (typeof works)[number]) => {
     onSelectWork?.(work);
     onOpenChange?.(true);
@@ -424,7 +435,9 @@ export default function WorkShowcase({
   }, []);
 
   // Derive showedWork from isMobile and showAll
-  const showedWork = showAll ? works : works.slice(0, isMobile ? 4 : 6);
+  const showedWork = showAll
+    ? sortedWorks
+    : sortedWorks.slice(0, isMobile ? 4 : 6);
 
   return (
     <section className="space-y-12">
@@ -477,7 +490,7 @@ export default function WorkShowcase({
             ))}
           </AnimatePresence>
         </div>
-        {showedWork.length < works.length ? (
+        {showedWork.length < sortedWorks.length ? (
           <Button
             variant="link"
             className="p-0 h-auto font-semibold w-full mt-4"
