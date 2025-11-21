@@ -1,13 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Block Builder Fellowship | Jonathan Bangert",
-  description: "Block Builder Fellowship | Jonathan Bangert.",
-};
+import { useEffect } from "react";
 
 export default function Block() {
+  // Track page visit
+  useEffect(() => {
+    fetch("/api/track-visit", {
+      method: "POST",
+    }).catch((error) => console.error("Failed to track visit:", error));
+  }, []);
   return (
     <main className="min-h-screen bg-white selection:bg-zinc-100">
       <div className="max-w-2xl mx-auto px-4 py-20">
@@ -54,9 +57,9 @@ export default function Block() {
             teachers teach.
           </p>
           <p>
-            I&apos;ve been programming since I was 10, and have since then worked on
-            several projects in my free time, including open source projects
-            such as{" "}
+            I&apos;ve been programming since I was 10, and have since then
+            worked on several projects in my free time, including open source
+            projects such as{" "}
             <a
               href="https://music-assistant.io/"
               className="underline font-bold"
