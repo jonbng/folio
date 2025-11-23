@@ -2,14 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const webhookUrl =
-      "https://discord.com/api/webhooks/1441360221158113381/DoTJned3ebb3NoJ_4Yhi9eClkcs5mIo2ytotjom7IIb94UofehBZ6oO1X37RZ8Y9ueqZ";
-
-    // Get visitor information
+    // Check if request is from localhost
+    const hostname = request.nextUrl.hostname;
     const ip =
       request.headers.get("x-forwarded-for") ||
       request.headers.get("x-real-ip") ||
       "Unknown";
+
+    // Ignore localhost requests
+    if (
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      ip === "127.0.0.1" ||
+      ip === "::1" ||
+      ip.startsWith("127.") ||
+      ip === "::ffff:127.0.0.1"
+    ) {
+      return NextResponse.json({ success: true, ignored: true });
+    }
+
+    const webhookUrl =
+      "https://discord.com/api/webhooks/1441360221158113381/DoTJned3ebb3NoJ_4Yhi9eClkcs5mIo2ytotjom7IIb94UofehBZ6oO1X37RZ8Y9ueqZ";
+
+    // Get visitor information
     const userAgent = request.headers.get("user-agent") || "Unknown";
     const timestamp = new Date().toISOString();
     const referer = request.headers.get("referer") || "Direct";
