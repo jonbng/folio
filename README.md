@@ -24,4 +24,4 @@ Showcase of a few press mentions and recognitions.
 
 ---
 
-Designed with Love by Jonathan Bangert under the MIT license ❤️ Copyright (c) 2025.
+Designed with Love by Jonathan Bangert under the MIT license ❤️ Copyright (c) 2025. 
