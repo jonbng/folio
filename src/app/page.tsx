@@ -220,7 +220,7 @@ function HomeContent() {
                     Hey, I&apos;m Jonathan! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    I&apos;m a 17-year-old software engineer who cares about
+                    I&apos;m a 18-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
                     <strong> Akademia</strong> and currently work as a lead SWE
                     @<strong>Burst</strong>. I focus on making technology that
