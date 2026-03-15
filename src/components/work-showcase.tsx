@@ -400,6 +400,43 @@ const works = [
       },
     ],
   },
+  {
+    id: 9,
+    order: 0,
+    title: "BetterLectio",
+    tag: "Founder",
+    link: "https://github.com/jonbng/betterlectio",
+    tagColor: "bg-green-100 text-green-800",
+    shortDescription: "A browser extension that modernizes Lectio.",
+    description:
+      "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system, with improved functionality and better styling.",
+    image: "/betterlectio.webp",
+    cover: "cover",
+    year: "2024 — Present",
+    detailedDescription:
+      "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system. It adds a modern sidebar, fast search with keyboard shortcuts, smart prefetching for instant page loads, an improved messages layout, profile pictures, and skeleton loading for smooth transitions. Available for both Chrome and Firefox.",
+    technologies: [
+      "WXT",
+      "Preact",
+      "TypeScript",
+      "Tailwind CSS",
+      "ShadCN UI",
+      "Radix UI",
+    ],
+    team: [
+      {
+        name: "Jonathan Bangert",
+        role: "Co-Creator",
+        avatar: "/pfp.jpg",
+      },
+      {
+        name: "Elliott Friedrich",
+        role: "Co-Creator",
+        avatar: "/elliott.jpg",
+        link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
+      },
+    ],
+  },
 ];
 
 interface WorkShowcaseProps {
