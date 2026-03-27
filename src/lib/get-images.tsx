@@ -29,10 +29,10 @@ export async function getSampleImages(): Promise<ImageType[]> {
   for (let i = 1; i <= imageCount; i++) {
     images.push({
       id: "image-" + i,
-      mainUrl: "/pfp.jpg",
-      modalUrl: "/pfp.jpg",
-      fullResUrl: "/pfp.jpg",
-      thumbnailUrl: "/pfp.jpg",
+      mainUrl: "/pfp.jpeg",
+      modalUrl: "/pfp.jpeg",
+      fullResUrl: "/pfp.jpeg",
+      thumbnailUrl: "/pfp.jpeg",
       alt: "wow",
       width: 720,
       height: 480,

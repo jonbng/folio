@@ -51,7 +51,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Lead Software Engineer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
@@ -89,7 +89,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Co-Founder",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
@@ -125,7 +125,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Designer & Developer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
     ],
   },
@@ -186,7 +186,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Software Engineer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
@@ -230,7 +230,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Designer & Developer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
     ],
   },
@@ -254,7 +254,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Maintainer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Marcel Van Der Veldt",
@@ -306,7 +306,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Developer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
@@ -350,7 +350,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Designer & Developer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
     ],
   },
@@ -380,7 +380,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Developer",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
@@ -427,7 +427,7 @@ const works = [
       {
         name: "Jonathan Bangert",
         role: "Co-Creator",
-        avatar: "/pfp.jpg",
+        avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",

@@ -65,14 +65,14 @@ export default function PressKit() {
             <div className="flex space-x-4">
               <div className="flex flex-col items-center">
                 <Image
-                  src="/pfp.jpg"
+                  src="/pfp.jpeg"
                   alt="Jonathan Bangert"
                   width={400}
                   height={400}
                 />
                 <Button variant="link" asChild>
                   <a
-                    href="/pfp.jpg"
+                    href="/pfp.jpeg"
                     download
                     className="text-blue-600 hover:underline"
                   >

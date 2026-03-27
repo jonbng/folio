@@ -240,15 +240,17 @@ function HomeContent() {
                   </div>
                 </div>
                 <div className="shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
-                  <Image
-                    src="/pfp.jpg"
-                    alt="Jonathan Bangert"
-                    width={210}
-                    height={210}
-                    loading="eager"
-                    className="w-full sm:w-[210px] aspect-3/2 sm:aspect-square object-[50%_10%] sm:rounded-4xl rounded-2xl object-cover"
-                    priority
-                  />
+                  <div className="relative w-full sm:w-[190px] aspect-3/4 overflow-hidden sm:rounded-4xl rounded-2xl">
+                    <Image
+                      src="/pfp-tall.jpeg"
+                      alt="Jonathan Bangert"
+                      fill
+                      sizes="(min-width: 640px) 190px, 100vw"
+                      loading="eager"
+                      className="object-cover object-[50%_10%]"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
               <div className="mt-4">
