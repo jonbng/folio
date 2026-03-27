@@ -223,7 +223,7 @@ function HomeContent() {
                     I&apos;m a 18-year-old software engineer who cares about
                     building high-quality, thoughtful software. I co-founded
                     <strong> Akademia</strong> and currently work as a lead SWE
-                    @<strong>Burst</strong>. I focus on making technology that
+                    @{" "}<strong>Burst</strong>. I focus on making technology that
                     is beautiful, intuitive, and genuinely useful.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
@@ -269,7 +269,7 @@ function HomeContent() {
             <div className="flex items-center gap-2 mb-14 text-zinc-600">
               <Book className="w-5 h-5" />
               <span>
-                Currently reading: &quot;The Creative Act&quot; by Rick Rubin
+                Currently reading: &quot;Nexus&quot; by Yuval Noah Harari
               </span>
             </div>
 
