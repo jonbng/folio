@@ -237,12 +237,8 @@ export default function Balloon({
           }}
         >
           <motion.div
-            className={`w-24 h-24 ${
-              layoutMode === "mobile" ? "sm:w-20 sm:h-20" : ""
-            } rounded-full flex items-center justify-center relative cursor-pointer`}
-            style={{
-              background: color.bg,
-            }}
+            className="cursor-pointer relative"
+            style={{ transformOrigin: "top center" }}
             onHoverStart={() => setShowTooltip(true)}
             onHoverEnd={() => setShowTooltip(false)}
             whileHover={{ scale: 1.1 }}
@@ -253,46 +249,64 @@ export default function Balloon({
             role="button"
             tabIndex={0}
           >
-            <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-lg">
-              {entry.name.split(" ")[0]}
-            </span>
-          </motion.div>
-
-          <div
-            className="relative h-4 w-8 mx-auto"
-            style={{ marginTop: "-2px" }}
-          >
             <div
-              className="absolute top-0 left-1/2 transform -translate-x-1/2 w-0 h-0"
+              className={`w-[88px] h-[104px] ${
+                layoutMode === "mobile" ? "sm:w-[72px] sm:h-[86px]" : ""
+              } flex items-center justify-center relative`}
               style={{
-                borderLeft: "6px solid transparent",
-                borderRight: "6px solid transparent",
-                borderBottom: `10px solid ${color.knot}`,
-                filter: "brightness(0.9)",
+                borderRadius: "50% 50% 50% 50% / 45% 45% 55% 55%",
+                background: `radial-gradient(circle at 35% 30%, ${color.highlight}, ${color.bg} 55%, ${color.dark} 100%)`,
+                boxShadow: `inset -4px -6px 12px rgba(0,0,0,0.08), 0 4px 12px ${color.shadow}`,
               }}
-            ></div>
-          </div>
-
-          <div className="h-24 relative">
-            <svg
-              width="30"
-              height="100"
-              viewBox="0 0 30 100"
-              fill="none"
-              className="absolute left-1/2 -translate-x-1/2"
             >
-              <path d={svgPathD} stroke="black" strokeWidth="1" fill="none" />
-            </svg>
-          </div>
+              {/* Shine highlight */}
+              <div
+                className="absolute w-[30%] h-[35%] rounded-full opacity-50 pointer-events-none"
+                style={{
+                  top: "15%",
+                  left: "20%",
+                  background: "radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%)",
+                }}
+              />
+              <span className="text-lg font-bold text-white text-center px-2 z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
+                {entry.name.split(" ")[0]}
+              </span>
+            </div>
+
+            {/* Knot - SVG loop */}
+            <div className="relative flex justify-center z-10" style={{ marginTop: "-1px" }}>
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                <path
+                  d="M7 0 C4 0, 2 3, 4 5 C5.5 6.5, 7 4, 7 4 C7 4, 8.5 6.5, 10 5 C12 3, 10 0, 7 0Z"
+                  fill={color.knot}
+                  style={{ filter: "brightness(0.82)" }}
+                />
+              </svg>
+            </div>
+
+            {/* String */}
+            <div className="h-24 relative" style={{ marginTop: "-7px" }}>
+              <svg
+                width="30"
+                height="100"
+                viewBox="0 0 30 100"
+                fill="none"
+                className="absolute left-1/2 -translate-x-1/2"
+                aria-hidden="true"
+              >
+                <path d={svgPathD} stroke={color.knot} strokeWidth="0.8" fill="none" opacity="0.5" />
+              </svg>
+            </div>
+          </motion.div>
 
           <AnimatePresence>
             {showTooltip && (
               <motion.div
-                className={`absolute bottom-full mb-2 w-64 ${layoutMode === "mobile" ? "sm:w-72" : ""} bg-white rounded-lg shadow-lg p-4 z-50`}
-                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                className={`absolute bottom-full mb-2 w-64 ${layoutMode === "mobile" ? "sm:w-72" : ""} bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.08)] p-4 z-50`}
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                transition={{ duration: 0.15, ease: [0.23, 1, 0.32, 1] }}
                 style={{
                   right: "50%",
                   translateX: "50%",
@@ -300,15 +314,14 @@ export default function Balloon({
                 }}
               >
                 <div className="flex items-baseline justify-between mb-1">
-                  <div className="text-sm text-gray-500">{formattedDate}</div>
+                  <div className="text-xs text-[var(--muted-foreground)]">{formattedDate}</div>
                 </div>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <div className="font-bold text-gray-800">{entry.name}</div>
+                <div className="flex items-baseline gap-2 mb-1.5">
+                  <div className="font-semibold text-[var(--foreground)]">{entry.name}</div>
                 </div>
-                <div className="text-gray-600">{entry.message}</div>
+                <div className="text-sm text-[var(--muted-foreground)] leading-relaxed">{entry.message}</div>
                 <div
-                  className="absolute w-4 h-4 bg-white transform rotate-45 left-1/2 -bottom-2 -ml-2"
-                  // style={{ boxShadow: "2px 2px 5px rgba(0,0,0,0.1)" }}
+                  className="absolute w-3 h-3 bg-[var(--card)] border-r border-b border-[var(--border)] transform rotate-45 left-1/2 -bottom-1.5 -ml-1.5"
                 ></div>
               </motion.div>
             )}
@@ -322,42 +335,56 @@ export default function Balloon({
 export function getBalloonColor(colorName: string) {
   const colors: Record<
     string,
-    { bg: string; highlight: string; knot: string }
+    { bg: string; highlight: string; dark: string; shadow: string; knot: string }
   > = {
     blue: {
-      bg: "rgba(135, 206, 250, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#87cefa",
+      bg: "rgba(135, 206, 250, 0.85)",
+      highlight: "rgba(190, 230, 255, 0.95)",
+      dark: "rgba(90, 160, 220, 0.9)",
+      shadow: "rgba(90, 160, 220, 0.2)",
+      knot: "#6db8e8",
     },
     pink: {
-      bg: "rgba(255, 182, 193, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#ffb6c1",
+      bg: "rgba(255, 182, 193, 0.85)",
+      highlight: "rgba(255, 220, 228, 0.95)",
+      dark: "rgba(220, 140, 155, 0.9)",
+      shadow: "rgba(220, 140, 155, 0.2)",
+      knot: "#e8a0ad",
     },
     yellow: {
-      bg: "rgba(255, 215, 0, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#ffd700",
+      bg: "rgba(255, 220, 60, 0.85)",
+      highlight: "rgba(255, 240, 150, 0.95)",
+      dark: "rgba(220, 180, 20, 0.9)",
+      shadow: "rgba(220, 180, 20, 0.2)",
+      knot: "#d4aa20",
     },
     green: {
-      bg: "rgba(152, 251, 152, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#98fb98",
+      bg: "rgba(140, 230, 140, 0.85)",
+      highlight: "rgba(190, 250, 190, 0.95)",
+      dark: "rgba(100, 190, 100, 0.9)",
+      shadow: "rgba(100, 190, 100, 0.2)",
+      knot: "#78c878",
     },
     purple: {
-      bg: "rgba(221, 160, 221, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#dda0dd",
+      bg: "rgba(200, 150, 210, 0.85)",
+      highlight: "rgba(230, 195, 240, 0.95)",
+      dark: "rgba(165, 115, 180, 0.9)",
+      shadow: "rgba(165, 115, 180, 0.2)",
+      knot: "#b088be",
     },
     orange: {
-      bg: "rgba(255, 160, 122, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#ffa07a",
+      bg: "rgba(255, 160, 100, 0.85)",
+      highlight: "rgba(255, 200, 160, 0.95)",
+      dark: "rgba(220, 120, 70, 0.9)",
+      shadow: "rgba(220, 120, 70, 0.2)",
+      knot: "#d88850",
     },
     teal: {
-      bg: "rgba(100, 210, 200, 0.8)",
-      highlight: "rgba(255, 255, 255, 0.6)",
-      knot: "#64d2c8",
+      bg: "rgba(100, 210, 200, 0.85)",
+      highlight: "rgba(160, 235, 228, 0.95)",
+      dark: "rgba(60, 170, 160, 0.9)",
+      shadow: "rgba(60, 170, 160, 0.2)",
+      knot: "#48aaa0",
     },
   };
   return colors[colorName] || colors.blue;
