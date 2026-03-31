@@ -52,7 +52,6 @@ export const metadata: Metadata = {
     locale: "en-US",
     siteName: "Jonathan Bangert",
     url: "https://jonathanb.dk",
-    emails: ["contact@jonathanb.dk"],
     images: [
       {
         url: "/og.webp",
