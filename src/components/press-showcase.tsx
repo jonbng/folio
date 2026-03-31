@@ -2,8 +2,7 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, Award, Newspaper } from "lucide-react";
+import { Award, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -93,6 +92,13 @@ const allItems: Item[] = [...awards, ...pressItems].sort(
   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 );
 
+function formatDate(dateStr: string) {
+  const [year, month, day] = dateStr.split("-");
+  if (month === "01" && day === "01") return year;
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
 export default function PressAndRecognitionShowcase() {
   const [count, setCount] = useState(3);
   const displayedItems = allItems.slice(0, count);
@@ -100,9 +106,9 @@ export default function PressAndRecognitionShowcase() {
   const isPressItem = (item: Item): item is PressItem => item.type === "press";
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-sm font-medium text-zinc-500 tracking-widest uppercase">
+        <h2 className="font-display text-3xl sm:text-4xl tracking-tight text-[var(--foreground)]">
           Recognition
         </h2>
         {/* <Button variant="link" asChild className="p-0 h-auto font-semibold">
@@ -149,19 +155,19 @@ export default function PressAndRecognitionShowcase() {
                   />
                 </div>
                 <div className="flex-grow">
-                  <h3 className="text-xl font-semibold group-hover:text-zinc-600 transition-colors">
+                  <h3 className="text-xl font-semibold group-hover:text-[var(--muted-foreground)] transition-colors duration-200">
                     {item.title}
                   </h3>
-                  <p className="text-zinc-600 mt-1">
+                  <p className="text-[var(--muted-foreground)] mt-1">
                     {isPressItem(item) ? (
                       <>
                         <Newspaper className="inline-block w-4 h-4 mr-1" />
-                        {item.publication} • {item.date}
+                        {item.publication} · {formatDate(item.date)}
                       </>
                     ) : (
                       <>
                         <Award className="inline-block w-4 h-4 mr-1" />
-                        {item.organization} • {item.date}
+                        {item.organization} · {formatDate(item.date)}
                       </>
                     )}
                   </p>

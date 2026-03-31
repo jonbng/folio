@@ -9,7 +9,7 @@ interface CTAButtonProps {
 
 export default function CTAButton({ text, href, icon }: CTAButtonProps) {
   return (
-    <Button asChild size="lg" className="font-semibold" variant={"actualGhost"}>
+    <Button asChild size="lg" className="font-semibold press-scale" variant={"actualGhost"}>
       <a href={href} className="inline-flex items-center gap-2">
         {icon}
         <span className="animate-underline text-lg font-medium">{text}</span>

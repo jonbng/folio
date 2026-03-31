@@ -7,7 +7,7 @@ import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
 import BeyondCoding from "@/components/beyond-coding";
 import { AnimatePresence, motion } from "motion/react";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useCallback } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
@@ -23,6 +23,28 @@ import { useSearchParams } from "next/navigation";
 import { GuestbookEntry } from "@/types/guestbook";
 import { WorkProject } from "@/lib/types";
 
+const stagger = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.23, 1, 0.32, 1] as [number, number, number, number],
+    },
+  },
+};
+
 function HomeContent() {
   const searchParams = useSearchParams();
   const [isWorkOpen, setIsWorkOpen] = useState(false);
@@ -35,16 +57,15 @@ function HomeContent() {
   const [isClient, setIsClient] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
 
-  function handleMessage() {
+  const handleMessage = useCallback(() => {
     setIsGuestbookExpanded(true);
     setInputOpen(true);
-  }
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Set mounted flag and initialize time on client-side only.
   useEffect(() => {
     setMounted(true);
     const now = new Date();
@@ -57,7 +78,6 @@ function HomeContent() {
     return () => clearInterval(timer);
   }, []);
 
-  // Load guestbook entries on mount
   useEffect(() => {
     async function fetchEntries() {
       try {
@@ -73,7 +93,6 @@ function HomeContent() {
     fetchEntries();
   }, [isGuestbookExpanded]);
 
-  // Format time for Copenhagen
   const copenhagenTime =
     mounted && time
       ? time.toLocaleTimeString("en-US", {
@@ -84,7 +103,6 @@ function HomeContent() {
         })
       : "Loading...";
 
-  // Prevent scrolling when sidebar is open
   useEffect(() => {
     if (isWorkOpen) {
       document.body.style.overflow = "hidden";
@@ -96,11 +114,9 @@ function HomeContent() {
     };
   }, [isWorkOpen]);
 
-  // Handle guestbook URL parameter and scrolling
   useEffect(() => {
     if (searchParams.get("guestbookOpen") === "1") {
       setIsGuestbookExpanded(true);
-      // Use setTimeout to ensure the element exists after state update
       setTimeout(() => {
         document
           .getElementById("guestbook")
@@ -109,7 +125,6 @@ function HomeContent() {
     }
   }, [searchParams]);
 
-  // Prevent scrolling when guestbook is expanded
   useEffect(() => {
     if (isGuestbookExpanded) {
       document.body.style.overflow = "hidden";
@@ -124,7 +139,7 @@ function HomeContent() {
   return (
     <>
       <Toaster />
-      <div className="relative min-h-screen bg-white">
+      <div className="relative min-h-screen bg-[var(--background)]">
         <motion.main
           animate={{
             scale: isWorkOpen || isGuestbookExpanded ? 0.93 : 1,
@@ -140,15 +155,10 @@ function HomeContent() {
           className="relative"
         >
           <div className="max-w-4xl mx-auto px-6 sm:px-4 pt-2 pb-10">
-            <header
-              className={
-                "sticky top-0 z-10 flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 py-6 sm:mb-8" +
-                (isWorkOpen ? "" : " bg-white")
-              }
-            >
+            <header className="sticky top-0 z-10 flex flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 py-6 sm:mb-8 bg-[var(--background)]">
               <div className="flex flex-row items-center gap-4">
                 <h1
-                  className="text-lg font-semibold cursor-pointer hover:text-zinc-600 transition-colors"
+                  className="text-lg font-semibold cursor-pointer transition-colors duration-200 hover:text-[var(--muted-foreground)] press-scale"
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
@@ -156,10 +166,10 @@ function HomeContent() {
                   Jonathan Bangert
                 </h1>
                 <div className="hidden sm:flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-zinc-500">
+                  <div className="flex items-center gap-2 text-[var(--muted-foreground)]">
                     <Clock className="w-4 h-4" />
                     <span>Copenhagen</span>
-                    <span>{copenhagenTime}</span>
+                    <span className="tabular-nums">{copenhagenTime}</span>
                   </div>
                 </div>
               </div>
@@ -167,9 +177,8 @@ function HomeContent() {
                 <Link
                   href="https://x.com/jonbng"
                   target="_blank"
-                  key="x-link"
                   rel="noopener noreferrer"
-                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                  className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-200 press-scale"
                 >
                   <XIcon size={23} className="opacity-80" />
                   <span className="sr-only">X</span>
@@ -178,8 +187,7 @@ function HomeContent() {
                   href="https://github.com/jonbng"
                   target="_blank"
                   rel="noopener noreferrer"
-                  key="github-link"
-                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                  className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-200 press-scale"
                 >
                   <Github size={24} />
                   <span className="sr-only">GitHub</span>
@@ -188,8 +196,7 @@ function HomeContent() {
                   href="https://linkedin.com/in/jonathan-bangert/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  key="linkedin-link"
-                  className="hidden sm:inline-flex text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
+                  className="hidden sm:inline-flex text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors duration-200 press-scale"
                 >
                   <Linkedin size={24} />
                   <span className="sr-only">LinkedIn</span>
@@ -207,23 +214,41 @@ function HomeContent() {
               won several game jams and contributed to open source projects.
             </p>
 
-            <section className="mb-6 sm:mt-12">
+            {/* Hero with stagger animation */}
+            <motion.section
+              className="mb-6 sm:mt-12"
+              variants={stagger}
+              initial="hidden"
+              animate="show"
+            >
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-4">
                 <div className="flex-1">
-                  <h2 className="text-4xl font-normal tracking-tight mb-8">
+                  <motion.h2
+                    variants={fadeUp}
+                    className="font-display text-5xl sm:text-6xl tracking-tight mb-8 text-[var(--foreground)]"
+                  >
                     Hey, I&apos;m Jonathan! <span className="wave">👋</span>
-                  </h2>
-                  <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    <strong>
+                  </motion.h2>
+                  <motion.p
+                    variants={fadeUp}
+                    className="text-xl text-[var(--muted-foreground)] leading-relaxed mb-4"
+                  >
+                    <strong className="text-[var(--foreground)]">
                       I build software that makes complex things simple.
                     </strong>
-                    <br />
-                    <br className="hidden sm:block" />
+                    <br className="mb-1.5" />
                     I&apos;m an 18-year-old software engineer based in
-                    Copenhagen. I co-founded <strong>Akademia</strong> and work
-                    as a Lead SWE at <strong>Burst</strong>.
-                  </p>
-                  <div className="flex flex-wrap gap-4 -ml-4">
+                    Copenhagen. I co-founded{" "}
+                    <strong className="text-[var(--foreground)]">
+                      Akademia
+                    </strong>{" "}
+                    and work as a Lead SWE at{" "}
+                    <strong className="text-[var(--foreground)]">Burst</strong>.
+                  </motion.p>
+                  <motion.div
+                    variants={fadeUp}
+                    className="flex flex-wrap gap-4 -ml-4"
+                  >
                     <CTAButton
                       text="Follow Me!"
                       href="https://x.com/jonbng"
@@ -234,10 +259,13 @@ function HomeContent() {
                       href="#guestbook"
                       icon={<Mail className="w-5 h-5" />}
                     />
-                  </div>
+                  </motion.div>
                 </div>
-                <div className="shrink-0 transition-transform duration-300 hover:scale-105 w-full sm:w-auto">
-                  <div className="relative w-full sm:w-[190px] aspect-3/4 overflow-hidden sm:rounded-4xl rounded-2xl">
+                <motion.div
+                  variants={fadeUp}
+                  className="shrink-0 w-full sm:w-auto"
+                >
+                  <div className="relative w-full sm:w-[190px] aspect-3/4 overflow-hidden sm:rounded-4xl rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08),0_2px_8px_rgba(0,0,0,0.04)] hover-lift transition-transform duration-300">
                     <Image
                       src="/pfp-tall.jpeg"
                       alt="Jonathan Bangert"
@@ -248,10 +276,10 @@ function HomeContent() {
                       priority
                     />
                   </div>
-                </div>
+                </motion.div>
               </div>
-              <div className="mt-4">
-                <ul className="list-disc pl-6 text-xl text-zinc-600 leading-relaxed space-y-2">
+              <motion.div variants={fadeUp} className="mt-4">
+                <ul className="list-disc pl-6 text-xl text-[var(--muted-foreground)] leading-relaxed space-y-2">
                   <li>I make complex systems simple to use.</li>
                   <li>
                     I started coding at 10 and broke into my school&apos;s
@@ -259,24 +287,29 @@ function HomeContent() {
                   </li>
                   <li>I care a lot about getting the details right.</li>
                 </ul>
-              </div>
-            </section>
+              </motion.div>
+            </motion.section>
 
-            <div className="flex items-center gap-2 mb-14 text-zinc-600">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              className="flex items-center gap-2 mb-14 text-[var(--muted-foreground)]"
+            >
               <Book className="w-5 h-5" />
               <span>
                 Currently reading: &quot;Nexus&quot; by Yuval Noah Harari
               </span>
-            </div>
+            </motion.div>
 
-            <Separator className="mb-16" />
+            <Separator className="mb-16 bg-[var(--border)]" />
 
             <WorkShowcase
               onOpenChange={setIsWorkOpen}
               onSelectWork={setSelectedWork}
             />
 
-            <Separator className="my-14" />
+            <Separator className="my-14 bg-[var(--border)]" />
 
             <div className="relative h-96">
               {!isGuestbookExpanded && (
@@ -290,43 +323,17 @@ function HomeContent() {
               )}
             </div>
 
-            <Separator className="my-14" />
+            <Separator className="my-14 bg-[var(--border)]" />
 
             <BeyondCoding />
 
-            <Separator className="my-20" />
+            <Separator className="my-20 bg-[var(--border)]" />
 
             <PressShowcase />
 
-            {/* <Separator className="my-20" /> */}
-
-            {/* <BlogPreview /> */}
-
-            {/* <Separator className="my-16" /> */}
-
-            {/* <section id="contact" className="text-center">
-              <h2 className="text-3xl font-bold mb-4">Let&apos;s Chat!</h2>
-              <p className="text-xl text-zinc-700 mb-6">
-                I&apos;m always open to collaborating or just chatting! Feel
-                free to reach out.
-              </p>
-              <div className="flex justify-center gap-4">
-                <CTAButton
-                  text="Get in Touch"
-                  href="mailto:contact@jonathanb.dk"
-                  icon={<Mail className="w-5 h-5" />}
-                />
-                <CTAButton
-                  text="Follow Me!"
-                  href="https://x.com/jonbng"
-                  icon={<XIcon className="w-5 h-5" />}
-                />
-              </div>
-            </section> */}
-
-            <footer className="mt-14 pt-10 border-t border-zinc-200">
+            <footer className="mt-14 pt-10 border-t border-[var(--border)]">
               <div className="flex justify-between items-center">
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-[var(--muted-foreground)]">
                   Designed with ❤️ by Jonathan Bangert. ©{" "}
                   {new Date().getFullYear()} All rights reserved.
                 </p>

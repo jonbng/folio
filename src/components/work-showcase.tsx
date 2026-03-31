@@ -478,7 +478,7 @@ export default function WorkShowcase({
 
   return (
     <section className="space-y-12">
-      <h2 className="text-sm font-medium text-zinc-500 tracking-widest uppercase">
+      <h2 className="font-display text-3xl sm:text-4xl tracking-tight text-[var(--foreground)] mb-4">
         Selected Work
       </h2>
 
@@ -493,19 +493,19 @@ export default function WorkShowcase({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -25 }}
                 transition={{ duration: 0.3 }}
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-                className="group cursor-pointer"
+                whileTap={{ scale: 0.97 }}
+                className="group cursor-pointer press-scale"
                 onClick={() => handleWorkClick(work)}
               >
                 <div className="space-y-4">
-                  <div className="overflow-hidden rounded-xl border">
+                  <div className="overflow-hidden rounded-xl border border-[var(--border)] shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-shadow duration-300 bg-white">
                     <Image
                       priority
                       src={work.image || "/placeholder.svg"}
                       alt={work.title}
                       width={600}
                       height={400}
-                      className={`object-${work.cover || "contain"} w-full h-48 transition-transform duration-300 group-hover:scale-105`}
+                      className={`object-${work.cover || "contain"} w-full h-48 transition-transform duration-300 group-hover:scale-[1.03]`}
                     />
                   </div>
                   <div className="space-y-2">
@@ -514,15 +514,15 @@ export default function WorkShowcase({
                     >
                       {work.tag}
                     </span>
-                    <h3 className="text-2xl font-semibold group-hover:text-zinc-600 transition-colors mt-2">
+                    <h3 className="text-2xl font-semibold group-hover:text-[var(--muted-foreground)] transition-colors duration-200 mt-2">
                       {work.title}
                     </h3>
-                    <p className="text-zinc-600 leading-relaxed">
+                    <p className="text-[var(--muted-foreground)] leading-relaxed">
                       {work.shortDescription}
                     </p>
                   </div>
                 </div>
-                <div className="text-sm text-zinc-500 mt-4">{work.year}</div>
+                <div className="text-sm text-[var(--muted-foreground)] mt-4 tabular-nums">{work.year}</div>
               </motion.div>
             ))}
           </AnimatePresence>

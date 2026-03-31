@@ -109,10 +109,10 @@ export default function ProjectSidebar({
                     >
                       {selectedWork.tag}
                     </span>
-                    <h2 className="text-4xl font-bold mt-2">
+                    <h2 className="font-display text-4xl sm:text-5xl mt-2 text-[var(--foreground)]">
                       {selectedWork.title}
                     </h2>
-                    <p className="text-xl text-zinc-600">
+                    <p className="text-xl text-[var(--muted-foreground)]">
                       {selectedWork.description}
                     </p>
                     {selectedWork.link && (
@@ -152,7 +152,7 @@ export default function ProjectSidebar({
                       {selectedWork.technologies.map((tech: string) => (
                         <span
                           key={tech}
-                          className="px-4 py-2 bg-zinc-100 rounded-full text-sm"
+                          className="px-4 py-2 bg-[var(--secondary)] rounded-full text-sm border border-[var(--border)]/50"
                         >
                           {tech}
                         </span>
