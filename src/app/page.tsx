@@ -164,7 +164,7 @@ function HomeContent() {
               </div>
               <nav className="flex gap-4 items-center">
                 <Link
-                  href="https://x.com/jonba_"
+                  href="https://x.com/jonbng"
                   target="_blank"
                   key="x-link"
                   rel="noopener noreferrer"
@@ -220,16 +220,19 @@ function HomeContent() {
                     Hey, I&apos;m Jonathan! <span className="wave">👋</span>
                   </h2>
                   <p className="text-xl text-zinc-600 leading-relaxed mb-4">
-                    I&apos;m a 18-year-old software engineer who cares about
-                    building high-quality, thoughtful software. I co-founded
-                    <strong> Akademia</strong> and currently work as a lead SWE
-                    @{" "}<strong>Burst</strong>. I focus on making technology that
-                    is beautiful, intuitive, and genuinely useful.
+                    <strong>
+                      I build software that makes complex things simple.
+                    </strong>
+                    <br />
+                    <br className="hidden sm:block" />
+                    I&apos;m an 18-year-old software engineer based in
+                    Copenhagen. I co-founded <strong>Akademia</strong> and work
+                    as a Lead SWE at <strong>Burst</strong>.
                   </p>
                   <div className="flex flex-wrap gap-4 -ml-4">
                     <CTAButton
                       text="Follow Me!"
-                      href="https://x.com/jonba_"
+                      href="https://x.com/jonbng"
                       icon={<XIcon className="w-5 h-5" />}
                     />
                     <CTAButton
@@ -254,15 +257,14 @@ function HomeContent() {
                 </div>
               </div>
               <div className="mt-4">
-                <div className="space-y-4">
-                  <p className="text-xl text-zinc-600 leading-relaxed">
-                    I&apos;ve been passionate about technology and design since
-                    I started coding at 10, hacked my school PC at 12 for admin
-                    access because I didn&apos;t have my own, and haven&apos;t
-                    looked back. Over the years, I&apos;ve developed a strong
-                    focus on building useful, well-designed products.
-                  </p>
-                </div>
+                <ul className="list-disc pl-6 text-xl text-zinc-600 leading-relaxed space-y-2">
+                  <li>I make complex systems simple to use.</li>
+                  <li>
+                    I started coding at 10 and broke into my school&apos;s
+                    system at 12.
+                  </li>
+                  <li>I care a lot about getting the details right.</li>
+                </ul>
               </div>
             </section>
 
@@ -322,7 +324,7 @@ function HomeContent() {
                 />
                 <CTAButton
                   text="Follow Me!"
-                  href="https://x.com/jonba_"
+                  href="https://x.com/jonbng"
                   icon={<XIcon className="w-5 h-5" />}
                 />
               </div>

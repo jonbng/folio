@@ -14,7 +14,7 @@ const works = [
     tagColor: "bg-blue-100 text-blue-800",
     description:
       "Connecting brands with creators. Creators get paid for views.",
-    shortDescription: "Connecting brands with creators.",
+    shortDescription: "Infrastructure for brands to work with creators.",
     image: "/burst-transparent.webp",
     year: "2025 — Present",
     detailedDescription:
@@ -70,7 +70,7 @@ const works = [
     tagColor: "bg-green-100 text-green-800",
     description:
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
-    shortDescription: "Reimagining the Danish school systems software.",
+    shortDescription: "A simpler operating system for schools.",
     image: "/akademia.webp",
     year: "2023 — 2024",
     detailedDescription:
@@ -138,7 +138,7 @@ const works = [
     tagColor: "bg-blue-100 text-blue-800",
     description:
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
-    shortDescription: "Turning screen time to play time.",
+    shortDescription: "Turning screen time into play time.",
     image: "/flimmer.svg",
     year: "2024 — 2025",
     detailedDescription:
@@ -246,7 +246,7 @@ const works = [
     shortDescription: "Open source music library manager.",
     image: "/musicassistant.png",
     cover: "cover",
-    year: "Early 2023 — Present",
+    year: "Early 2023 — 2025",
     detailedDescription:
       "I joined this project fairly early on, initally only working on the Deezer provider, but later creating and maintaining the Companion app as well. This was my first time contributing to open source project, and on a personal note a really awesome team to be working with, and thought me a ton. I am one of the core members, sadly being less active at the moment.",
     technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO", "Deezer API"],
@@ -329,7 +329,7 @@ const works = [
     link: "https://scanshop.arctix.dev/",
     tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
-    shortDescription: "Remove items from your shopping list by easily.",
+    shortDescription: "Remove items from your shopping list by scanning.",
     description:
       "ScanShop is a web app that allows you to scan items in your shopping cart and automatically remove them from your shopping list.",
     detailedDescription:
@@ -407,12 +407,12 @@ const works = [
     tag: "Founder",
     link: "https://github.com/jonbng/betterlectio",
     tagColor: "bg-green-100 text-green-800",
-    shortDescription: "A browser extension that modernizes Lectio.",
+    shortDescription: "A cleaner, faster interface for Lectio.",
     description:
       "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system, with improved functionality and better styling.",
     image: "/betterlectio.webp",
     cover: "cover",
-    year: "2024 — Present",
+    year: "2026 — Present",
     detailedDescription:
       "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system. It adds a modern sidebar, fast search with keyboard shortcuts, smart prefetching for instant page loads, an improved messages layout, profile pictures, and skeleton loading for smooth transitions. Available for both Chrome and Firefox.",
     technologies: [

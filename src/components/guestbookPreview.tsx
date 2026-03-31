@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Maximize, Send } from "lucide-react";
 import { GuestbookEntry } from "@/types/guestbook";
 
-const PROMOTED_ENTRIES = [2,5,7,8,9,10,11,12,13,14,15,16,17,18,20];
+const PROMOTED_ENTRIES = [10,18,2,27,29,32,38,39,5,54,55,7,8]
 
 export default function GuestbookPreview({
   entries,

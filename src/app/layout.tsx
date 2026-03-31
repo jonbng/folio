@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jonathan Bangert",
     description: "My place on the internet! Welcome.",
-    creatorId: "@jonba_",
-    siteId: "@jonba_",
-    site: "@jonba_",
-    creator: "@jonba_",
+    creatorId: "@jonbng",
+    siteId: "@jonbng",
+    site: "@jonbng",
+    creator: "@jonbng",
     images: [
       {
         url: "/og.webp",
