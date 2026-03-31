@@ -1,6 +1,7 @@
 // Example usage: Place this in pages/privacy.jsx or import into another page
 
 import { Metadata } from "next";
+import { EmailText } from "@/components/email-text";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Jonathan Bangert",
@@ -8,8 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicy() {
-  const contactEmail = "privacy@jonathanb.dk";
-  const contactLink = `mailto:${contactEmail}`;
 
   return (
     <div className="prose mx-auto max-w-3xl px-4 py-8 text-gray-700 bg-white">
@@ -126,12 +125,7 @@ export default function PrivacyPolicy() {
           <strong className="font-medium text-gray-900">deletion</strong> of
           your guestbook messages and associated data (Name, Profile Picture
           link, User ID) by contacting us at{" "}
-          <a
-            href={contactLink}
-            className="text-blue-600 underline hover:text-blue-800"
-          >
-            {contactEmail}
-          </a>
+          <EmailText type="privacy" className="text-blue-600 underline hover:text-blue-800" />
           . We will process deletion requests promptly.
         </li>
       </ul>
@@ -167,12 +161,7 @@ export default function PrivacyPolicy() {
       <p>
         If you have any questions about this Privacy Policy, please contact us
         at:{" "}
-        <a
-          href={contactLink}
-          className="text-blue-600 underline hover:text-blue-800"
-        >
-          {contactEmail}
-        </a>
+        <EmailText type="privacy" className="text-blue-600 underline hover:text-blue-800" />
       </p>
     </div>
   );

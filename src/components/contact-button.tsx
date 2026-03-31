@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "./ui/button";
+import { Check } from "lucide-react";
+import { copyEmail, getEmail } from "@/lib/email";
 
 const cursors = [
   "default",
@@ -69,17 +71,31 @@ const useChangingCursor = () => {
 
 export const ContactButton: React.FC = () => {
   const cursor = useChangingCursor();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    const ok = await copyEmail(getEmail);
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, []);
 
   return (
     <Button
-      asChild
       variant="link"
       style={{ cursor }}
-      className="p-0 h-auto font-semibold hidden sm:inline-flex"
+      className="p-0 h-auto font-semibold hidden sm:inline-flex animate-underline"
+      onClick={handleCopy}
     >
-      <a href="mailto:contact@jonathanb.dk" className="animate-underline">
-        Let&apos;s Talk
-      </a>
+      {copied ? (
+        <span className="inline-flex items-center gap-1.5">
+          <Check className="w-3.5 h-3.5 text-emerald-600" />
+          <span className="text-emerald-600">Copied!</span>
+        </span>
+      ) : (
+        "Let\u2019s Talk"
+      )}
     </Button>
   );
 };

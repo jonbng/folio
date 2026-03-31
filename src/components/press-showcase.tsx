@@ -41,7 +41,7 @@ const pressItems: PressItem[] = [
   },
   {
     id: 2,
-    title: "Ung forsker nåede til tops igen (Mentioned)",
+    title: "Ung forsker nåede til tops igen",
     publication: "Sjællandske Nyhedder",
     date: "2024-04-24",
     image: "/sn.jpg",

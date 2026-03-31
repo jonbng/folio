@@ -12,6 +12,7 @@ import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
 import CTAButton from "@/components/cta-button";
+import { CopyEmailIcon } from "@/components/copy-email-icon";
 import XIcon from "@/components/XIcon";
 import { Toaster } from "@/components/ui/sonner";
 import GuestbookFull from "@/components/guestbookFull";
@@ -193,14 +194,7 @@ function HomeContent() {
                   <Linkedin size={24} />
                   <span className="sr-only">LinkedIn</span>
                 </Link>
-                <Link
-                  href="mailto:contact@jonathanb.dk"
-                  key="email-link"
-                  className="text-zinc-600 hover:text-zinc-900 transition-colors hover:scale-110"
-                >
-                  <Mail size={24} />
-                  <span className="sr-only">Email</span>
-                </Link>
+                <CopyEmailIcon key="email-link" />
               </nav>
             </header>
             <p className="absolute left-[-99999px]">

@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Metadata } from "next";
+import { EmailText } from "@/components/email-text";
 
 export const metadata: Metadata = {
   title: "Press Kit | Jonathan Bangert",
@@ -46,13 +47,7 @@ export default function PressKit() {
                 X
               </a>
               , and if you want to chat, you can reach him at{" "}
-              <a
-                href="mailto:contact@jonathanb.dk"
-                className="underline font-bold"
-              >
-                contact@jonathanb.dk
-              </a>
-              .
+              <EmailText type="contact" className="underline font-bold" />.
             </p>
           </div>
 
@@ -104,12 +99,7 @@ export default function PressKit() {
             <h2 className="text-2xl font-semibold mb-4">Contact</h2>
             <p className="text-zinc-600">
               For press inquiries, please contact:{" "}
-              <a
-                href="mailto:press@jonathanb.dk"
-                className="text-blue-600 hover:underline"
-              >
-                press@jonathanb.dk
-              </a>
+              <EmailText type="press" className="text-blue-600 hover:underline" />
             </p>
           </div>
         </section>
