@@ -128,7 +128,7 @@ export default function GuestbookFull({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full rounded-2xl bg-zinc-50 p-6 border-2 border-zinc-700 z-50 flex flex-col min-h-[96.85vh] sm:min-h-[95.25vh] md:min-h-[93.7vh]"
+          className="relative w-full rounded-2xl bg-[var(--card)] p-6 border border-[var(--border)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] z-50 flex flex-col min-h-[96.85vh] sm:min-h-[95.25vh] md:min-h-[93.7vh]"
           onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
           tabIndex={-1}
         >
@@ -142,7 +142,7 @@ export default function GuestbookFull({
               <Button
                 variant="actualGhost"
                 size="icon"
-                className="hover:bg-zinc-900 rounded-full bg-zinc-800 transition-transform duration-200 hover:scale-110 cursor-pointer"
+                className="hover:bg-[var(--foreground)] rounded-full bg-[var(--foreground)]/90 cursor-pointer press-scale"
                 onClick={onCollapse}
                 aria-label="Close guestbook"
               >
@@ -158,14 +158,14 @@ export default function GuestbookFull({
           >
             <h2
               id="guestbook-title"
-              className="text-md font-semibold text-zinc-700 tracking-widest uppercase"
+              className="font-display text-2xl tracking-tight text-[var(--foreground)]"
             >
-              Guestbook!
+              Guestbook
             </h2>
-            <p className="text-md text-zinc-500 hidden sm:block">
+            <p className="text-md text-[var(--muted-foreground)] hidden sm:block">
               Thanks for visiting! Feel free to leave a message. ❤️
             </p>
-            <p className="text-md text-zinc-500 block sm:hidden">
+            <p className="text-md text-[var(--muted-foreground)] block sm:hidden">
               Click on the balloons to read the messages!
             </p>
           </div>
@@ -204,9 +204,9 @@ export default function GuestbookFull({
           transition={{ delay: 0.1, type: "spring", stiffness: 100 }}
           className="flex justify-center items-center pointer-events-auto mx-auto max-w-3xl"
         >
-          <div className="bg-zinc-50 border-2 border-zinc-700 text-black rounded-2xl shadow-lg w-full sm:w-auto">
+          <div className="bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] rounded-2xl shadow-[0_-4px_24px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.04)] w-full sm:w-auto">
             {hasSubmitted ? (
-              <p className="text-zinc-700 p-4">
+              <p className="text-[var(--foreground)] p-4">
                 Thank you for your message! 🎈
               </p>
             ) : (

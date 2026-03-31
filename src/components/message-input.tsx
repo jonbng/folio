@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, FormEvent, ChangeEvent } from "react";
+import { useState, useRef, useEffect, FormEvent, ChangeEvent } from "react";
 import { Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Balloon, { getBalloonColor } from "./balloon";
@@ -16,6 +16,7 @@ const colorOptions = [
   { name: "Green", value: "green" },
   { name: "Purple", value: "purple" },
   { name: "Orange", value: "orange" },
+  { name: "Teal", value: "teal" },
 ];
 
 type FormData = {
@@ -31,22 +32,20 @@ interface MessageInputProps {
   inputOpen: boolean;
 }
 
-// Preview balloon component (remains the same)
 const BalloonPreview = ({ entry }: { entry: GuestbookEntry }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.8, y: 20 }}
-      className="w-32 h-32 pt-5 pl-12 flex-shrink-0 hidden md:block"
+      initial={{ opacity: 0, scale: 0.8, marginRight: -112 }}
+      animate={{ opacity: 1, scale: 1, marginRight: 0 }}
+      exit={{ opacity: 0, scale: 0.8, marginRight: -112 }}
+      transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+      className="w-28 h-28 pt-5 pl-11 shrink-0 hidden md:block"
     >
       <Balloon entry={entry} index={0} layoutMode="static" />
     </motion.div>
   );
 };
 
-// Main MessageInput Component
-// Helper function to get random color
 const getRandomColor = () =>
   colorOptions[Math.floor(Math.random() * colorOptions.length)].value;
 
@@ -57,15 +56,38 @@ export default function MessageInput({
 }: MessageInputProps) {
   const [isEditing, setIsEditing] = useState(inputOpen);
   const inputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isEditing) return;
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsEditing(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setIsEditing(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isEditing]);
 
   const [formData, setFormData] = useState<FormData>(() => ({
     name: "",
     message: "",
     selectedColor: getRandomColor(),
-    notABot: "", // Initialize honeypot field as empty
+    notABot: "",
   }));
 
-  // Preview entry
   const previewEntry: GuestbookEntry = {
     id: "preview",
     name: formData.name || "Name",
@@ -90,13 +112,13 @@ export default function MessageInput({
     setFormData((prev) => ({ ...prev, selectedColor: color }));
   };
 
+  const canSubmit = formData.message.trim() && formData.name.trim();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const { name, message, selectedColor, notABot } = formData;
 
-    // Bot detection - if honeypot field is filled, silently reject
     if (notABot) {
-      // Pretend success but don't actually submit
       setIsEditing(false);
       setFormData({
         name: "",
@@ -107,7 +129,6 @@ export default function MessageInput({
       return;
     }
 
-    // Validation
     if (!name.trim() || !message.trim()) {
       toast.error("Name and message are required");
       return;
@@ -117,7 +138,6 @@ export default function MessageInput({
     const trimmedName = name.trim();
     const trimmedMessage = message.trim();
 
-    // --- ADD new entry ---
     const tempId = `temp-${Date.now()}-${Math.random()}`;
     const optimisticNewEntry: GuestbookEntry = {
       id: tempId,
@@ -133,7 +153,7 @@ export default function MessageInput({
           new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
       ),
     );
-    toast.success("Message sent successfully");
+    // toast.success("Message sent successfully");
     setIsEditing(false);
 
     try {
@@ -154,7 +174,6 @@ export default function MessageInput({
           ),
       );
 
-      // Reset form
       setFormData({
         name: "",
         message: "",
@@ -162,7 +181,6 @@ export default function MessageInput({
         notABot: "",
       });
 
-      // Call onSubmit callback if provided
       onSubmit?.();
     } catch (error) {
       console.error("Failed to add guestbook entry:", error);
@@ -180,7 +198,7 @@ export default function MessageInput({
   };
 
   return (
-    <div className="flex items-start gap-8">
+    <div ref={formRef} className="flex items-start gap-8">
       <AnimatePresence>
         {isEditing && <BalloonPreview entry={previewEntry} />}
       </AnimatePresence>
@@ -191,7 +209,7 @@ export default function MessageInput({
         className="flex-1 overflow-hidden sm:min-w-[350px]"
       >
         <form onSubmit={handleSubmit} className="h-full">
-          <div className="p-4 flex flex-col gap-2 pb-2">
+          <div className="p-4 flex flex-col gap-3">
             <AnimatePresence>
               {isEditing && (
                 <motion.div
@@ -203,9 +221,9 @@ export default function MessageInput({
                   <div>
                     <label
                       htmlFor="name"
-                      className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide"
+                      className="block text-xs font-medium text-[var(--muted-foreground)] mb-1.5 uppercase tracking-wider"
                     >
-                      Your Full Name
+                      Your Name
                     </label>
                     <input
                       id="name"
@@ -213,8 +231,8 @@ export default function MessageInput({
                       type="text"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Enter your full name"
-                      className="w-full px-4 py-2.5 border-2 border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500 transition-all duration-200 text-[15px] bg-white/50"
+                      placeholder="Enter your name"
+                      className="w-full px-3.5 py-2.5 border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--ring)]/20 focus:border-[var(--ring)] transition-[border-color,box-shadow] duration-150 text-[15px] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/50"
                       required
                     />
                   </div>
@@ -225,9 +243,9 @@ export default function MessageInput({
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide"
+                className="block text-xs font-medium text-[var(--muted-foreground)] mb-1.5 uppercase tracking-wider"
               >
-                Your Message
+                Message
               </label>
               <input
                 ref={inputRef}
@@ -237,8 +255,8 @@ export default function MessageInput({
                 value={formData.message}
                 onChange={handleInputChange}
                 onFocus={() => !isEditing && handleStartEditing()}
-                placeholder="Enter a message..."
-                className="flex-1 w-full px-4 py-2.5 border-2 border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500 transition-all duration-200 text-[15px] bg-white/50"
+                placeholder="Leave a message..."
+                className="flex-1 w-full px-3.5 py-2.5 border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--ring)]/20 focus:border-[var(--ring)] transition-[border-color,box-shadow] duration-150 text-[15px] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/50"
                 required
               />
             </div>
@@ -250,7 +268,7 @@ export default function MessageInput({
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="px-4 pb-4 flex flex-col justify-between"
+                className="px-4 pb-4 flex flex-col gap-3"
               >
                 <div
                   aria-hidden="true"
@@ -277,44 +295,45 @@ export default function MessageInput({
                     onChange={handleInputChange}
                   />
                 </div>
-                <label className="block text-sm font-medium text-zinc-600 mb-1.5 tracking-wide">
-                  Balloon Color
-                </label>
-                <div className="flex flex-row justify-between">
-                  <div className="flex flex-wrap gap-2">
-                    {colorOptions.map((color) => (
-                      <button
-                        key={color.value}
-                        type="button"
-                        onClick={() => handleColorSelect(color.value)}
-                        className={`w-8 h-8 rounded-full border-2 cursor-pointer ${
-                          formData.selectedColor === color.value
-                            ? "border-gray-800"
-                            : "border-transparent"
-                        }`}
-                        style={{
-                          backgroundColor: getBalloonColor(color.value).bg,
-                          boxShadow:
-                            formData.selectedColor === color.value
-                              ? "0 0 0 2px rgba(0,0,0,0.1)"
-                              : "none",
-                        }}
-                        aria-label={`Select ${color.name} color`}
-                      />
-                    ))}
+                <div className="flex flex-row justify-between items-end">
+                  <div>
+                    <label className="block text-xs font-medium text-[var(--muted-foreground)] mb-2 uppercase tracking-wider">
+                      Color
+                    </label>
+                    <div className="flex gap-2">
+                      {colorOptions.map((color) => {
+                        const isSelected =
+                          formData.selectedColor === color.value;
+                        return (
+                          <button
+                            key={color.value}
+                            type="button"
+                            onClick={() => handleColorSelect(color.value)}
+                            className="w-7 h-7 rounded-full cursor-pointer press-scale transition-[box-shadow] duration-150"
+                            style={{
+                              backgroundColor: getBalloonColor(color.value).bg,
+                              boxShadow: isSelected
+                                ? `0 0 0 2px var(--background), 0 0 0 4px ${getBalloonColor(color.value).knot}`
+                                : "0 0 0 1px rgba(0,0,0,0.06)",
+                            }}
+                            aria-label={`Select ${color.name} color`}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                   <Button
                     type="submit"
-                    variant="ghost"
+                    variant="actualGhost"
                     size="icon"
-                    disabled={!formData.message.trim() || !formData.name.trim()}
-                    className={`transition-all duration-200 rounded-lg text-zinc-300 min-w-[40px] min-h-[40px] flex-shrink-0 ${
-                      formData.message.trim() && formData.name.trim()
-                        ? "bg-zinc-700 hover:bg-zinc-800 hover:text-white"
-                        : "cursor-not-allowed bg-zinc-700"
+                    disabled={!canSubmit}
+                    className={`rounded-xl min-w-[40px] min-h-[40px] flex-shrink-0 press-scale transition-colors duration-150 ${
+                      canSubmit
+                        ? "bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--foreground)]/85"
+                        : "bg-[var(--muted)] text-[var(--muted-foreground)]/40 cursor-not-allowed"
                     }`}
                   >
-                    <Send className="h-5 w-5" />
+                    <Send className="h-4.5 w-4.5" />
                   </Button>
                 </div>
               </motion.div>

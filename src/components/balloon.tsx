@@ -354,6 +354,11 @@ export function getBalloonColor(colorName: string) {
       highlight: "rgba(255, 255, 255, 0.6)",
       knot: "#ffa07a",
     },
+    teal: {
+      bg: "rgba(100, 210, 200, 0.8)",
+      highlight: "rgba(255, 255, 255, 0.6)",
+      knot: "#64d2c8",
+    },
   };
   return colors[colorName] || colors.blue;
 }
