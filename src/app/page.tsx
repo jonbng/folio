@@ -93,10 +93,10 @@ function HomeContent() {
     fetchEntries();
   }, [isGuestbookExpanded]);
 
-  const copenhagenTime =
+  const localTime =
     mounted && time
       ? time.toLocaleTimeString("en-US", {
-          timeZone: "Europe/Copenhagen",
+          timeZone: "Europe/Oslo",
           hour: "numeric",
           minute: "2-digit",
           hour12: true,
@@ -168,8 +168,8 @@ function HomeContent() {
                 <div className="hidden sm:flex items-center gap-3">
                   <div className="flex items-center gap-2 text-[var(--muted-foreground)]">
                     <Clock className="w-4 h-4" />
-                    <span>Copenhagen</span>
-                    <span className="tabular-nums">{copenhagenTime}</span>
+                    <span>Flekke, Norway</span>
+                    <span className="tabular-nums">{localTime}</span>
                   </div>
                 </div>
               </div>
@@ -237,10 +237,13 @@ function HomeContent() {
                       I build software that makes complex things simple.
                     </strong>
                     <br className="mb-1.5" />
-                    I&apos;m an 18-year-old software engineer based in
-                    Copenhagen. I co-founded{" "}
+                    I&apos;m an 18-year-old software engineer studying at{" "}
                     <strong className="text-[var(--foreground)]">
-                      Akademia
+                      UWC Red Cross Nordic
+                    </strong>
+                    . I co-founded{" "}
+                    <strong className="text-[var(--foreground)]">
+                      BetterLectio
                     </strong>{" "}
                     and work as a Lead SWE at{" "}
                     <strong className="text-[var(--foreground)]">Burst</strong>.
@@ -298,7 +301,7 @@ function HomeContent() {
             >
               <Book className="w-5 h-5" />
               <span>
-                Currently reading: &quot;Nexus&quot; by Yuval Noah Harari
+                Currently reading: &quot;The Martian&quot; by Andy Weir
               </span>
             </motion.div>
 
