@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicy() {
-
   return (
     <div className="prose mx-auto max-w-3xl px-4 py-8 text-gray-700 bg-white">
       {/* Using prose classes for nice typography defaults */}
@@ -17,7 +16,7 @@ export default function PrivacyPolicy() {
       {/* text-gray-700 for base text color */}
 
       <h1 className="text-3xl font-bold text-gray-900">
-        Privacy Policy for Folio Guestbook (jonathanb.dk)
+        Privacy Policy for Folio Guestbook (jonathanbangert.com)
       </h1>
       <p className="text-sm italic text-gray-500">
         Last Updated: April 23, 2025
@@ -27,7 +26,7 @@ export default function PrivacyPolicy() {
         This Privacy Policy explains how Jonathan Bangert (&quot;we&quot;,
         &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects your
         information when you use the guestbook feature on the Folio website
-        (jonathanb.dk).
+        (jonathanbangert.com).
       </p>
 
       <h2 className="mt-6 text-2xl font-semibold text-gray-900">
@@ -68,8 +67,9 @@ export default function PrivacyPolicy() {
       <p>We use the collected information solely to:</p>
       <ul className="ml-6 list-disc space-y-2">
         <li>
-          Display your guestbook entry publicly on jonathanb.dk, including your
-          Name, Profile Picture, Message, Timestamp, and chosen Balloon Color.
+          Display your guestbook entry publicly on jonathanbangert.com,
+          including your Name, Profile Picture, Message, Timestamp, and chosen
+          Balloon Color.
         </li>
         <li>
           Operate and maintain the guestbook service, including preventing spam.
@@ -125,7 +125,10 @@ export default function PrivacyPolicy() {
           <strong className="font-medium text-gray-900">deletion</strong> of
           your guestbook messages and associated data (Name, Profile Picture
           link, User ID) by contacting us at{" "}
-          <EmailText type="privacy" className="text-blue-600 underline hover:text-blue-800" />
+          <EmailText
+            type="privacy"
+            className="text-blue-600 underline hover:text-blue-800"
+          />
           . We will process deletion requests promptly.
         </li>
       </ul>
@@ -161,7 +164,10 @@ export default function PrivacyPolicy() {
       <p>
         If you have any questions about this Privacy Policy, please contact us
         at:{" "}
-        <EmailText type="privacy" className="text-blue-600 underline hover:text-blue-800" />
+        <EmailText
+          type="privacy"
+          className="text-blue-600 underline hover:text-blue-800"
+        />
       </p>
     </div>
   );

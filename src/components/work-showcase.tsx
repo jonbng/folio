@@ -206,7 +206,7 @@ const works = [
     id: 5,
     order: 9,
     title: "Tars Mono",
-    link: "https://tars.jonathanb.dk/",
+    link: "https://tars.jonathanbangert.com/",
     tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
     description:
@@ -522,7 +522,9 @@ export default function WorkShowcase({
                     </p>
                   </div>
                 </div>
-                <div className="text-sm text-[var(--muted-foreground)] mt-4 tabular-nums">{work.year}</div>
+                <div className="text-sm text-[var(--muted-foreground)] mt-4 tabular-nums">
+                  {work.year}
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>

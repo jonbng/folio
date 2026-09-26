@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /block
 
-Sitemap: https://jonathanb.dk/sitemap.xml
+Sitemap: https://jonathanbangert.com/sitemap.xml

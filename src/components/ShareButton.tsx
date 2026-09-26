@@ -14,7 +14,7 @@ export default function ShareButton({ imageId }: { imageId: string }) {
           `Check out this amazing photo from Jonathan Bangert's gallery!`,
         );
         const tweetUrl = encodeURIComponent(
-          `https://jonathanb.dk/p/${imageId}`,
+          `https://jonathanbangert.com/p/${imageId}`,
         );
         window.open(
           `https://twitter.com/intent/tweet?text=${tweetText}&url=${tweetUrl}`,

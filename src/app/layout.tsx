@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     telephone: true,
   },
   manifest: "/site.webmanifest",
-  metadataBase: new URL("https://jonathanb.dk"),
+  metadataBase: new URL("https://jonathanbangert.com"),
   robots: {
     index: true,
     follow: true,
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     countryName: "United States",
     locale: "en-US",
     siteName: "Jonathan Bangert",
-    url: "https://jonathanb.dk",
+    url: "https://jonathanbangert.com",
     images: [
       {
         url: "/og.webp",

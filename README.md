@@ -4,7 +4,7 @@
 
 ## Live site
 
-Check it out at https://jonathanb.dk/
+Check it out at https://jonathanbangert.com/
 
 ## Guestbook
 
