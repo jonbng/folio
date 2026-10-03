@@ -405,7 +405,7 @@ const works = [
     order: 0,
     title: "BetterLectio",
     tag: "Founder",
-    link: "https://github.com/jonbng/betterlectio",
+    link: "https://betterlectio.dk",
     tagColor: "bg-green-100 text-green-800",
     shortDescription: "A cleaner, faster interface for Lectio.",
     description:
