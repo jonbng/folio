@@ -3,6 +3,9 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { toProjectSlug } from "@/lib/projects";
 
 const works = [
   {
@@ -206,7 +209,7 @@ const works = [
     id: 5,
     order: 9,
     title: "Tars Mono",
-    link: "https://tars.jonathanbangert.com/",
+    link: "",
     tag: "For Fun",
     tagColor: "bg-yellow-100 text-yellow-800",
     description:
@@ -484,7 +487,7 @@ export default function WorkShowcase({
 
       <motion.div layout transition={{ layout: { duration: 0.5 } }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {showedWork.map((work) => (
               <motion.div
                 key={work.id}
@@ -500,7 +503,6 @@ export default function WorkShowcase({
                 <div className="space-y-4">
                   <div className="overflow-hidden rounded-xl border border-[var(--border)] shadow-[0_2px_8px_rgba(0,0,0,0.04)] group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-shadow duration-300 bg-white">
                     <Image
-                      priority
                       src={work.image || "/placeholder.svg"}
                       alt={work.title}
                       width={600}
@@ -520,6 +522,30 @@ export default function WorkShowcase({
                     <p className="text-[var(--muted-foreground)] leading-relaxed">
                       {work.shortDescription}
                     </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        href={`/work/${toProjectSlug(work.title)}`}
+                        onClick={(event) => event.stopPropagation()}
+                        className="inline-flex min-h-10 items-center rounded-md px-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--muted)]"
+                      >
+                        Read case study
+                      </Link>
+                      {work.link && (
+                        <a
+                          href={work.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex min-h-10 items-center gap-1 rounded-md px-2 text-sm font-medium text-[var(--foreground)] hover:bg-[var(--muted)]"
+                        >
+                          Visit {work.title}
+                          <ExternalLink
+                            className="size-3.5"
+                            aria-hidden="true"
+                          />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="text-sm text-[var(--muted-foreground)] mt-4 tabular-nums">

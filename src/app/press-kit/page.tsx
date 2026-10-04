@@ -7,7 +7,33 @@ import { EmailText } from "@/components/email-text";
 
 export const metadata: Metadata = {
   title: "Press Kit | Jonathan Bangert",
-  description: "Press kit for Jonathan Bangert.",
+  description:
+    "Official press kit for Danish software engineer Jonathan Bangert, including his biography, downloadable photos, and contact information.",
+  alternates: {
+    canonical: "/press-kit",
+  },
+  openGraph: {
+    title: "Press Kit | Jonathan Bangert",
+    description:
+      "Biography, downloadable photos, and contact information for Jonathan Bangert.",
+    url: "/press-kit",
+    type: "website",
+    images: [
+      {
+        url: "/og.webp",
+        width: 1200,
+        height: 630,
+        alt: "Jonathan Bangert",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Press Kit | Jonathan Bangert",
+    description:
+      "Biography, downloadable photos, and contact information for Jonathan Bangert.",
+    images: ["/og.webp"],
+  },
 };
 
 export default function PressKit() {
@@ -37,12 +63,13 @@ export default function PressKit() {
                 Flimmer
               </a>{" "}
               as a software engineer and */}{" "}
-              He is the Co-Founder of{" "}
-              <a href="https://akademia.dev" className="underline font-bold">
-                Akademia
+              He is the Co-Creator of{" "}
+              <a href="https://betterlectio.dk" className="underline font-bold">
+                BetterLectio
               </a>
-              , a reimagined platform for schools, but he&apos;s always
-              experimenting with new ideas. He shares his thoughts on{" "}
+              , a browser extension that modernizes the Danish school platform
+              Lectio, and works as a Lead Software Engineer at Burst. He&apos;s
+              always experimenting with new ideas and shares his thoughts on{" "}
               <a href="https://x.com/jonbng" className="underline font-bold">
                 X
               </a>
@@ -99,7 +126,10 @@ export default function PressKit() {
             <h2 className="text-2xl font-semibold mb-4">Contact</h2>
             <p className="text-zinc-600">
               For press inquiries, please contact:{" "}
-              <EmailText type="press" className="text-blue-600 hover:underline" />
+              <EmailText
+                type="press"
+                className="text-blue-600 hover:underline"
+              />
             </p>
           </div>
         </section>

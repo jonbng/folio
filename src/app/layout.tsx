@@ -3,8 +3,8 @@ import "./globals.css";
 import { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import FaviconLoader from "@/components/FaviconLoader";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { getSiteDescription, site } from "@/lib/site";
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -19,64 +19,82 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Jonathan Bangert",
-  description: "My place on the internet! Welcome.",
-  authors: [{ name: "Jonathan Bangert" }],
-  category: "website",
-  keywords: ["Jonathan Bangert", "folio", "portfolio", "website"],
-  creator: "Jonathan Bangert",
-  publisher: "Jonathan Bangert",
-  formatDetection: {
-    url: true,
-    date: false,
-    email: true,
-    address: true,
-    telephone: true,
-  },
-  manifest: "/site.webmanifest",
-  metadataBase: new URL("https://jonathanbangert.com"),
-  robots: {
-    index: true,
-    follow: true,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Jonathan Bangert",
-    description: "My place on the internet! Welcome.",
-    creatorId: "@jonbng",
-    siteId: "@jonbng",
-    site: "@jonbng",
-    creator: "@jonbng",
-    images: [
-      {
-        url: "/og.webp",
-        alt: "Jonathan Bangert",
-        width: 1200,
-        height: 630,
-        type: "image/webp",
+export async function generateMetadata(): Promise<Metadata> {
+  const description = await getSiteDescription();
+
+  return {
+    title: `${site.name} — Software Engineer & Builder`,
+    description,
+    authors: [{ name: site.name, url: site.url }],
+    category: "website",
+    creator: site.name,
+    publisher: site.name,
+    formatDetection: {
+      url: true,
+      date: false,
+      email: true,
+      address: true,
+      telephone: true,
+    },
+    manifest: "/manifest.webmanifest",
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.png", type: "image/png", sizes: "192x192" },
+      ],
+      shortcut: "/favicon.ico",
+    },
+    metadataBase: new URL(site.url),
+    alternates: {
+      canonical: "/",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
       },
-    ],
-  },
-  openGraph: {
-    title: "Jonathan Bangert",
-    description: "My place on the internet! Welcome.",
-    type: "website",
-    countryName: "United States",
-    locale: "en-US",
-    siteName: "Jonathan Bangert",
-    url: "https://jonathanbangert.com",
-    images: [
-      {
-        url: "/og.webp",
-        alt: "Jonathan Bangert",
-        width: 1200,
-        height: 630,
-        type: "image/webp",
-      },
-    ],
-  },
-};
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${site.name} — Software Engineer & Builder`,
+      description,
+      site: "@jonbng",
+      creator: "@jonbng",
+      images: [
+        {
+          url: "/og.webp",
+          alt: "Jonathan Bangert",
+          width: 1200,
+          height: 630,
+          type: "image/webp",
+        },
+      ],
+    },
+    openGraph: {
+      title: `${site.name} — Software Engineer & Builder`,
+      description,
+      type: "website",
+      countryName: "Denmark",
+      locale: "en_DK",
+      siteName: site.name,
+      url: site.url,
+      images: [
+        {
+          url: "/og.webp",
+          alt: "Jonathan Bangert",
+          width: 1200,
+          height: 630,
+          type: "image/webp",
+        },
+      ],
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -84,7 +102,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -92,14 +109,62 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${site.url}/#website`,
+        name: site.name,
+        url: site.url,
+        inLanguage: "en-DK",
+      },
+      {
+        "@type": "Person",
+        "@id": `${site.url}/#person`,
+        name: site.name,
+        url: site.url,
+        image: `${site.url}/pfp.jpeg`,
+        description: site.profileDescription,
+        jobTitle: "Software Engineer",
+        nationality: {
+          "@type": "Country",
+          name: "Denmark",
+        },
+        affiliation: {
+          "@type": "EducationalOrganization",
+          name: "UWC Red Cross Nordic",
+          url: "https://uwcrcn.no",
+        },
+        sameAs: site.socialLinks,
+        knowsAbout: [
+          "Software engineering",
+          "Product development",
+          "Technology",
+        ],
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": site.url,
+        },
+      },
+    ],
+  };
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={`${instrumentSerif.variable} ${plusJakartaSans.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
+      </head>
       <body className="antialiased font-body">
-        <FaviconLoader />
         {children}
         <Analytics />
         <SpeedInsights />

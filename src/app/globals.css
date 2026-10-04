@@ -95,7 +95,7 @@ body {
   --secondary: hsl(35 15% 93%);
   --secondary-foreground: hsl(20 10% 12%);
   --muted: hsl(35 12% 93%);
-  --muted-foreground: hsl(20 5% 45%);
+  --muted-foreground: hsl(20 5% 43%);
   --accent: hsl(35 15% 93%);
   --accent-foreground: hsl(20 10% 12%);
   --destructive: hsl(0 84.2% 60.2%);
@@ -192,8 +192,6 @@ body {
     transform-origin: bottom left;
   }
 }
-
-
 /* Typography refinements */
 h1, h2, h3, h4 {
   text-wrap: balance;

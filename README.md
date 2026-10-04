@@ -1,4 +1,4 @@
-# My corner of the internet! Folio! ⛰️
+# Jonathan Bangert ⛰️
 
 ![screenshot of landing page](https://github.com/user-attachments/assets/c325c426-2da9-4b47-adeb-4209e660815a)
 

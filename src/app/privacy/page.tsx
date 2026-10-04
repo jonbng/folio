@@ -6,6 +6,24 @@ import { EmailText } from "@/components/email-text";
 export const metadata: Metadata = {
   title: "Privacy Policy | Jonathan Bangert",
   description: "Privacy policy for Jonathan Bangert.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "Privacy Policy | Jonathan Bangert",
+    description: "Privacy policy for Jonathan Bangert's website and guestbook.",
+    url: "/privacy",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | Jonathan Bangert",
+    description: "Privacy policy for Jonathan Bangert's website and guestbook.",
+  },
 };
 
 export default function PrivacyPolicy() {
@@ -16,7 +34,7 @@ export default function PrivacyPolicy() {
       {/* text-gray-700 for base text color */}
 
       <h1 className="text-3xl font-bold text-gray-900">
-        Privacy Policy for Folio Guestbook (jonathanbangert.com)
+        Privacy Policy for the Guestbook (jonathanbangert.com)
       </h1>
       <p className="text-sm italic text-gray-500">
         Last Updated: April 23, 2025
@@ -25,8 +43,8 @@ export default function PrivacyPolicy() {
       <p>
         This Privacy Policy explains how Jonathan Bangert (&quot;we&quot;,
         &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects your
-        information when you use the guestbook feature on the Folio website
-        (jonathanbangert.com).
+        information when you use the guestbook feature on Jonathan
+        Bangert&apos;s website (jonathanbangert.com).
       </p>
 
       <h2 className="mt-6 text-2xl font-semibold text-gray-900">

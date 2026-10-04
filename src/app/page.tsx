@@ -7,7 +7,7 @@ import WorkShowcase from "@/components/work-showcase";
 import PressShowcase from "@/components/press-showcase";
 import BeyondCoding from "@/components/beyond-coding";
 import { AnimatePresence, motion } from "motion/react";
-import { useState, useEffect, Suspense, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ProjectSidebar from "@/components/project-sidebar";
 import Link from "next/link";
 import { ContactButton } from "@/components/contact-button";
@@ -19,7 +19,6 @@ import GuestbookFull from "@/components/guestbookFull";
 import GuestbookPreview from "@/components/guestbookPreview";
 import { GetAllGuestbookEntries } from "@/lib/guestbookActions";
 import { createPortal } from "react-dom";
-import { useSearchParams } from "next/navigation";
 import { GuestbookEntry } from "@/types/guestbook";
 import { WorkProject } from "@/lib/types";
 
@@ -46,7 +45,6 @@ const fadeUp = {
 };
 
 function HomeContent() {
-  const searchParams = useSearchParams();
   const [isWorkOpen, setIsWorkOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkProject | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -115,6 +113,8 @@ function HomeContent() {
   }, [isWorkOpen]);
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
     if (searchParams.get("guestbookOpen") === "1") {
       setIsGuestbookExpanded(true);
       setTimeout(() => {
@@ -123,7 +123,7 @@ function HomeContent() {
           ?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     if (isGuestbookExpanded) {
@@ -204,21 +204,11 @@ function HomeContent() {
                 <CopyEmailIcon key="email-link" />
               </nav>
             </header>
-            <p className="absolute left-[-99999px]">
-              Hey! I&apos;m Jonathan Bangert, im an innovate software engineer
-              whos really passionate and curious about the world and technology.
-              I love working on projects that are actually used by people and
-              make a difference. I love using ai to help creativity and
-              experimenting with things. I have worked with AI for several years
-              now feel very fluent in AI/ML. I tought programming to students,
-              won several game jams and contributed to open source projects.
-            </p>
-
             {/* Hero with stagger animation */}
             <motion.section
               className="mb-6 sm:mt-12"
               variants={stagger}
-              initial="hidden"
+              initial={false}
               animate="show"
             >
               <div className="flex flex-col-reverse sm:flex-row items-start gap-8 sm:gap-12 mb-4">
@@ -275,6 +265,7 @@ function HomeContent() {
                       fill
                       sizes="(min-width: 640px) 190px, 100vw"
                       loading="eager"
+                      fetchPriority="high"
                       className="object-cover object-[50%_10%]"
                       priority
                     />
@@ -295,7 +286,7 @@ function HomeContent() {
 
             <motion.div
               variants={fadeUp}
-              initial="hidden"
+              initial={false}
               animate="show"
               className="flex items-center gap-2 mb-14 text-[var(--muted-foreground)]"
             >
@@ -335,12 +326,25 @@ function HomeContent() {
             <PressShowcase />
 
             <footer className="mt-14 pt-10 border-t border-[var(--border)]">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
                 <p className="text-sm text-[var(--muted-foreground)]">
-                  Designed with ❤️ by Jonathan Bangert. ©{" "}
-                  {new Date().getFullYear()} All rights reserved.
+                  Designed with ❤️ by Jonathan Bangert. All rights reserved.
                 </p>
-                <ContactButton />
+                <div className="flex items-center gap-4">
+                  <Link
+                    href="/press-kit"
+                    className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  >
+                    Press kit
+                  </Link>
+                  <Link
+                    href="/privacy"
+                    className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                  >
+                    Privacy
+                  </Link>
+                  <ContactButton />
+                </div>
               </div>
             </footer>
           </div>
@@ -376,9 +380,5 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return (
-    <Suspense>
-      <HomeContent />
-    </Suspense>
-  );
+  return <HomeContent />;
 }

@@ -1,12 +1,6 @@
 "use client";
 
-// import Link from "next/link";
 import Image from "next/image";
-import { motion } from "motion/react";
-// import { ArrowRight } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import Link from "next/link";
-// import { ArrowRight } from "lucide-react";
 
 const photos = [
   {
@@ -44,20 +38,12 @@ export default function BeyondCoding() {
                 className="rounded-xl object-cover w-full h-48 transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </div>
-            <p className="text-sm text-[var(--muted-foreground)] mt-2">{photo.alt}</p>
+            <p className="text-sm text-[var(--muted-foreground)] mt-2">
+              {photo.alt}
+            </p>
           </div>
         ))}
       </div>
-      {/* <Button
-        variant="link"
-        asChild
-        className="p-0 h-auto font-semibold text-zinc-900 hover:no-underline group"
-      >
-        <Link href="/photography" className="flex items-center gap-1">
-          <span className="animate-underline">View all photos</span>
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
-      </Button> */}
     </section>
   );
 }

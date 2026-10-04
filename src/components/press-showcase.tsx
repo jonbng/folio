@@ -111,12 +111,6 @@ export default function PressAndRecognitionShowcase() {
         <h2 className="font-display text-3xl sm:text-4xl tracking-tight text-[var(--foreground)]">
           Recognition
         </h2>
-        {/* <Button variant="link" asChild className="p-0 h-auto font-semibold">
-          <Link href="/press-kit" className="flex items-center gap-1">
-            <span className="animate-underline">Press Kit</span>
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </Button> */}
       </div>
 
       <motion.div
