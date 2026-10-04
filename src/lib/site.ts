@@ -1,9 +1,12 @@
+import { birthDate, getAge } from "@/lib/age";
+import { cacheLife } from "next/cache";
+
 export const site = {
   name: "Jonathan Bangert",
   url: "https://jonathanbangert.com",
   profileDescription:
     "A Danish software engineer, builder, and problem solver studying the International Baccalaureate at UWC Red Cross Nordic.",
-  birthDate: { year: 2008, month: 3, day: 1 },
+  birthDate,
   socialLinks: [
     "https://github.com/jonbng",
     "https://linkedin.com/in/jonathan-bangert/",
@@ -11,26 +14,19 @@ export const site = {
   ],
 } as const;
 
-export function getAge(date = new Date()) {
-  const { year, month, day } = site.birthDate;
-  let age = date.getUTCFullYear() - year;
-  const currentMonth = date.getUTCMonth() + 1;
-
-  if (
-    currentMonth < month ||
-    (currentMonth === month && date.getUTCDate() < day)
-  ) {
-    age--;
-  }
-
-  return age;
-}
-
 export async function getSiteDescription() {
   "use cache";
+  cacheLife("days");
 
-  const age = getAge(new Date());
+  const age = await getCurrentAge();
   const article = age === 18 ? "an" : "a";
 
-  return `I'm ${article} ${age}-year-old software engineer, builder, and problem solver from Denmark. I currently study the International Baccalaureate at UWC Red Cross Nordic.`;
+  return `I'm Jonathan Bangert, ${article} ${age}-year-old Danish software engineer. I lead engineering at Burst and study the International Baccalaureate at UWC Red Cross Nordic.`;
+}
+
+export async function getCurrentAge() {
+  "use cache";
+  cacheLife("days");
+
+  return getAge(new Date());
 }

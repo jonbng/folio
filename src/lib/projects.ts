@@ -16,7 +16,7 @@ export const projects: ProjectCaseStudy[] = [
   {
     slug: "betterlectio",
     title: "BetterLectio",
-    role: "Co-Creator",
+    role: "Co-Founder",
     year: "2026 — Present",
     summary:
       "A cleaner, faster interface for the Danish school platform Lectio.",

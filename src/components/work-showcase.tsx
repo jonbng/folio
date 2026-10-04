@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { toProjectSlug } from "@/lib/projects";
+import { getProject, toProjectSlug } from "@/lib/projects";
 
 const works = [
   {
@@ -68,7 +68,7 @@ const works = [
     id: 1,
     order: 3,
     title: "Akademia",
-    tag: "Founder",
+    tag: "Co-Founder",
     link: "https://akademia.cc",
     tagColor: "bg-green-100 text-green-800",
     description:
@@ -407,7 +407,7 @@ const works = [
     id: 9,
     order: 0,
     title: "BetterLectio",
-    tag: "Founder",
+    tag: "Co-Founder",
     link: "https://betterlectio.dk",
     tagColor: "bg-green-100 text-green-800",
     shortDescription: "A cleaner, faster interface for Lectio.",
@@ -429,12 +429,12 @@ const works = [
     team: [
       {
         name: "Jonathan Bangert",
-        role: "Co-Creator",
+        role: "Co-Founder",
         avatar: "/pfp.jpeg",
       },
       {
         name: "Elliott Friedrich",
-        role: "Co-Creator",
+        role: "Co-Founder",
         avatar: "/elliott.jpg",
         link: "https://www.linkedin.com/in/elliott-friedrich-0460962b0/",
       },
@@ -520,7 +520,8 @@ export default function WorkShowcase({
                       {work.title}
                     </h3>
                     <p className="text-[var(--muted-foreground)] leading-relaxed">
-                      {work.shortDescription}
+                      {getProject(toProjectSlug(work.title))?.description ??
+                        work.description}
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <Link

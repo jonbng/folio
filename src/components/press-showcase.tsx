@@ -118,7 +118,7 @@ export default function PressAndRecognitionShowcase() {
         transition={{ layout: { duration: 0.5 } }}
         style={{ overflow: "hidden" }}
       >
-        <motion.div
+        <motion.ul
           className="space-y-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -126,68 +126,76 @@ export default function PressAndRecognitionShowcase() {
         >
           <AnimatePresence initial={false}>
             {displayedItems.map((item, index) => (
-              <motion.a
+              <motion.li
                 layout
                 key={item.id}
-                href={item.link}
-                className="group flex flex-row items-center gap-6 cursor-pointer mb-5"
+                className="mb-5"
                 initial={index >= 3 ? { opacity: 0, y: -25 } : false}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -25 }}
                 transition={{ duration: 0.4 }}
-                whileHover={{ x: 10 }}
               >
-                <div className="flex-shrink-0 w-auto">
-                  <Image
-                    src={item.image || "/placeholder.svg"}
-                    alt={
-                      isPressItem(item) ? item.publication : item.organization
-                    }
-                    width={100}
-                    height={100}
-                    className="rounded-lg object-cover w-[100px] h-[100px]"
-                  />
-                </div>
-                <div className="flex-grow">
-                  <h3 className="text-xl font-semibold group-hover:text-[var(--muted-foreground)] transition-colors duration-200">
-                    {item.title}
-                  </h3>
-                  <p className="text-[var(--muted-foreground)] mt-1">
-                    {isPressItem(item) ? (
-                      <>
-                        <Newspaper className="inline-block w-4 h-4 mr-1" />
-                        {item.publication} · {formatDate(item.date)}
-                      </>
-                    ) : (
-                      <>
-                        <Award className="inline-block w-4 h-4 mr-1" />
-                        {item.organization} · {formatDate(item.date)}
-                      </>
-                    )}
-                  </p>
-                </div>
-              </motion.a>
+                <motion.a
+                  href={item.link}
+                  className="group flex flex-row items-center gap-6 cursor-pointer"
+                  whileHover={{ x: 10 }}
+                >
+                  <div className="flex-shrink-0 w-auto">
+                    <Image
+                      src={item.image || "/placeholder.svg"}
+                      alt={
+                        isPressItem(item) ? item.publication : item.organization
+                      }
+                      width={100}
+                      height={100}
+                      className="rounded-lg object-cover w-[100px] h-[100px]"
+                    />
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="text-xl font-semibold group-hover:text-[var(--muted-foreground)] transition-colors duration-200">
+                      {item.title}
+                    </h3>
+                    <p className="text-[var(--muted-foreground)] mt-1">
+                      {isPressItem(item) ? (
+                        <>
+                          <Newspaper className="inline-block w-4 h-4 mr-1" />
+                          {item.publication} · {formatDate(item.date)}
+                        </>
+                      ) : (
+                        <>
+                          <Award className="inline-block w-4 h-4 mr-1" />
+                          {item.organization} · {formatDate(item.date)}
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </motion.a>
+              </motion.li>
             ))}
           </AnimatePresence>
           {count < allItems.length && (
-            <Button
-              variant="link"
-              className="p-0 h-auto font-semibold"
-              onClick={() => setCount(allItems.length)}
-            >
-              <span className="animate-underline">Show more</span>
-            </Button>
+            <li>
+              <Button
+                variant="link"
+                className="p-0 h-auto font-semibold"
+                onClick={() => setCount(allItems.length)}
+              >
+                <span className="animate-underline">Show more</span>
+              </Button>
+            </li>
           )}
           {count === allItems.length && (
-            <Button
-              variant="link"
-              className="p-0 h-auto font-semibold"
-              onClick={() => setCount(3)}
-            >
-              <span className="animate-underline">Show less</span>
-            </Button>
+            <li>
+              <Button
+                variant="link"
+                className="p-0 h-auto font-semibold"
+                onClick={() => setCount(3)}
+              >
+                <span className="animate-underline">Show less</span>
+              </Button>
+            </li>
           )}
-        </motion.div>
+        </motion.ul>
       </motion.div>
     </section>
   );

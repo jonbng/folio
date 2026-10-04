@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Maximize, Send } from "lucide-react";
 import { GuestbookEntry } from "@/types/guestbook";
 
-const PROMOTED_ENTRIES = [10,18,2,27,29,32,38,39,5,54,55,7,8]
+const PROMOTED_ENTRIES = [10, 18, 2, 27, 29, 32, 38, 39, 5, 54, 55, 7, 8];
 
 export default function GuestbookPreview({
   entries,
@@ -18,8 +18,9 @@ export default function GuestbookPreview({
   onMessage: () => void;
   isLoading?: boolean;
 }) {
-
-  const promotedEntries = entries.filter((entry) => PROMOTED_ENTRIES.includes(Number(entry.id)));
+  const promotedEntries = entries.filter((entry) =>
+    PROMOTED_ENTRIES.includes(Number(entry.id)),
+  );
   return (
     <>
       <div id="guestbook" className="relative bottom-80 invisible" />
@@ -41,10 +42,13 @@ export default function GuestbookPreview({
             </p>
           </div>
 
-          <div className={`w-full relative`}>
+          <div className="w-full relative" data-nosnippet>
             {isLoading ? (
               <div className="flex justify-center items-center h-32">
-                <p className="text-zinc-500">Loading messages...</p>
+                <p className="max-w-sm text-center text-zinc-500">
+                  A small corner for notes from friends, collaborators, and
+                  visitors.
+                </p>
               </div>
             ) : promotedEntries.length > 0 ? (
               <div className={`flex flex-row gap-8 h-0 animate-marquee`}>
@@ -78,7 +82,11 @@ export default function GuestbookPreview({
             <Maximize className="h-4 w-4" />
             <span>Expand Guestbook</span>
           </Button>
-          <Button onClick={onMessage} variant="actualGhost" className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed z-50">
+          <Button
+            onClick={onMessage}
+            variant="actualGhost"
+            className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed z-50"
+          >
             <Send className="h-4 w-4" />
             <span>Leave a Message</span>
           </Button>
