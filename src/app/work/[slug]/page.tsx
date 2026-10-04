@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   if (!project) return {};
 
-  const title = `${project.title} — ${project.role} | Jonathan Bangert`;
+  const title = `${project.title} | ${project.role} | Jonathan Bangert`;
   const canonical = `/work/${project.slug}`;
 
   return {
@@ -39,7 +39,7 @@ export async function generateMetadata({
           url: "/og.webp",
           width: 1200,
           height: 630,
-          alt: "Jonathan Bangert — Software Engineer & Builder",
+          alt: "Jonathan Bangert, Software Engineer & Builder",
         },
       ],
     },
@@ -132,7 +132,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             {project.highlights.map((highlight) => (
               <li key={highlight} className="flex gap-3">
                 <span aria-hidden="true" className="text-[var(--foreground)]">
-                  —
+                  •
                 </span>
                 <span>{highlight}</span>
               </li>

@@ -19,7 +19,7 @@ const works = [
       "Connecting brands with creators. Creators get paid for views.",
     shortDescription: "Infrastructure for brands to work with creators.",
     image: "/burst-transparent.webp",
-    year: "2025 — Present",
+    year: "2025 – Present",
     detailedDescription:
       "At Burst we connect brands to creators. Brands choose what message or product they want promoted, the creators join a campaign and get paid for the views their videos get. I joined Burst in summer 2025, working full time as their lead software engineer.",
     technologies: [
@@ -75,7 +75,7 @@ const works = [
       "A reimagined platform for schools that transforms how students learn and teachers teach.",
     shortDescription: "A simpler operating system for schools.",
     image: "/akademia.webp",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     detailedDescription:
       "Akademia simplifies how schools handle learning. It brings assignments, grading, and communication into one platform, replacing the need for multiple tools. Teachers can create assignments, track progress, and give feedback in one place. Students get a clear view of their coursework, deadlines, and feedback, making it easier to stay organized and focused. This project won 1st place in the Junior Technology category at Unge Forskere, and we got to present it at Shark Tank Junior where we got a mentor.",
     technologies: [
@@ -143,7 +143,7 @@ const works = [
       "Flimmer is a video app for kids that turns screen time into active play with interactive tasks and a safe community.",
     shortDescription: "Turning screen time into play time.",
     image: "/flimmer.svg",
-    year: "2024 — 2025",
+    year: "2024 – 2025",
     detailedDescription:
       "Flimmer is a social video app designed for children aged 6 to 12, aiming to transform screen time into active play. It offers a curated selection of child-friendly videos from trusted creators, each encouraging offline activities through engaging tasks and quizzes. Children can share photos, earn points, and participate in a safe, age-appropriate community. Flimmer avoids features like endless feeds, focusing instead on promoting real-world play and learning. Specifically I was helping with the mobile app, working with both the frontend and backend maintaining and creating new features for the app.",
     technologies: [
@@ -249,7 +249,7 @@ const works = [
     shortDescription: "Open source music library manager.",
     image: "/musicassistant.png",
     cover: "cover",
-    year: "Early 2023 — 2025",
+    year: "Early 2023 – 2025",
     detailedDescription:
       "I joined this project fairly early on, initally only working on the Deezer provider, but later creating and maintaining the Companion app as well. This was my first time contributing to open source project, and on a personal note a really awesome team to be working with, and thought me a ton. I am one of the core members, sadly being less active at the moment.",
     technologies: ["Rust", "Vue", "Tauri", "Python", "AsyncIO", "Deezer API"],
@@ -294,7 +294,7 @@ const works = [
       "We built a new website for Nørrebro Skakklub, making it easier for members to stay updated, find events, and connect with the club.",
     shortDescription: "Building a better chess club website.",
     image: "/nbskak.webp",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     cover: "cover",
     detailedDescription:
       "Nørrebro Skakklub needed a new, modern, functional website to provide information to current members and attract new ones. The old site was outdated, ugly, complicated and expensive to host. We worked with the club to find a design that fit them. We ended up with a new modern site that was easier for them to maintain, and is completely free for them to host. ",
@@ -366,7 +366,7 @@ const works = [
     tagColor: "bg-yellow-100 text-yellow-800",
     shortDescription: "A casual puzzle game about playing with gravity.",
     image: "/gravitydrop.webp",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     description: "A casual puzzle game about playing with gravity.",
     detailedDescription:
       "GravityDrop is a casual puzzle game where players manipulate gravity to solve challenges and progress through levels. The game is made with Unity and is designed to be released to mobile platforms, although the project is on hold for now. The game won the best overall game at the Coding Pirates Game Jam 2023, and was a great experience to work on.",
@@ -415,7 +415,7 @@ const works = [
       "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system, with improved functionality and better styling.",
     image: "/betterlectio.webp",
     cover: "cover",
-    year: "2026 — Present",
+    year: "2026 – Present",
     detailedDescription:
       "BetterLectio is a browser extension that modernizes Lectio, the Danish school management system. It adds a modern sidebar, fast search with keyboard shortcuts, smart prefetching for instant page loads, an improved messages layout, profile pictures, and skeleton loading for smooth transitions. Available for both Chrome and Firefox.",
     technologies: [

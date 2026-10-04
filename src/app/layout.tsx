@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = await getSiteDescription();
 
   return {
-    title: `${site.name} — Software Engineer & Builder`,
+    title: `${site.name} | Software Engineer & Builder`,
     description,
     authors: [{ name: site.name, url: site.url }],
     category: "website",
@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${site.name} — Software Engineer & Builder`,
+      title: `${site.name} | Software Engineer & Builder`,
       description,
       site: "@jonbng",
       creator: "@jonbng",
@@ -76,7 +76,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     openGraph: {
-      title: `${site.name} — Software Engineer & Builder`,
+      title: `${site.name} | Software Engineer & Builder`,
       description,
       type: "website",
       countryName: "Denmark",

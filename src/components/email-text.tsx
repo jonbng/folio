@@ -22,7 +22,7 @@ export function EmailText({ type, className = "" }: EmailTextProps) {
   const [email, setEmail] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Resolve email only on the client — never in SSR HTML
+  // Resolve email only on the client, never in SSR HTML
   useEffect(() => {
     setEmail(emailFn());
   }, [emailFn]);

@@ -17,7 +17,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "betterlectio",
     title: "BetterLectio",
     role: "Co-Founder",
-    year: "2026 — Present",
+    year: "2026 – Present",
     summary:
       "A cleaner, faster interface for the Danish school platform Lectio.",
     description:
@@ -36,7 +36,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "burst",
     title: "Burst",
     role: "Lead Software Engineer",
-    year: "2025 — Present",
+    year: "2025 – Present",
     summary: "Infrastructure for brands to work with creators.",
     description:
       "Burst connects brands with creators and pays creators based on the views their campaign videos receive. I joined in summer 2025 as a lead software engineer.",
@@ -61,7 +61,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "music-assistant",
     title: "Music Assistant",
     role: "Core Contributor",
-    year: "2023 — 2025",
+    year: "2023 – 2025",
     summary: "An open-source music library manager for Home Assistant.",
     description:
       "Music Assistant combines online and offline music sources and streams them to a wide range of supported players. It was my first major open-source project.",
@@ -79,7 +79,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "akademia",
     title: "Akademia",
     role: "Co-Founder",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     summary: "A simpler operating system for schools.",
     description:
       "Akademia brought assignments, grading, communication, deadlines, and feedback into one platform for students and teachers.",
@@ -104,7 +104,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "flimmer",
     title: "Flimmer",
     role: "Software Engineer",
-    year: "2024 — 2025",
+    year: "2024 – 2025",
     summary: "Turning screen time into active play for children.",
     description:
       "Flimmer is a safe social video app for children aged 6 to 12. Videos encourage offline tasks, quizzes, creativity, and real-world play instead of endless scrolling.",
@@ -187,7 +187,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "norrebro-skakklub",
     title: "Nørrebro Skakklub",
     role: "Developer",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     summary:
       "A more useful and maintainable website for a Copenhagen chess club.",
     description:
@@ -212,7 +212,7 @@ export const projects: ProjectCaseStudy[] = [
     slug: "gravitydrop",
     title: "GravityDrop",
     role: "Developer",
-    year: "2023 — 2024",
+    year: "2023 – 2024",
     summary: "A casual puzzle game built around manipulating gravity.",
     description:
       "GravityDrop is a Unity puzzle game where players manipulate gravity to solve challenges and progress through levels.",
